@@ -1,0 +1,381 @@
+/* AI Connector Chatbot — Frontend styles.
+ *
+ * Colors, fonts, and spacing reference the active theme's design tokens
+ * (the CSS custom properties WordPress generates from theme.json). This
+ * means the chatbot automatically matches any block theme's color palette.
+ * Every variable has a fallback so the widget remains usable on themes
+ * that don't define a particular token.
+ */
+
+.aicc-chatbot-container {
+	/* Primary action color — theme's primary palette. */
+	--aicc-primary: var(--wp--preset--color--primary, #0050d8);
+	--aicc-primary-hover: var(--wp--preset--color--primary-dark, #0041b0);
+
+	/* Backgrounds and surfaces. */
+	--aicc-bg: #ffffff;
+	--aicc-surface: var(--wp--preset--color--base-lightest, #f0f0f0);
+	--aicc-user-bubble: color-mix(in srgb, var(--wp--preset--color--primary, #0050d8) 12%, white);
+	--aicc-ai-bubble: var(--wp--preset--color--base-lightest, #f0f0f0);
+
+	/* Text colors. */
+	--aicc-text: var(--wp--preset--color--contrast, #1b1b1b);
+	--aicc-text-muted: var(--wp--preset--color--base, #71767a);
+
+	/* Borders. */
+	--aicc-border: var(--wp--preset--color--base-lighter, #dfe1e2);
+
+	/* Radius — mirrors the theme's button radius (0.25rem). */
+	--aicc-radius: 0.25rem;
+	--aicc-radius-lg: 0.5rem;
+
+	/* Shadows. */
+	--aicc-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	--aicc-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.2);
+
+	/* Sizing. */
+	--aicc-max-width: 380px;
+	--aicc-max-height: 560px;
+
+	/* Font family — uses the theme's body font. */
+	--aicc-font: var(--wp--preset--font-family--public-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+
+	position: fixed;
+	z-index: 9999;
+	font-family: var(--aicc-font);
+	font-size: var(--wp--preset--font-size--medium, 0.875rem);
+	line-height: 1.5;
+	color: var(--aicc-text);
+}
+
+.aicc-chatbot-container.aicc-position-bottom-right {
+	bottom: var(--wp--preset--spacing--50, 1.5rem);
+	right: var(--wp--preset--spacing--50, 1.5rem);
+}
+
+.aicc-chatbot-container.aicc-position-bottom-left {
+	bottom: var(--wp--preset--spacing--50, 1.5rem);
+	left: var(--wp--preset--spacing--50, 1.5rem);
+}
+
+/* ── Toggle button ──────────────────────────────────────────────── */
+
+.aicc-chat-toggle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	background-color: var(--aicc-primary);
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	box-shadow: var(--aicc-shadow);
+	transition: background-color 0.2s ease, transform 0.2s ease;
+	padding: 0;
+}
+
+.aicc-chat-toggle:hover,
+.aicc-chat-toggle:focus-visible {
+	background-color: var(--aicc-primary-hover);
+	transform: scale(1.05);
+}
+
+.aicc-chat-toggle:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 2px;
+}
+
+.aicc-chat-toggle--active {
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* ── Chat panel ─────────────────────────────────────────────────── */
+
+.aicc-chat-panel {
+	position: absolute;
+	bottom: 70px;
+	width: var(--aicc-max-width);
+	max-width: calc(100vw - 40px);
+	max-height: var(--aicc-max-height);
+	background-color: var(--aicc-bg);
+	border-radius: var(--aicc-radius-lg);
+	box-shadow: var(--aicc-shadow-lg);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	opacity: 1;
+	transform: translateY(0);
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.aicc-chat-panel[hidden] {
+	display: none;
+}
+
+.aicc-position-bottom-right .aicc-chat-panel {
+	right: 0;
+}
+
+.aicc-position-bottom-left .aicc-chat-panel {
+	left: 0;
+}
+
+/* ── Header ─────────────────────────────────────────────────────── */
+
+.aicc-chat-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--wp--preset--spacing--30, 0.75rem) var(--wp--preset--spacing--40, 1rem);
+	background-color: var(--aicc-primary);
+	color: #fff;
+}
+
+.aicc-chat-header-text {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.aicc-chat-title {
+	font-weight: 600;
+	font-size: 0.9375rem;
+}
+
+.aicc-chat-subtitle {
+	font-size: 0.75rem;
+	opacity: 0.85;
+}
+
+.aicc-chat-close {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: var(--aicc-radius);
+	background: transparent;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	padding: 0;
+	transition: background-color 0.15s ease;
+}
+
+.aicc-chat-close:hover,
+.aicc-chat-close:focus-visible {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.aicc-chat-close:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 1px;
+}
+
+/* ── Messages ───────────────────────────────────────────────────── */
+
+.aicc-chat-messages {
+	flex: 1;
+	overflow-y: auto;
+	padding: var(--wp--preset--spacing--40, 1rem);
+	display: flex;
+	flex-direction: column;
+	gap: var(--wp--preset--spacing--30, 0.75rem);
+	scroll-behavior: smooth;
+}
+
+.aicc-message {
+	display: flex;
+	gap: var(--wp--preset--spacing--20, 0.5rem);
+	max-width: 85%;
+}
+
+.aicc-message--user {
+	align-self: flex-end;
+	flex-direction: row-reverse;
+}
+
+.aicc-message--assistant {
+	align-self: flex-start;
+}
+
+.aicc-message-avatar {
+	flex-shrink: 0;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 11px;
+	font-weight: 600;
+	background-color: var(--aicc-primary);
+	color: #fff;
+}
+
+.aicc-message--user .aicc-message-avatar {
+	background-color: var(--aicc-text-muted);
+}
+
+.aicc-message-bubble {
+	padding: var(--wp--preset--spacing--20, 0.5rem) 0.875rem;
+	border-radius: 0.75rem;
+	word-break: break-word;
+}
+
+.aicc-message--user .aicc-message-bubble {
+	background-color: var(--aicc-user-bubble);
+	border-bottom-right-radius: var(--aicc-radius);
+}
+
+.aicc-message--assistant .aicc-message-bubble {
+	background-color: var(--aicc-ai-bubble);
+	border-bottom-left-radius: var(--aicc-radius);
+}
+
+.aicc-message-text a {
+	color: var(--aicc-primary);
+	text-decoration: underline;
+}
+
+/* ── Captcha ────────────────────────────────────────────────────── */
+
+.aicc-chat-captcha {
+	padding: var(--wp--preset--spacing--20, 0.5rem) var(--wp--preset--spacing--40, 1rem);
+	min-height: 65px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* ── Typing indicator ────────────────────────────────────────────── */
+
+.aicc-typing-indicator .aicc-message-bubble {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+	padding: 14px;
+}
+
+.aicc-typing-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: var(--aicc-text-muted);
+	animation: aicc-typing 1.2s infinite ease-in-out;
+}
+
+.aicc-typing-dot:nth-child(2) {
+	animation-delay: 0.2s;
+}
+
+.aicc-typing-dot:nth-child(3) {
+	animation-delay: 0.4s;
+}
+
+@keyframes aicc-typing {
+	0%, 60%, 100% {
+		transform: translateY(0);
+		opacity: 0.4;
+	}
+	30% {
+		transform: translateY(-6px);
+		opacity: 1;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.aicc-typing-dot {
+		animation: none;
+		opacity: 0.6;
+	}
+}
+
+/* ── Input area ──────────────────────────────────────────────────── */
+
+.aicc-chat-input-area {
+	display: flex;
+	gap: var(--wp--preset--spacing--20, 0.5rem);
+	padding: var(--wp--preset--spacing--30, 0.75rem) var(--wp--preset--spacing--40, 1rem);
+	border-top: 1px solid var(--aicc-border);
+	align-items: flex-end;
+}
+
+.aicc-chat-input {
+	flex: 1;
+	resize: none;
+	border: 1px solid var(--aicc-border);
+	border-radius: var(--aicc-radius);
+	padding: var(--wp--preset--spacing--20, 0.5rem) 0.75rem;
+	font-family: var(--aicc-font);
+	font-size: 0.875rem;
+	line-height: 1.4;
+	max-height: 120px;
+	overflow-y: auto;
+	color: var(--aicc-text);
+	background-color: var(--aicc-bg);
+}
+
+.aicc-chat-input:focus {
+	outline: none;
+	border-color: var(--aicc-primary);
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--aicc-primary) 25%, transparent);
+}
+
+.aicc-chat-input::placeholder {
+	color: var(--aicc-text-muted);
+}
+
+.aicc-chat-send {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	flex-shrink: 0;
+	border-radius: var(--aicc-radius);
+	background-color: var(--aicc-primary);
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	transition: background-color 0.15s ease;
+}
+
+.aicc-chat-send:hover,
+.aicc-chat-send:focus-visible {
+	background-color: var(--aicc-primary-hover);
+}
+
+.aicc-chat-send:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 1px;
+}
+
+.aicc-chat-send:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+	.aicc-chatbot-container.aicc-position-bottom-right,
+	.aicc-chatbot-container.aicc-position-bottom-left {
+		bottom: var(--wp--preset--spacing--20, 0.5rem);
+		right: var(--wp--preset--spacing--20, 0.5rem);
+		left: var(--wp--preset--spacing--20, 0.5rem);
+	}
+
+	.aicc-position-bottom-left .aicc-chat-panel {
+		left: 0;
+	}
+
+	.aicc-chat-panel {
+		width: 100%;
+		max-height: calc(100vh - 80px);
+	}
+}
