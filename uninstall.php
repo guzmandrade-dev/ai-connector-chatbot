@@ -11,16 +11,16 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 delete_option( 'aicc_settings' );
 
 // Delete rate-limit transients.
+//
+// There is no WordPress API for deleting transients by prefix, so a direct
+// query is required. It runs once, during uninstall, so caching does not apply.
 global $wpdb;
-$wpdb->query(
+$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 	$wpdb->prepare(
-		"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
-		$wpdb->esc_like( '_transient_aicc_rate_' ) . '%'
-	)
-);
-$wpdb->query(
-	$wpdb->prepare(
-		"DELETE FROM {$wpdb->options} WHERE option_name LIKE %s",
+		"DELETE FROM {$wpdb->options}
+		 WHERE option_name LIKE %s
+		    OR option_name LIKE %s",
+		$wpdb->esc_like( '_transient_aicc_rate_' ) . '%',
 		$wpdb->esc_like( '_transient_timeout_aicc_rate_' ) . '%'
 	)
 );

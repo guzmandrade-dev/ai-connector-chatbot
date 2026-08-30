@@ -75,23 +75,14 @@ final class AICC_Plugin {
 
 	/**
 	 * Constructor — wires up hooks and modules.
+	 *
+	 * Note: load_plugin_textdomain() is not called since WordPress 4.6
+	 * loads translations for plugins automatically.
 	 */
 	private function __construct() {
-		$this->load_text_domain();
 		$this->require_files();
 		$this->init_modules();
 		$this->check_dependencies();
-	}
-
-	/**
-	 * Loads the plugin text domain for i18n.
-	 */
-	private function load_text_domain(): void {
-		load_plugin_textdomain(
-			'ai-connector-chatbot',
-			false,
-			dirname( AICC_PLUGIN_BASENAME ) . '/languages'
-		);
 	}
 
 	/**

@@ -1,14 +1,14 @@
 === AI Connector Chatbot ===
 Contributors: guzmandrade-dev
-Tags: chatbot, ai, chat, akismet, spam, captcha, turnstile, knowledge base, connectors
+Tags: chatbot, ai, chat, spam, captcha
 Requires at least: 7.0
 Requires PHP: 8.0
-Tested up to: 7.0
+Tested up to: 7.1
 Stable tag: 0.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-AI-powered frontend chatbot with a knowledge base, Akismet spam protection, and Cloudflare Turnstile captcha. Built on the WordPress 7.0 Connectors API and PHP AI Client SDK.
+AI-powered frontend chatbot with a knowledge base, Akismet spam protection, and Cloudflare Turnstile captcha.
 
 == Description ==
 

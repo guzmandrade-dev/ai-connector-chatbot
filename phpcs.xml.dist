@@ -43,6 +43,14 @@
 	<!-- Let's also check that everything is properly documented. -->
 	<rule ref="WordPress-Docs"/>
 
+	<!--
+	Sniffs used by WordPress.org plugin review (via plugin-check) that are
+	not part of WordPress-Core/WordPress-Extra. Enabling them locally keeps
+	`composer lint` aligned with the Plugin Check tool.
+	-->
+	<rule ref="WordPress.Security.ValidatedSanitizedInput"/>
+	<rule ref="WordPress.DB.DirectDatabaseQuery"/>
+
 	<!-- Add in some extra rules from other standards. -->
 	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
 	<rule ref="Generic.Commenting.Todo"/>

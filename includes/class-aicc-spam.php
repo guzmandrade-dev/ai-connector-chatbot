@@ -96,7 +96,7 @@ class AICC_Spam {
 		}
 
 		$ip    = $user_data['ip'] ?? $this->get_client_ip();
-		$ua    = $user_data['user_agent'] ?? ( $_SERVER['HTTP_USER_AGENT'] ?? '' );
+		$ua    = $user_data['user_agent'] ?? $this->get_user_agent();
 		$email = $user_data['email'] ?? '';
 		$name  = $user_data['name'] ?? '';
 
@@ -177,10 +177,17 @@ class AICC_Spam {
 	/**
 	 * Returns the client IP address.
 	 *
+	 * The value is validated with FILTER_VALIDATE_IP, which only accepts
+	 * well-formed IP addresses, so no further sanitization is needed.
+	 *
 	 * @return string
 	 */
-	private function get_client_ip(): string {
-		$ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+	public function get_client_ip(): string {
+		$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+
+		if ( empty( $ip ) && function_exists( 'getenv' ) ) {
+			$ip = (string) getenv( 'REMOTE_ADDR' );
+		}
 
 		if ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 			$forwarded = explode( ',', sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) );
@@ -188,5 +195,16 @@ class AICC_Spam {
 		}
 
 		return filter_var( $ip, FILTER_VALIDATE_IP ) ? $ip : '127.0.0.1';
+	}
+
+	/**
+	 * Returns the client user agent.
+	 *
+	 * @return string
+	 */
+	public function get_user_agent(): string {
+		return isset( $_SERVER['HTTP_USER_AGENT'] )
+			? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) )
+			: '';
 	}
 }

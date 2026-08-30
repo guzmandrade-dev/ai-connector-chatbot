@@ -1,0 +1,394 @@
+# Copyright (C) 2026 Mauricio Andrade
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: AI Connector Chatbot 0.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-connector-chatbot\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-08-30T03:01:22+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 3.0.0-alpha-6a3afd3\n"
+"X-Domain: ai-connector-chatbot\n"
+
+#. Plugin Name of the plugin
+#: ai-connector-chatbot.php:3
+#: includes/class-aicc-settings.php:102
+#: includes/class-aicc-settings.php:103
+msgid "AI Connector Chatbot"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: ai-connector-chatbot.php:4
+msgid "https://github.com/guzmandrade-dev/wp-uswds"
+msgstr ""
+
+#. Description of the plugin
+#: ai-connector-chatbot.php:5
+msgid "AI-powered frontend chatbot with a knowledge base, Akismet spam protection, and Cloudflare Turnstile captcha. Leverages the WordPress 7.0 Connectors API and the PHP AI Client SDK — no custom AI provider code required."
+msgstr ""
+
+#. Author of the plugin
+#: ai-connector-chatbot.php:7
+msgid "Mauricio Andrade"
+msgstr ""
+
+#. Author URI of the plugin
+#: ai-connector-chatbot.php:8
+msgid "https://github.com/guzmandrade-dev"
+msgstr ""
+
+#: includes/class-aicc-captcha.php:71
+msgid "Captcha verification required. Please complete the challenge."
+msgstr ""
+
+#: includes/class-aicc-captcha.php:86
+#: includes/class-aicc-chatbot.php:201
+msgid "Captcha verification failed. Please try again."
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:184
+#: includes/class-aicc-settings.php:41
+msgid "Chat with us"
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:186
+#: includes/class-aicc-settings.php:44
+msgid "Hello! How can I help you today?"
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:192
+msgid "Type your message…"
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:193
+msgid "Send"
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:194
+msgid "Open chat"
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:195
+msgid "Close chat"
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:196
+msgid "Assistant is typing…"
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:197
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:198
+msgid "Your message was blocked. Please try again later."
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:199
+msgid "The AI assistant is not configured. Please contact the site administrator."
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:200
+msgid "Please complete the captcha challenge first."
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:330
+msgid "The AI assistant is not configured."
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:451
+#: includes/class-aicc-chatbot.php:460
+msgid "Failed to generate a response. Please try again."
+msgstr ""
+
+#: includes/class-aicc-chatbot.php:549
+#: includes/class-aicc-chatbot.php:560
+msgid "I've saved your information. Is there anything else I can help you with?"
+msgstr ""
+
+#: includes/class-aicc-knowledge-base.php:47
+#: includes/class-aicc-knowledge-base.php:58
+#: includes/class-aicc-settings.php:271
+msgid "Knowledge Base"
+msgstr ""
+
+#: includes/class-aicc-knowledge-base.php:48
+#: includes/class-aicc-settings.php:484
+msgid "Knowledge Base Article"
+msgstr ""
+
+#: includes/class-aicc-knowledge-base.php:49
+msgid "Add New Article"
+msgstr ""
+
+#: includes/class-aicc-knowledge-base.php:50
+msgid "Add New Knowledge Base Article"
+msgstr ""
+
+#: includes/class-aicc-knowledge-base.php:51
+msgid "Edit Article"
+msgstr ""
+
+#: includes/class-aicc-knowledge-base.php:52
+msgid "New Article"
+msgstr ""
+
+#: includes/class-aicc-knowledge-base.php:53
+msgid "View Article"
+msgstr ""
+
+#: includes/class-aicc-knowledge-base.php:54
+msgid "Search Knowledge Base"
+msgstr ""
+
+#: includes/class-aicc-knowledge-base.php:55
+msgid "No articles found."
+msgstr ""
+
+#: includes/class-aicc-knowledge-base.php:56
+msgid "No articles in trash."
+msgstr ""
+
+#: includes/class-aicc-knowledge-base.php:57
+msgid "All Articles"
+msgstr ""
+
+#: includes/class-aicc-lead-capture.php:72
+msgid "Save a lead captured during the chat conversation. Call this function when a user provides their contact information (name, email, phone) and expresses interest in being contacted or learning more. Only call this when the user has explicitly shared their details."
+msgstr ""
+
+#: includes/class-aicc-lead-capture.php:111
+msgid "You have the ability to save leads using the save_lead function. When a user shows interest in your services, products, or being contacted, naturally guide the conversation toward collecting their contact information. Ask for their name and email address conversationally — do not use form-like language. For example, instead of \"Please provide your name and email,\" say something like \"I'd be happy to have someone follow up with you about this. Could you share your name and the best email to reach you at?\" Only call the save_lead function after the user has provided at least their name and email. Never call save_lead more than once per conversation — once a lead is saved, do not save it again even if the user continues chatting. Never ask for or collect sensitive data like passwords, credit card numbers, or social security numbers. After saving a lead, let the user know their information has been received and someone will be in touch."
+msgstr ""
+
+#: includes/class-aicc-lead-capture.php:113
+msgid ""
+"## Conversation End Detection\n"
+"When it is clear the user has no further questions (e.g. they say \"that is all\", \"no more questions\", \"thanks\", \"goodbye\", or similar), wrap up the conversation politely and append the marker [[CHAT_END]] at the very end of your response. This signals the system to close the chat panel. Only use this marker when you are confident the conversation has concluded — never use it if the user might still have follow-up questions."
+msgstr ""
+
+#: includes/class-aicc-lead-capture.php:166
+msgid "Lead saved successfully."
+msgstr ""
+
+#: includes/class-aicc-lead-capture.php:167
+msgid "Lead saved with some delivery errors."
+msgstr ""
+
+#. translators: %s: Lead name.
+#: includes/class-aicc-lead-capture.php:181
+#, php-format
+msgid "[%s] New lead from chatbot"
+msgstr ""
+
+#: includes/class-aicc-lead-capture.php:182
+msgid "Unknown"
+msgstr ""
+
+#: includes/class-aicc-lead-capture.php:185
+msgid "A new lead was captured by the AI Connector Chatbot:"
+msgstr ""
+
+#: includes/class-aicc-lead-capture.php:186
+msgid "Name: "
+msgstr ""
+
+#: includes/class-aicc-lead-capture.php:187
+msgid "Email: "
+msgstr ""
+
+#: includes/class-aicc-lead-capture.php:190
+msgid "Phone: "
+msgstr ""
+
+#: includes/class-aicc-lead-capture.php:194
+msgid "Notes:"
+msgstr ""
+
+#: includes/class-aicc-lead-capture.php:197
+msgid "Captured: "
+msgstr ""
+
+#: includes/class-aicc-lead-capture.php:198
+msgid "Source: "
+msgstr ""
+
+#. translators: %s: Link to the AI plugin.
+#: includes/class-aicc-plugin.php:130
+#, php-format
+msgid "AI Connector Chatbot needs the WordPress AI building blocks to function. Please install and activate the <a href=\"%s\">AI plugin</a> or upgrade to WordPress 7.0+. Then configure an AI provider under <strong>Settings &rsaquo; Connectors</strong>."
+msgstr ""
+
+#. translators: %s: Link to Akismet.
+#: includes/class-aicc-plugin.php:147
+#, php-format
+msgid "AI Connector Chatbot recommends <a href=\"%s\">Akismet</a> for spam protection. Install and activate it to enable spam filtering on chat messages. Rate-limiting fallback is active in the meantime."
+msgstr ""
+
+#. translators: %s: Link to the Turnstile plugin.
+#: includes/class-aicc-plugin.php:161
+#, php-format
+msgid "AI Connector Chatbot is configured to use captcha but the <a href=\"%s\">Simple CAPTCHA with Cloudflare Turnstile</a> plugin is not active. Install and configure it, or disable captcha in the chatbot settings."
+msgstr ""
+
+#: includes/class-aicc-settings.php:42
+msgid "We typically reply in a moment"
+msgstr ""
+
+#: includes/class-aicc-settings.php:45
+msgid "You are a helpful assistant for this website. Answer questions accurately and concisely. If you do not know the answer, say so. Use only the provided knowledge base context to answer questions about this site."
+msgstr ""
+
+#: includes/class-aicc-settings.php:125
+msgid "Chatbot"
+msgstr ""
+
+#: includes/class-aicc-settings.php:132
+msgid "Enable chatbot"
+msgstr ""
+
+#: includes/class-aicc-settings.php:144
+msgid "Title"
+msgstr ""
+
+#: includes/class-aicc-settings.php:156
+msgid "Subtitle"
+msgstr ""
+
+#: includes/class-aicc-settings.php:168
+msgid "Welcome message"
+msgstr ""
+
+#: includes/class-aicc-settings.php:180
+msgid "Position"
+msgstr ""
+
+#: includes/class-aicc-settings.php:188
+msgid "Bottom right"
+msgstr ""
+
+#: includes/class-aicc-settings.php:189
+msgid "Bottom left"
+msgstr ""
+
+#: includes/class-aicc-settings.php:197
+msgid "AI Configuration"
+msgstr ""
+
+#: includes/class-aicc-settings.php:204
+msgid "System instructions"
+msgstr ""
+
+#: includes/class-aicc-settings.php:216
+msgid "AI provider"
+msgstr ""
+
+#: includes/class-aicc-settings.php:228
+msgid "Model (optional)"
+msgstr ""
+
+#: includes/class-aicc-settings.php:240
+msgid "Temperature"
+msgstr ""
+
+#: includes/class-aicc-settings.php:255
+msgid "Max tokens"
+msgstr ""
+
+#: includes/class-aicc-settings.php:278
+msgid "Post types to include"
+msgstr ""
+
+#: includes/class-aicc-settings.php:289
+msgid "Max context length (chars)"
+msgstr ""
+
+#: includes/class-aicc-settings.php:305
+msgid "Spam Protection"
+msgstr ""
+
+#: includes/class-aicc-settings.php:312
+msgid "Enable spam protection"
+msgstr ""
+
+#: includes/class-aicc-settings.php:324
+msgid "Rate limit (messages per hour per user)"
+msgstr ""
+
+#: includes/class-aicc-settings.php:340
+msgid "Captcha Protection"
+msgstr ""
+
+#: includes/class-aicc-settings.php:347
+msgid "Enable captcha"
+msgstr ""
+
+#: includes/class-aicc-settings.php:360
+msgid "Lead Capture"
+msgstr ""
+
+#: includes/class-aicc-settings.php:367
+msgid "Enable lead capture"
+msgstr ""
+
+#: includes/class-aicc-settings.php:379
+msgid "Lead notification email"
+msgstr ""
+
+#: includes/class-aicc-settings.php:391
+msgid "Webhook URL (optional)"
+msgstr ""
+
+#: includes/class-aicc-settings.php:454
+msgid "Automatic (use any available)"
+msgstr ""
+
+#: includes/class-aicc-settings.php:496
+msgid "You do not have permission to access this page."
+msgstr ""
+
+#: includes/class-aicc-settings.php:505
+msgid "Save Settings"
+msgstr ""
+
+#: includes/class-aicc-settings.php:516
+msgid "Configure how the chatbot appears on your site."
+msgstr ""
+
+#: includes/class-aicc-settings.php:523
+msgid "AI providers and API keys are managed under Settings › Connectors (WordPress 7.0+). Select a provider and optionally a specific model here."
+msgstr ""
+
+#: includes/class-aicc-settings.php:530
+msgid "Select which content types to include as context for the chatbot. Knowledge Base Articles are always available. The article content is where you write the information the chatbot should know."
+msgstr ""
+
+#: includes/class-aicc-settings.php:537
+msgid "Uses Akismet for spam detection when available, with a rate-limiting fallback."
+msgstr ""
+
+#. translators: %s: Link to the Turnstile plugin.
+#: includes/class-aicc-settings.php:547
+#, php-format
+msgid "Requires the <a href=\"%s\">Simple CAPTCHA with Cloudflare Turnstile</a> plugin. Configure your Cloudflare site key and secret in its settings (Settings › Cloudflare Turnstile) before enabling captcha here."
+msgstr ""
+
+#: includes/class-aicc-settings.php:558
+msgid "When enabled, the chatbot uses AI function calling to detect when users share their contact information and automatically saves it. Leads are delivered via email and/or a webhook URL (for connecting to Zapier, Make, n8n, Google Sheets, a CRM, etc.). No forms or database tables needed."
+msgstr ""
+
+#: includes/class-aicc-settings.php:685
+msgid "No AI providers found. Install a provider connector plugin and configure it under Settings › Connectors."
+msgstr ""
+
+#: includes/class-aicc-spam.php:141
+msgid "Message flagged as spam by Akismet."
+msgstr ""
+
+#: includes/class-aicc-spam.php:166
+msgid "Rate limit exceeded. Please try again later."
+msgstr ""

@@ -347,8 +347,8 @@ class AICC_Chatbot {
 		// 3. Collect user data for spam check.
 		$user      = wp_get_current_user();
 		$user_data = array(
-			'ip'         => $_SERVER['REMOTE_ADDR'] ?? '',
-			'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
+			'ip'         => $this->spam->get_client_ip(),
+			'user_agent' => $this->spam->get_user_agent(),
 			'email'      => $user->exists() ? $user->user_email : '',
 			'name'       => $user->exists() ? $user->display_name : '',
 		);
