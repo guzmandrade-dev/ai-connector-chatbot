@@ -3,7 +3,7 @@
  * Plugin Name:       AI Connector Chatbot
  * Plugin URI:        https://github.com/guzmandrade-dev/ai-connector-chatbot
  * Description:       AI-powered frontend chatbot with a knowledge base, Akismet spam protection, and Cloudflare Turnstile captcha. Leverages the WordPress 7.0 Connectors API and the PHP AI Client SDK — no custom AI provider code required.
- * Version:           0.1.0
+ * Version:           1.0.0
  * Author:            Mauricio Andrade
  * Author URI:        https://profiles.wordpress.org/h4l9k/
  * License:           GPL-2.0-or-later
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'AICC_VERSION', '0.1.0' );
+define( 'AICC_VERSION', '1.0.0' );
 define( 'AICC_PLUGIN_FILE', __FILE__ );
 define( 'AICC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AICC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

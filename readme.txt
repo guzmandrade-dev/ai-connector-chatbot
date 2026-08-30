@@ -4,7 +4,7 @@ Tags: chatbot, ai, chat, spam, captcha
 Requires at least: 7.0
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 0.1.0
+Stable tag: 1.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,7 +65,7 @@ Captcha uses Cloudflare Turnstile via the "Simple CAPTCHA with Cloudflare Turnst
 
 == Changelog ==
 
-= 0.1.0 =
+= 1.0.0 =
 * Initial release.
 * Frontend chatbot widget (floating button + chat panel).
 * Knowledge base via `aicc_article` custom post type with keyword-based context retrieval.
