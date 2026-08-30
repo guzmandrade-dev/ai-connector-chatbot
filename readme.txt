@@ -1,5 +1,5 @@
 === AI Connector Chatbot ===
-Contributors: guzmandrade-dev
+Contributors: h4l9k
 Tags: chatbot, ai, chat, spam, captcha
 Requires at least: 7.0
 Requires PHP: 8.0
