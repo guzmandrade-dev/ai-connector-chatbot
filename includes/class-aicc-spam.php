@@ -12,7 +12,11 @@ defined( 'ABSPATH' ) || exit;
  */
 class AICC_Spam {
 
-	/** @var AICC_Settings Settings instance. */
+	/**
+	 * Settings instance.
+	 *
+	 * @var AICC_Settings
+	 */
 	private AICC_Settings $settings;
 
 	/**
@@ -34,9 +38,12 @@ class AICC_Spam {
 	 * @param array  $user_data Optional user data [ip, user_agent, email, name].
 	 * @return array{spam: bool, reason: string}
 	 */
-	public function check( string $message, array $user_data = [] ): array {
+	public function check( string $message, array $user_data = array() ): array {
 		if ( ! $this->settings->get( 'spam_protection', true ) ) {
-			return [ 'spam' => false, 'reason' => '' ];
+			return array(
+				'spam'   => false,
+				'reason' => '',
+			);
 		}
 
 		// Always apply rate limiting.
@@ -53,7 +60,10 @@ class AICC_Spam {
 			}
 		}
 
-		return [ 'spam' => false, 'reason' => '' ];
+		return array(
+			'spam'   => false,
+			'reason' => '',
+		);
 	}
 
 	/**
@@ -90,7 +100,7 @@ class AICC_Spam {
 		$email = $user_data['email'] ?? '';
 		$name  = $user_data['name'] ?? '';
 
-		$comment = [
+		$comment = array(
 			'blog'                 => get_option( 'home' ),
 			'blog_lang'            => get_bloginfo( 'language' ),
 			'blog_charset'         => get_bloginfo( 'charset' ),
@@ -101,7 +111,7 @@ class AICC_Spam {
 			'comment_author_email' => $email,
 			'comment_content'      => $message,
 			'comment_date_gmt'     => gmdate( 'Y-m-d H:i:s' ),
-		];
+		);
 
 		/**
 		 * Filters the Akismet comment-check payload before it is sent.
@@ -126,13 +136,16 @@ class AICC_Spam {
 		$is_spam = ( 'true' === trim( $response[1] ) );
 
 		if ( $is_spam ) {
-			return [
+			return array(
 				'spam'   => true,
 				'reason' => __( 'Message flagged as spam by Akismet.', 'ai-connector-chatbot' ),
-			];
+			);
 		}
 
-		return [ 'spam' => false, 'reason' => '' ];
+		return array(
+			'spam'   => false,
+			'reason' => '',
+		);
 	}
 
 	/**
@@ -148,14 +161,17 @@ class AICC_Spam {
 
 		$count = (int) get_transient( $transient_key );
 		if ( $count >= $limit ) {
-			return [
+			return array(
 				'spam'   => true,
 				'reason' => __( 'Rate limit exceeded. Please try again later.', 'ai-connector-chatbot' ),
-			];
+			);
 		}
 
 		set_transient( $transient_key, $count + 1, HOUR_IN_SECONDS );
-		return [ 'spam' => false, 'reason' => '' ];
+		return array(
+			'spam'   => false,
+			'reason' => '',
+		);
 	}
 
 	/**

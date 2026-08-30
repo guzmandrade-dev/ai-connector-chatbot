@@ -15,22 +15,46 @@ class AICC_Chatbot {
 	/** REST API namespace. */
 	const REST_NAMESPACE = 'aicc/v1';
 
-	/** @var AICC_Plugin Plugin instance. */
+	/**
+	 * Plugin instance.
+	 *
+	 * @var AICC_Plugin
+	 */
 	private AICC_Plugin $plugin;
 
-	/** @var AICC_Settings Settings instance. */
+	/**
+	 * Settings instance.
+	 *
+	 * @var AICC_Settings
+	 */
 	private AICC_Settings $settings;
 
-	/** @var AICC_Knowledge_Base Knowledge base instance. */
+	/**
+	 * Knowledge base instance.
+	 *
+	 * @var AICC_Knowledge_Base
+	 */
 	private AICC_Knowledge_Base $knowledge_base;
 
-	/** @var AICC_Spam Spam instance. */
+	/**
+	 * Spam instance.
+	 *
+	 * @var AICC_Spam
+	 */
 	private AICC_Spam $spam;
 
-	/** @var AICC_Captcha Captcha instance. */
+	/**
+	 * Captcha instance.
+	 *
+	 * @var AICC_Captcha
+	 */
 	private AICC_Captcha $captcha;
 
-	/** @var AICC_Lead_Capture Lead capture instance. */
+	/**
+	 * Lead capture instance.
+	 *
+	 * @var AICC_Lead_Capture
+	 */
 	private AICC_Lead_Capture $lead_capture;
 
 	/**
@@ -58,10 +82,10 @@ class AICC_Chatbot {
 		$this->captcha        = $captcha;
 		$this->lead_capture   = $lead_capture;
 
-		add_action( 'init', [ $this, 'register_shortcode' ] );
-		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ] );
-		add_action( 'wp_enqueue_scripts', [ $this, 'register_assets' ] );
-		add_action( 'wp_footer', [ $this, 'maybe_inject_chatbot' ] );
+		add_action( 'init', array( $this, 'register_shortcode' ) );
+		add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ) );
+		add_action( 'wp_footer', array( $this, 'maybe_inject_chatbot' ) );
 	}
 
 	// ── Shortcode ─────────────────────────────────────────────────────
@@ -70,7 +94,7 @@ class AICC_Chatbot {
 	 * Registers the [aicc_chatbot] shortcode.
 	 */
 	public function register_shortcode(): void {
-		add_shortcode( 'aicc_chatbot', [ $this, 'render_shortcode' ] );
+		add_shortcode( 'aicc_chatbot', array( $this, 'render_shortcode' ) );
 	}
 
 	/**
@@ -79,13 +103,17 @@ class AICC_Chatbot {
 	 * @param array<string,mixed> $atts Shortcode attributes.
 	 * @return string HTML markup.
 	 */
-	public function render_shortcode( $atts = [] ): string {
+	public function render_shortcode( $atts = array() ): string {
 		// Force the assets to load on this page.
 		$this->enqueue_frontend_assets();
 
-		$atts = shortcode_atts( [
-			'position' => $this->settings->get( 'position', 'bottom-right' ),
-		], $atts, 'aicc_chatbot' );
+		$atts = shortcode_atts(
+			array(
+				'position' => $this->settings->get( 'position', 'bottom-right' ),
+			),
+			$atts,
+			'aicc_chatbot'
+		);
 
 		return sprintf(
 			'<div class="aicc-chatbot-container" data-aicc-position="%s"></div>',
@@ -110,8 +138,11 @@ class AICC_Chatbot {
 
 		$this->enqueue_frontend_assets();
 
-		$position = esc_attr( $this->settings->get( 'position', 'bottom-right' ) );
-		echo '<div class="aicc-chatbot-container" data-aicc-position="' . $position . '"></div>';
+		$position = sanitize_html_class( (string) $this->settings->get( 'position', 'bottom-right' ) );
+		printf(
+			'<div class="aicc-chatbot-container" data-aicc-position="%s"></div>',
+			esc_attr( $position )
+		);
 	}
 
 	// ── Assets ─────────────────────────────────────────────────────────
@@ -123,14 +154,14 @@ class AICC_Chatbot {
 		wp_register_style(
 			'aicc-chatbot',
 			AICC_PLUGIN_URL . 'assets/css/chatbot.css',
-			[],
+			array(),
 			AICC_VERSION
 		);
 
 		wp_register_script(
 			'aicc-chatbot',
 			AICC_PLUGIN_URL . 'assets/js/chatbot.js',
-			[],
+			array(),
 			AICC_VERSION,
 			true
 		);
@@ -147,7 +178,7 @@ class AICC_Chatbot {
 		$this->captcha->enqueue_scripts();
 
 		$user = wp_get_current_user();
-		$data = [
+		$data = array(
 			'restUrl'        => esc_url_raw( rest_url( self::REST_NAMESPACE . '/chat' ) ),
 			'nonce'          => wp_create_nonce( 'wp_rest' ),
 			'title'          => $this->settings->get( 'title', __( 'Chat with us', 'ai-connector-chatbot' ) ),
@@ -157,19 +188,19 @@ class AICC_Chatbot {
 			'userName'       => $user->exists() ? $user->display_name : '',
 			'captchaEnabled' => $this->captcha->is_enabled(),
 			'captchaSiteKey' => $this->captcha->is_enabled() ? $this->captcha->get_site_key() : '',
-			'strings'        => [
-				'placeholder'    => __( 'Type your message…', 'ai-connector-chatbot' ),
-				'send'           => __( 'Send', 'ai-connector-chatbot' ),
-				'openChat'       => __( 'Open chat', 'ai-connector-chatbot' ),
-				'closeChat'      => __( 'Close chat', 'ai-connector-chatbot' ),
-				'typing'         => __( 'Assistant is typing…', 'ai-connector-chatbot' ),
-				'error'          => __( 'Something went wrong. Please try again.', 'ai-connector-chatbot' ),
-				'spamBlocked'    => __( 'Your message was blocked. Please try again later.', 'ai-connector-chatbot' ),
-				'aiUnavailable'  => __( 'The AI assistant is not configured. Please contact the site administrator.', 'ai-connector-chatbot' ),
+			'strings'        => array(
+				'placeholder'     => __( 'Type your message…', 'ai-connector-chatbot' ),
+				'send'            => __( 'Send', 'ai-connector-chatbot' ),
+				'openChat'        => __( 'Open chat', 'ai-connector-chatbot' ),
+				'closeChat'       => __( 'Close chat', 'ai-connector-chatbot' ),
+				'typing'          => __( 'Assistant is typing…', 'ai-connector-chatbot' ),
+				'error'           => __( 'Something went wrong. Please try again.', 'ai-connector-chatbot' ),
+				'spamBlocked'     => __( 'Your message was blocked. Please try again later.', 'ai-connector-chatbot' ),
+				'aiUnavailable'   => __( 'The AI assistant is not configured. Please contact the site administrator.', 'ai-connector-chatbot' ),
 				'captchaRequired' => __( 'Please complete the captcha challenge first.', 'ai-connector-chatbot' ),
-				'captchaFailed'  => __( 'Captcha verification failed. Please try again.', 'ai-connector-chatbot' ),
-			],
-		];
+				'captchaFailed'   => __( 'Captcha verification failed. Please try again.', 'ai-connector-chatbot' ),
+			),
+		);
 
 		wp_add_inline_script(
 			'aicc-chatbot',
@@ -184,35 +215,43 @@ class AICC_Chatbot {
 	 * Registers the REST routes.
 	 */
 	public function register_rest_routes(): void {
-		register_rest_route( self::REST_NAMESPACE, '/chat', [
-			'methods'             => 'POST',
-			'callback'            => [ $this, 'handle_chat' ],
-			'permission_callback' => [ $this, 'chat_permission' ],
-			'args'                => [
-				'message'      => [
-					'required'          => true,
-					'type'              => 'string',
-					'sanitize_callback' => 'sanitize_textarea_field',
-					'validate_callback' => [ $this, 'validate_message' ],
-				],
-				'history'      => [
-					'required'          => false,
-					'type'              => 'array',
-					'sanitize_callback' => [ $this, 'sanitize_history' ],
-				],
-				'captcha_token' => [
-					'required'          => false,
-					'type'              => 'string',
-					'sanitize_callback' => 'sanitize_text_field',
-				],
-			],
-		] );
+		register_rest_route(
+			self::REST_NAMESPACE,
+			'/chat',
+			array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'handle_chat' ),
+				'permission_callback' => array( $this, 'chat_permission' ),
+				'args'                => array(
+					'message'       => array(
+						'required'          => true,
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_textarea_field',
+						'validate_callback' => array( $this, 'validate_message' ),
+					),
+					'history'       => array(
+						'required'          => false,
+						'type'              => 'array',
+						'sanitize_callback' => array( $this, 'sanitize_history' ),
+					),
+					'captcha_token' => array(
+						'required'          => false,
+						'type'              => 'string',
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+				),
+			)
+		);
 
-		register_rest_route( self::REST_NAMESPACE, '/status', [
-			'methods'             => 'GET',
-			'callback'            => [ $this, 'handle_status' ],
-			'permission_callback' => '__return_true',
-		] );
+		register_rest_route(
+			self::REST_NAMESPACE,
+			'/status',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'handle_status' ),
+				'permission_callback' => '__return_true',
+			)
+		);
 	}
 
 	/**
@@ -251,21 +290,21 @@ class AICC_Chatbot {
 	 */
 	public function sanitize_history( $value ): array {
 		if ( ! is_array( $value ) ) {
-			return [];
+			return array();
 		}
 
-		$clean = [];
+		$clean = array();
 		foreach ( $value as $entry ) {
 			if ( ! is_array( $entry ) || ! isset( $entry['role'], $entry['content'] ) ) {
 				continue;
 			}
-			$role    = in_array( $entry['role'], [ 'user', 'assistant' ], true ) ? $entry['role'] : 'user';
+			$role    = in_array( $entry['role'], array( 'user', 'assistant' ), true ) ? $entry['role'] : 'user';
 			$content = sanitize_textarea_field( (string) $entry['content'] );
 			if ( ! empty( $content ) ) {
-				$clean[] = [
+				$clean[] = array(
 					'role'    => $role,
 					'content' => $content,
-				];
+				);
 			}
 		}
 
@@ -289,7 +328,7 @@ class AICC_Chatbot {
 			return new WP_Error(
 				'aicc_ai_unavailable',
 				__( 'The AI assistant is not configured.', 'ai-connector-chatbot' ),
-				[ 'status' => 503 ]
+				array( 'status' => 503 )
 			);
 		}
 
@@ -300,19 +339,19 @@ class AICC_Chatbot {
 				return new WP_Error(
 					'aicc_captcha_failed',
 					$captcha_result['reason'],
-					[ 'status' => 403 ]
+					array( 'status' => 403 )
 				);
 			}
 		}
 
 		// 3. Collect user data for spam check.
-		$user = wp_get_current_user();
-		$user_data = [
+		$user      = wp_get_current_user();
+		$user_data = array(
 			'ip'         => $_SERVER['REMOTE_ADDR'] ?? '',
 			'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? '',
 			'email'      => $user->exists() ? $user->user_email : '',
 			'name'       => $user->exists() ? $user->display_name : '',
-		];
+		);
 
 		// 4. Spam check.
 		$spam_result = $this->spam->check( $message, $user_data );
@@ -320,7 +359,7 @@ class AICC_Chatbot {
 			return new WP_Error(
 				'aicc_spam_blocked',
 				$spam_result['reason'],
-				[ 'status' => 403 ]
+				array( 'status' => 403 )
 			);
 		}
 
@@ -352,7 +391,7 @@ class AICC_Chatbot {
 			// Apply specific model if configured.
 			$model = (string) $this->settings->get( 'ai_model', '' );
 			if ( ! empty( $model ) && ! empty( $provider ) && 'auto' !== $provider ) {
-				$builder = $builder->using_model_preference( [ $provider, $model ] );
+				$builder = $builder->using_model_preference( array( $provider, $model ) );
 			}
 
 			if ( ! empty( $full_system ) ) {
@@ -360,7 +399,7 @@ class AICC_Chatbot {
 			}
 
 			$temperature = (float) $this->settings->get( 'temperature', 0.3 );
-			$builder      = $builder->using_temperature( $temperature );
+			$builder     = $builder->using_temperature( $temperature );
 
 			$max_tokens = (int) $this->settings->get( 'max_tokens', 1000 );
 			$builder    = $builder->using_max_tokens( $max_tokens );
@@ -410,16 +449,16 @@ class AICC_Chatbot {
 			return new WP_Error(
 				'aicc_ai_error',
 				__( 'Failed to generate a response. Please try again.', 'ai-connector-chatbot' ),
-				[ 'status' => 500 ]
+				array( 'status' => 500 )
 			);
-		}
+		}//end try
 
 		// generate_text() returns string|WP_Error.
 		if ( is_wp_error( $reply ) ) {
 			return new WP_Error(
 				'aicc_ai_error',
-				$reply->get_error_message() ?: __( 'Failed to generate a response. Please try again.', 'ai-connector-chatbot' ),
-				[ 'status' => 500 ]
+				$reply->get_error_message() ? $reply->get_error_message() : __( 'Failed to generate a response. Please try again.', 'ai-connector-chatbot' ),
+				array( 'status' => 500 )
 			);
 		}
 
@@ -433,11 +472,13 @@ class AICC_Chatbot {
 			$reply      = trim( $reply );
 		}
 
-		return rest_ensure_response( [
-			'reply'      => $reply,
-			'success'    => true,
-			'close_chat' => $close_chat,
-		] );
+		return rest_ensure_response(
+			array(
+				'reply'      => $reply,
+				'success'    => true,
+				'close_chat' => $close_chat,
+			)
+		);
 	}
 
 	/**
@@ -512,9 +553,9 @@ class AICC_Chatbot {
 		// of WP_Error. Detect common API error patterns.
 		$final_text = (string) $final_text;
 		if (
-			false !== stripos( $final_text, 'The API only allows' ) ||
-			false !== stripos( $final_text, 'function response' ) ||
-			false !== stripos( $final_text, 'invalid' ) && strlen( $final_text ) < 200 && stripos( $final_text, 'error' )
+			false !== stripos( $final_text, 'The API only allows' )
+			|| false !== stripos( $final_text, 'function response' )
+			|| ( false !== stripos( $final_text, 'invalid' ) && strlen( $final_text ) < 200 && stripos( $final_text, 'error' ) )
 		) {
 			return __( 'I\'ve saved your information. Is there anything else I can help you with?', 'ai-connector-chatbot' );
 		}
@@ -569,7 +610,7 @@ class AICC_Chatbot {
 	 * Constructs Message DTOs from the history entries and passes them
 	 * via with_history(), which accepts variadic Message arguments.
 	 *
-	 * @param WP_AI_Client_Prompt_Builder                   $builder Prompt builder.
+	 * @param WP_AI_Client_Prompt_Builder                  $builder Prompt builder.
 	 * @param array<int,array{role:string,content:string}> $history  Conversation history.
 	 * @return WP_AI_Client_Prompt_Builder Modified builder.
 	 */
@@ -581,7 +622,7 @@ class AICC_Chatbot {
 
 		$message_class = 'WordPress\AiClient\Messages\DTO\Message';
 
-		$messages = [];
+		$messages = array();
 		foreach ( $history as $entry ) {
 			// The SDK uses 'model' for assistant messages.
 			$role = ( 'assistant' === $entry['role'] ) ? 'model' : 'user';
@@ -594,17 +635,22 @@ class AICC_Chatbot {
 			}
 
 			try {
-				$messages[] = $message_class::fromArray( [
-					'role'  => $role,
-					'parts' => [
-						[ 'type' => 'text', 'text' => $entry['content'] ],
-					],
-				] );
+				$messages[] = $message_class::fromArray(
+					array(
+						'role'  => $role,
+						'parts' => array(
+							array(
+								'type' => 'text',
+								'text' => $entry['content'],
+							),
+						),
+					)
+				);
 			} catch ( Throwable $e ) {
 				// Skip malformed history entries.
 				continue;
 			}
-		}
+		}//end foreach
 
 		if ( ! empty( $messages ) ) {
 			$builder = $builder->with_history( ...$messages );
@@ -620,11 +666,13 @@ class AICC_Chatbot {
 	 * @return WP_REST_Response
 	 */
 	public function handle_status(): WP_REST_Response {
-		return rest_ensure_response( [
-			'ai_available'   => $this->plugin->is_ai_available(),
-			'akismet_active' => $this->spam->is_akismet_active(),
-			'captcha_active' => $this->captcha->is_available(),
-			'enabled'        => (bool) $this->settings->get( 'enabled', false ),
-		] );
+		return rest_ensure_response(
+			array(
+				'ai_available'   => $this->plugin->is_ai_available(),
+				'akismet_active' => $this->spam->is_akismet_active(),
+				'captcha_active' => $this->captcha->is_available(),
+				'enabled'        => (bool) $this->settings->get( 'enabled', false ),
+			)
+		);
 	}
 }

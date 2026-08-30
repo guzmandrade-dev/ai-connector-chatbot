@@ -5,6 +5,7 @@
  * Creates a floating chat button and panel that communicates with the
  * WordPress REST API. Optionally integrates with Cloudflare Turnstile.
  */
+
 ( function () {
 	'use strict';
 
@@ -12,18 +13,18 @@
 		return;
 	}
 
-	var data = window.AICC_DATA;
-	var strings = data.strings || {};
+	var data      = window.AICC_DATA;
+	var strings   = data.strings || {};
 	var container = document.querySelector( '.aicc-chatbot-container' );
 
 	if ( ! container ) {
 		return;
 	}
 
-	var position = container.getAttribute( 'data-aicc-position' ) || data.position || 'bottom-right';
-	var captchaToken = null;
+	var position        = container.getAttribute( 'data-aicc-position' ) || data.position || 'bottom-right';
+	var captchaToken    = null;
 	var captchaWidgetId = null;
-	var captchaReady = false;
+	var captchaReady    = false;
 
 	var state = {
 		isOpen: false,
@@ -34,7 +35,7 @@
 	// ── DOM construction ────────────────────────────────────────────
 
 	function createButton() {
-		var btn = document.createElement( 'button' );
+		var btn       = document.createElement( 'button' );
 		btn.className = 'aicc-chat-toggle';
 		btn.setAttribute( 'type', 'button' );
 		btn.setAttribute( 'aria-label', strings.openChat || 'Open chat' );
@@ -47,7 +48,7 @@
 	}
 
 	function createPanel() {
-		var panel = document.createElement( 'div' );
+		var panel       = document.createElement( 'div' );
 		panel.className = 'aicc-chat-panel';
 		panel.setAttribute( 'role', 'dialog' );
 		panel.setAttribute( 'aria-label', data.title || 'Chat' );
@@ -55,26 +56,26 @@
 		panel.setAttribute( 'hidden', '' );
 
 		// Header.
-		var header = document.createElement( 'div' );
+		var header       = document.createElement( 'div' );
 		header.className = 'aicc-chat-header';
 
-		var headerText = document.createElement( 'div' );
+		var headerText       = document.createElement( 'div' );
 		headerText.className = 'aicc-chat-header-text';
 
-		var titleEl = document.createElement( 'span' );
-		titleEl.className = 'aicc-chat-title';
+		var titleEl         = document.createElement( 'span' );
+		titleEl.className   = 'aicc-chat-title';
 		titleEl.textContent = data.title || 'Chat';
 		headerText.appendChild( titleEl );
 
 		if ( data.subtitle ) {
-			var subtitleEl = document.createElement( 'span' );
-			subtitleEl.className = 'aicc-chat-subtitle';
+			var subtitleEl         = document.createElement( 'span' );
+			subtitleEl.className   = 'aicc-chat-subtitle';
 			subtitleEl.textContent = data.subtitle;
 			headerText.appendChild( subtitleEl );
 		}
 		header.appendChild( headerText );
 
-		var closeBtn = document.createElement( 'button' );
+		var closeBtn       = document.createElement( 'button' );
 		closeBtn.className = 'aicc-chat-close';
 		closeBtn.setAttribute( 'type', 'button' );
 		closeBtn.setAttribute( 'aria-label', strings.closeChat || 'Close chat' );
@@ -85,7 +86,7 @@
 		header.appendChild( closeBtn );
 
 		// Messages area.
-		var messagesEl = document.createElement( 'div' );
+		var messagesEl       = document.createElement( 'div' );
 		messagesEl.className = 'aicc-chat-messages';
 		messagesEl.setAttribute( 'role', 'log' );
 		messagesEl.setAttribute( 'aria-live', 'polite' );
@@ -94,22 +95,22 @@
 		// Captcha area (between messages and input, shown when enabled).
 		var captchaEl = null;
 		if ( data.captchaEnabled && data.captchaSiteKey ) {
-			captchaEl = document.createElement( 'div' );
+			captchaEl           = document.createElement( 'div' );
 			captchaEl.className = 'aicc-chat-captcha';
 		}
 
 		// Input area.
-		var inputWrap = document.createElement( 'div' );
+		var inputWrap       = document.createElement( 'div' );
 		inputWrap.className = 'aicc-chat-input-area';
 
-		var input = document.createElement( 'textarea' );
+		var input       = document.createElement( 'textarea' );
 		input.className = 'aicc-chat-input';
 		input.setAttribute( 'type', 'text' );
 		input.setAttribute( 'placeholder', strings.placeholder || 'Type your message…' );
 		input.setAttribute( 'rows', '1' );
 		input.setAttribute( 'aria-label', strings.placeholder || 'Type your message…' );
 
-		var sendBtn = document.createElement( 'button' );
+		var sendBtn       = document.createElement( 'button' );
 		sendBtn.className = 'aicc-chat-send';
 		sendBtn.setAttribute( 'type', 'button' );
 		sendBtn.setAttribute( 'aria-label', strings.send || 'Send' );
@@ -147,21 +148,24 @@
 
 		// If Turnstile is already loaded, render the widget.
 		if ( typeof window.turnstile !== 'undefined' && ! captchaWidgetId ) {
-			captchaWidgetId = window.turnstile.render( elements.captchaEl, {
-				sitekey: data.captchaSiteKey,
-				callback: function ( token ) {
-					captchaToken = token;
-					captchaReady = true;
-				},
-				'expired-callback': function () {
-					captchaToken = null;
-					captchaReady = false;
-				},
-				'error-callback': function () {
-					captchaToken = null;
-					captchaReady = false;
-				},
-			} );
+			captchaWidgetId = window.turnstile.render(
+				elements.captchaEl,
+				{
+					sitekey: data.captchaSiteKey,
+					callback: function ( token ) {
+						captchaToken = token;
+						captchaReady = true;
+					},
+					'expired-callback': function () {
+						captchaToken = null;
+						captchaReady = false;
+					},
+					'error-callback': function () {
+						captchaToken = null;
+						captchaReady = false;
+					},
+				}
+			);
 		}
 	}
 
@@ -176,18 +180,18 @@
 	// ── Message rendering ──────────────────────────────────────────
 
 	function addMessage( role, content, storeInState ) {
-		var msg = document.createElement( 'div' );
+		var msg       = document.createElement( 'div' );
 		msg.className = 'aicc-message aicc-message--' + role;
 
-		var avatar = document.createElement( 'span' );
+		var avatar       = document.createElement( 'span' );
 		avatar.className = 'aicc-message-avatar';
 		avatar.setAttribute( 'aria-hidden', 'true' );
 		avatar.textContent = role === 'user' ? 'U' : 'AI';
 
-		var bubble = document.createElement( 'div' );
+		var bubble       = document.createElement( 'div' );
 		bubble.className = 'aicc-message-bubble';
 
-		var text = document.createElement( 'div' );
+		var text       = document.createElement( 'div' );
 		text.className = 'aicc-message-text';
 		text.innerHTML = formatMessage( content );
 
@@ -210,24 +214,24 @@
 		var div = document.createElement( 'div' );
 		// Basic XSS protection: escape HTML, then restore formatting.
 		div.textContent = text;
-		var escaped = div.innerHTML;
-		escaped = escaped.replace( /\*\*(.+?)\*\*/g, '<strong>$1</strong>' );
-		escaped = escaped.replace( /\[(.+?)\]\((https?:\/\/.+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>' );
-		escaped = escaped.replace( /\n/g, '<br>' );
+		var escaped     = div.innerHTML;
+		escaped         = escaped.replace( /\*\*(.+?)\*\*/g, '<strong>$1</strong>' );
+		escaped         = escaped.replace( /\[(.+?)\]\((https?:\/\/.+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>' );
+		escaped         = escaped.replace( /\n/g, '<br>' );
 		return escaped;
 	}
 
 	function showTyping() {
-		var msg = document.createElement( 'div' );
+		var msg       = document.createElement( 'div' );
 		msg.className = 'aicc-message aicc-message--assistant aicc-typing-indicator';
 		msg.setAttribute( 'aria-label', strings.typing || 'Assistant is typing…' );
 
-		var avatar = document.createElement( 'span' );
+		var avatar       = document.createElement( 'span' );
 		avatar.className = 'aicc-message-avatar';
 		avatar.setAttribute( 'aria-hidden', 'true' );
 		avatar.textContent = 'AI';
 
-		var dots = document.createElement( 'div' );
+		var dots       = document.createElement( 'div' );
 		dots.className = 'aicc-message-bubble';
 		dots.innerHTML = '<span class="aicc-typing-dot"></span><span class="aicc-typing-dot"></span><span class="aicc-typing-dot"></span>';
 
@@ -259,17 +263,19 @@
 
 		// Capture history before adding the current user message, so the
 		// current message isn't duplicated in both `message` and `history`.
-		var history = state.messages.slice( -10 ).filter( function ( m ) {
-			return m.role === 'user' || m.role === 'assistant';
-		} );
+		var history = state.messages.slice( -10 ).filter(
+			function ( m ) {
+				return m.role === 'user' || m.role === 'assistant';
+			}
+		);
 
 		addMessage( 'user', text );
 		elements.input.value = '';
 		autoResize();
 
-		state.isTyping = true;
+		state.isTyping            = true;
 		elements.sendBtn.disabled = true;
-		var typingEl = showTyping();
+		var typingEl              = showTyping();
 
 		var payload = {
 			message: text,
@@ -288,60 +294,76 @@
 			headers[ 'X-WP-Nonce' ] = data.nonce;
 		}
 
-		fetch( data.restUrl, {
-			method: 'POST',
-			headers: headers,
-			body: JSON.stringify( payload ),
-			credentials: 'same-origin',
-		} )
-			.then( function ( response ) {
-				return response.json().then( function ( json ) {
-					return { ok: response.ok, json: json };
-				} );
-			} )
-			.then( function ( result ) {
-				removeTyping( typingEl );
-
-				if ( result.ok && result.json.reply ) {
-					addMessage( 'assistant', result.json.reply );
-
-					// If the AI signaled conversation end, close after a delay.
-					if ( result.json.close_chat ) {
-						setTimeout( function () {
-							closeChat();
-						}, 3500 );
-					}
-				} else {
-					var errorMsg = ( result.json && result.json.message ) ? result.json.message : ( strings.error || 'Something went wrong.' );
-					if ( result.json && result.json.code === 'aicc_spam_blocked' ) {
-						errorMsg = strings.spamBlocked || errorMsg;
-					}
-					if ( result.json && result.json.code === 'aicc_ai_unavailable' ) {
-						errorMsg = strings.aiUnavailable || errorMsg;
-					}
-					if ( result.json && result.json.code === 'aicc_captcha_failed' ) {
-						errorMsg = strings.captchaFailed || errorMsg;
-					}
-					addMessage( 'assistant', errorMsg );
+		fetch(
+			data.restUrl,
+			{
+				method: 'POST',
+				headers: headers,
+				body: JSON.stringify( payload ),
+				credentials: 'same-origin',
+			}
+		)
+			.then(
+				function ( response ) {
+					return response.json().then(
+						function ( json ) {
+							return { ok: response.ok, json: json };
+						}
+					);
 				}
+			)
+			.then(
+				function ( result ) {
+					removeTyping( typingEl );
 
-				// Reset captcha after each message.
-				if ( data.captchaEnabled ) {
-					resetCaptcha();
+					if ( result.ok && result.json.reply ) {
+							addMessage( 'assistant', result.json.reply );
+
+							// If the AI signaled conversation end, close after a delay.
+						if ( result.json.close_chat ) {
+							setTimeout(
+								function () {
+									closeChat();
+								},
+								3500
+							);
+						}
+					} else {
+						var errorMsg = ( result.json && result.json.message ) ? result.json.message : ( strings.error || 'Something went wrong.' );
+						if ( result.json && result.json.code === 'aicc_spam_blocked' ) {
+							errorMsg = strings.spamBlocked || errorMsg;
+						}
+						if ( result.json && result.json.code === 'aicc_ai_unavailable' ) {
+							errorMsg = strings.aiUnavailable || errorMsg;
+						}
+						if ( result.json && result.json.code === 'aicc_captcha_failed' ) {
+							errorMsg = strings.captchaFailed || errorMsg;
+						}
+						addMessage( 'assistant', errorMsg );
+					}//end if
+
+					// Reset captcha after each message.
+					if ( data.captchaEnabled ) {
+						resetCaptcha();
+					}
 				}
-			} )
-			.catch( function () {
-				removeTyping( typingEl );
-				addMessage( 'assistant', strings.error || 'Something went wrong.' );
-				if ( data.captchaEnabled ) {
-					resetCaptcha();
+			)
+			.catch(
+				function () {
+					removeTyping( typingEl );
+					addMessage( 'assistant', strings.error || 'Something went wrong.' );
+					if ( data.captchaEnabled ) {
+							resetCaptcha();
+					}
 				}
-			} )
-			.finally( function () {
-				state.isTyping = false;
-				elements.sendBtn.disabled = false;
-				elements.input.focus();
-			} );
+			)
+			.finally(
+				function () {
+					state.isTyping            = false;
+					elements.sendBtn.disabled = false;
+					elements.input.focus();
+				}
+			);
 	}
 
 	// ── UI helpers ─────────────────────────────────────────────────
@@ -366,21 +388,30 @@
 				renderCaptcha();
 			} else {
 				// Wait for the Turnstile API to load.
-				var checkInterval = setInterval( function () {
-					if ( typeof window.turnstile !== 'undefined' ) {
-						renderCaptcha();
+				var checkInterval = setInterval(
+					function () {
+						if ( typeof window.turnstile !== 'undefined' ) {
+								renderCaptcha();
+								clearInterval( checkInterval );
+						}
+					},
+					200
+				);
+				setTimeout(
+					function () {
 						clearInterval( checkInterval );
-					}
-				}, 200 );
-				setTimeout( function () {
-					clearInterval( checkInterval );
-				}, 10000 );
+					},
+					10000
+				);
 			}
-		}
+		}//end if
 
-		setTimeout( function () {
-			elements.input.focus();
-		}, 100 );
+		setTimeout(
+			function () {
+				elements.input.focus();
+			},
+			100
+		);
 	}
 
 	function closeChat() {
@@ -410,36 +441,45 @@
 	container.classList.add( 'aicc-position-' + position );
 
 	var toggleBtn = createButton();
-	var elements = createPanel();
+	var elements  = createPanel();
 
 	container.appendChild( toggleBtn );
 	container.appendChild( elements.panel );
 
 	// Event listeners.
-	toggleBtn.addEventListener( 'click', function () {
-		if ( state.isOpen ) {
-			closeChat();
-		} else {
-			openChat();
+	toggleBtn.addEventListener(
+		'click',
+		function () {
+			if ( state.isOpen ) {
+				closeChat();
+			} else {
+				openChat();
+			}
 		}
-	} );
+	);
 
 	elements.closeBtn.addEventListener( 'click', closeChat );
 
-	elements.sendBtn.addEventListener( 'click', function () {
-		var text = elements.input.value.trim();
-		if ( text ) {
-			sendMessage( text );
+	elements.sendBtn.addEventListener(
+		'click',
+		function () {
+			var text = elements.input.value.trim();
+			if ( text ) {
+				sendMessage( text );
+			}
 		}
-	} );
+	);
 
 	elements.input.addEventListener( 'input', autoResize );
 	elements.input.addEventListener( 'keydown', handleKeyDown );
 
 	// Close on Escape.
-	document.addEventListener( 'keydown', function ( e ) {
-		if ( e.key === 'Escape' && state.isOpen ) {
-			closeChat();
+	document.addEventListener(
+		'keydown',
+		function ( e ) {
+			if ( e.key === 'Escape' && state.isOpen ) {
+				closeChat();
+			}
 		}
-	} );
+	);
 } )();

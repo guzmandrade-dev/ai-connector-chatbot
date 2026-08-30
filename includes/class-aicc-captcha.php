@@ -13,7 +13,11 @@ defined( 'ABSPATH' ) || exit;
  */
 class AICC_Captcha {
 
-	/** @var AICC_Settings Settings instance. */
+	/**
+	 * Settings instance.
+	 *
+	 * @var AICC_Settings
+	 */
 	private AICC_Settings $settings;
 
 	/**
@@ -55,26 +59,32 @@ class AICC_Captcha {
 	 */
 	public function verify( string $token ): array {
 		if ( ! $this->is_enabled() ) {
-			return [ 'valid' => true, 'reason' => '' ];
+			return array(
+				'valid'  => true,
+				'reason' => '',
+			);
 		}
 
 		if ( empty( $token ) ) {
-			return [
+			return array(
 				'valid'  => false,
 				'reason' => __( 'Captcha verification required. Please complete the challenge.', 'ai-connector-chatbot' ),
-			];
+			);
 		}
 
 		$result = cfturnstile_check( $token );
 
 		if ( is_array( $result ) && ! empty( $result['success'] ) ) {
-			return [ 'valid' => true, 'reason' => '' ];
+			return array(
+				'valid'  => true,
+				'reason' => '',
+			);
 		}
 
-		return [
+		return array(
 			'valid'  => false,
 			'reason' => __( 'Captcha verification failed. Please try again.', 'ai-connector-chatbot' ),
-		];
+		);
 	}
 
 	/**
@@ -96,7 +106,7 @@ class AICC_Captcha {
 
 		// The Turnstile plugin provides this action to load its scripts.
 		if ( function_exists( 'cfturnstile_register_api' ) ) {
-			cfturnstile_register_api( [ 'in_footer' => true ] );
+			cfturnstile_register_api( array( 'in_footer' => true ) );
 			wp_enqueue_script( 'cfturnstile' );
 		}
 	}

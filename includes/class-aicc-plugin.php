@@ -12,25 +12,53 @@ defined( 'ABSPATH' ) || exit;
  */
 final class AICC_Plugin {
 
-	/** @var AICC_Plugin|null Singleton instance. */
+	/**
+	 * Singleton instance.
+	 *
+	 * @var ?AICC_Plugin
+	 */
 	private static ?AICC_Plugin $instance = null;
 
-	/** @var AICC_Settings|null Settings module. */
+	/**
+	 * Settings module.
+	 *
+	 * @var ?AICC_Settings
+	 */
 	private ?AICC_Settings $settings = null;
 
-	/** @var AICC_Knowledge_Base|null Knowledge Base module. */
+	/**
+	 * Knowledge Base module.
+	 *
+	 * @var ?AICC_Knowledge_Base
+	 */
 	private ?AICC_Knowledge_Base $knowledge_base = null;
 
-	/** @var AICC_Spam|null Spam module. */
+	/**
+	 * Spam module.
+	 *
+	 * @var ?AICC_Spam
+	 */
 	private ?AICC_Spam $spam = null;
 
-	/** @var AICC_Captcha|null Captcha module. */
+	/**
+	 * Captcha module.
+	 *
+	 * @var ?AICC_Captcha
+	 */
 	private ?AICC_Captcha $captcha = null;
 
-	/** @var AICC_Lead_Capture|null Lead capture module. */
+	/**
+	 * Lead capture module.
+	 *
+	 * @var ?AICC_Lead_Capture
+	 */
 	private ?AICC_Lead_Capture $lead_capture = null;
 
-	/** @var AICC_Chatbot|null Chatbot module. */
+	/**
+	 * Chatbot module.
+	 *
+	 * @var ?AICC_Chatbot
+	 */
 	private ?AICC_Chatbot $chatbot = null;
 
 	/**
@@ -95,7 +123,7 @@ final class AICC_Plugin {
 	 * surfaces an admin notice when something is missing.
 	 */
 	private function check_dependencies(): void {
-		add_action( 'admin_notices', [ $this, 'render_dependency_notices' ] );
+		add_action( 'admin_notices', array( $this, 'render_dependency_notices' ) );
 	}
 
 	/**
@@ -111,10 +139,10 @@ final class AICC_Plugin {
 						__( 'AI Connector Chatbot needs the WordPress AI building blocks to function. Please install and activate the <a href="%s">AI plugin</a> or upgrade to WordPress 7.0+. Then configure an AI provider under <strong>Settings &rsaquo; Connectors</strong>.', 'ai-connector-chatbot' ),
 						'https://wordpress.org/plugins/ai/'
 					),
-					[
-						'a'      => [ 'href' => [] ],
-						'strong' => [],
-					]
+					array(
+						'a'      => array( 'href' => array() ),
+						'strong' => array(),
+					)
 				)
 			);
 		}
@@ -128,7 +156,7 @@ final class AICC_Plugin {
 						__( 'AI Connector Chatbot recommends <a href="%s">Akismet</a> for spam protection. Install and activate it to enable spam filtering on chat messages. Rate-limiting fallback is active in the meantime.', 'ai-connector-chatbot' ),
 						'https://wordpress.org/plugins/akismet/'
 					),
-					[ 'a' => [ 'href' => [] ] ]
+					array( 'a' => array( 'href' => array() ) )
 				)
 			);
 		}
@@ -142,7 +170,7 @@ final class AICC_Plugin {
 						__( 'AI Connector Chatbot is configured to use captcha but the <a href="%s">Simple CAPTCHA with Cloudflare Turnstile</a> plugin is not active. Install and configure it, or disable captcha in the chatbot settings.', 'ai-connector-chatbot' ),
 						'https://wordpress.org/plugins/simple-cloudflare-turnstile/'
 					),
-					[ 'a' => [ 'href' => [] ] ]
+					array( 'a' => array( 'href' => array() ) )
 				)
 			);
 		}
@@ -193,7 +221,6 @@ final class AICC_Plugin {
 	 */
 	public function captcha(): AICC_Captcha {
 		return $this->captcha;
-
 	}
 
 	/**

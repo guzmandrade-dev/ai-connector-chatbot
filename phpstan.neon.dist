@@ -1,0 +1,10 @@
+includes:
+  - vendor/szepeviktor/phpstan-wordpress/extension.neon
+parameters:
+  level: 9
+  phpVersion: 80000
+  paths:
+    - ai-connector-chatbot.php
+    - uninstall.php
+  scanDirectories:
+    - includes

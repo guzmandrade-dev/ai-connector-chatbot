@@ -24,7 +24,13 @@ define( 'AICC_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 require_once AICC_PLUGIN_DIR . 'includes/class-aicc-plugin.php';
 
-register_activation_hook( __FILE__, [ 'AICC_Plugin', 'activate' ] );
-register_deactivation_hook( __FILE__, [ 'AICC_Plugin', 'deactivate' ] );
+register_activation_hook( __FILE__, array( 'AICC_Plugin', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'AICC_Plugin', 'deactivate' ) );
 
-add_action( 'plugins_loaded', [ 'AICC_Plugin', 'get_instance' ] );
+add_action(
+	'plugins_loaded',
+	static function (): void {
+
+		AICC_Plugin::get_instance();
+	}
+);

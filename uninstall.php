@@ -26,13 +26,15 @@ $wpdb->query(
 );
 
 // Delete all knowledge base articles.
-$kb_posts = get_posts( [
-	'post_type'      => 'aicc_article',
-	'post_status'    => 'any',
-	'posts_per_page' => -1,
-	'fields'         => 'ids',
-] );
+$aicc_kb_posts = get_posts(
+	array(
+		'post_type'      => 'aicc_article',
+		'post_status'    => 'any',
+		'posts_per_page' => -1,
+		'fields'         => 'ids',
+	)
+);
 
-foreach ( $kb_posts as $post_id ) {
-	wp_delete_post( $post_id, true );
+foreach ( $aicc_kb_posts as $aicc_post_id ) {
+	wp_delete_post( $aicc_post_id, true );
 }

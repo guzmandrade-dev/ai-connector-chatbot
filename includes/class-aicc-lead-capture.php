@@ -18,7 +18,11 @@ defined( 'ABSPATH' ) || exit;
  */
 class AICC_Lead_Capture {
 
-	/** @var AICC_Settings Settings instance. */
+	/**
+	 * Settings instance.
+	 *
+	 * @var AICC_Settings
+	 */
 	private AICC_Settings $settings;
 
 	/**
@@ -66,29 +70,29 @@ class AICC_Lead_Capture {
 		return new $fn_class(
 			'save_lead',
 			__( 'Save a lead captured during the chat conversation. Call this function when a user provides their contact information (name, email, phone) and expresses interest in being contacted or learning more. Only call this when the user has explicitly shared their details.', 'ai-connector-chatbot' ),
-			[
+			array(
 				'type'       => 'object',
-				'properties' => [
-					'name'  => [
+				'properties' => array(
+					'name'  => array(
 						'type'        => 'string',
 						'description' => 'The contact\'s full name.',
-					],
-					'email' => [
+					),
+					'email' => array(
 						'type'        => 'string',
 						'description' => 'The contact\'s email address.',
 						'format'      => 'email',
-					],
-					'phone' => [
+					),
+					'phone' => array(
 						'type'        => 'string',
 						'description' => 'The contact\'s phone number, if provided.',
-					],
-					'notes' => [
+					),
+					'notes' => array(
 						'type'        => 'string',
 						'description' => 'A summary of what the user is interested in or any additional context from the conversation.',
-					],
-				],
-				'required'   => [ 'name', 'email' ],
-			]
+					),
+				),
+				'required'   => array( 'name', 'email' ),
+			)
 		);
 	}
 
@@ -106,7 +110,7 @@ class AICC_Lead_Capture {
 		return "\n\n## Lead Capture\n\n" .
 			__( 'You have the ability to save leads using the save_lead function. When a user shows interest in your services, products, or being contacted, naturally guide the conversation toward collecting their contact information. Ask for their name and email address conversationally — do not use form-like language. For example, instead of "Please provide your name and email," say something like "I\'d be happy to have someone follow up with you about this. Could you share your name and the best email to reach you at?" Only call the save_lead function after the user has provided at least their name and email. Never call save_lead more than once per conversation — once a lead is saved, do not save it again even if the user continues chatting. Never ask for or collect sensitive data like passwords, credit card numbers, or social security numbers. After saving a lead, let the user know their information has been received and someone will be in touch.', 'ai-connector-chatbot' ) .
 			"\n\n" .
-			__( '## Conversation End Detection' . "\n" . 'When it is clear the user has no further questions (e.g. they say "that is all", "no more questions", "thanks", "goodbye", or similar), wrap up the conversation politely and append the marker [[CHAT_END]] at the very end of your response. This signals the system to close the chat panel. Only use this marker when you are confident the conversation has concluded — never use it if the user might still have follow-up questions.', 'ai-connector-chatbot' );
+			__( "## Conversation End Detection\nWhen it is clear the user has no further questions (e.g. they say \"that is all\", \"no more questions\", \"thanks\", \"goodbye\", or similar), wrap up the conversation politely and append the marker [[CHAT_END]] at the very end of your response. This signals the system to close the chat panel. Only use this marker when you are confident the conversation has concluded — never use it if the user might still have follow-up questions.", 'ai-connector-chatbot' );
 	}
 
 	/**
@@ -120,7 +124,7 @@ class AICC_Lead_Capture {
 	 * @return array{success: bool, message: string}
 	 */
 	public function save_lead( string $name, string $email, string $phone = '', string $notes = '' ): array {
-		$lead_data = [
+		$lead_data = array(
 			'name'      => $name,
 			'email'     => $email,
 			'phone'     => $phone,
@@ -128,9 +132,9 @@ class AICC_Lead_Capture {
 			'timestamp' => gmdate( 'Y-m-d H:i:s' ),
 			'source'    => get_bloginfo( 'name' ) . ' — Chatbot',
 			'url'       => home_url(),
-		];
+		);
 
-		$results = [];
+		$results = array();
 
 		// Deliver via email.
 		$email_to = (string) $this->settings->get( 'lead_email', '' );
@@ -156,19 +160,19 @@ class AICC_Lead_Capture {
 		 */
 		do_action( 'aicc_lead_captured', $lead_data, $all_success );
 
-		return [
+		return array(
 			'success' => $all_success,
 			'message' => $all_success
 				? __( 'Lead saved successfully.', 'ai-connector-chatbot' )
 				: __( 'Lead saved with some delivery errors.', 'ai-connector-chatbot' ),
-		];
+		);
 	}
 
 	/**
 	 * Sends lead data via email.
 	 *
-	 * @param string               $to        Email recipient.
-	 * @param array<string,mixed>  $lead_data Lead data.
+	 * @param string              $to        Email recipient.
+	 * @param array<string,mixed> $lead_data Lead data.
 	 * @return bool
 	 */
 	private function send_email( string $to, array $lead_data ): bool {
@@ -193,7 +197,7 @@ class AICC_Lead_Capture {
 		$body .= "\n" . __( 'Captured: ', 'ai-connector-chatbot' ) . $lead_data['timestamp'] . "\n";
 		$body .= __( 'Source: ', 'ai-connector-chatbot' ) . $lead_data['source'] . "\n";
 
-		$headers = [ 'Content-Type: text/plain; charset=UTF-8' ];
+		$headers = array( 'Content-Type: text/plain; charset=UTF-8' );
 
 		return wp_mail( $to, $subject, $body, $headers );
 	}
@@ -201,18 +205,21 @@ class AICC_Lead_Capture {
 	/**
 	 * Sends lead data to a webhook URL via HTTP POST.
 	 *
-	 * @param string               $url       Webhook URL.
-	 * @param array<string,mixed>  $lead_data Lead data.
+	 * @param string              $url       Webhook URL.
+	 * @param array<string,mixed> $lead_data Lead data.
 	 * @return bool
 	 */
 	private function send_webhook( string $url, array $lead_data ): bool {
-		$response = wp_remote_post( $url, [
-			'headers' => [
-				'Content-Type' => 'application/json',
-			],
-			'body'    => wp_json_encode( $lead_data ),
-			'timeout' => 15,
-		] );
+		$response = wp_remote_post(
+			$url,
+			array(
+				'headers' => array(
+					'Content-Type' => 'application/json',
+				),
+				'body'    => wp_json_encode( $lead_data ),
+				'timeout' => 15,
+			)
+		);
 
 		return ! is_wp_error( $response );
 	}
@@ -240,7 +247,7 @@ class AICC_Lead_Capture {
 		}
 
 		$args = $call->getArgs();
-		$args = is_array( $args ) ? $args : [];
+		$args = is_array( $args ) ? $args : array();
 
 		$result = $this->save_lead(
 			sanitize_text_field( $args['name'] ?? '' ),
