@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-30T03:25:49+00:00\n"
+"POT-Creation-Date: 2026-08-30T03:29:10+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 3.0.0-alpha-6a3afd3\n"
 "X-Domain: ai-connector-chatbot\n"
@@ -21,18 +21,23 @@ msgstr ""
 msgid "AI Connector Chatbot"
 msgstr ""
 
-#. Description of the plugin
+#. Plugin URI of the plugin
 #: ai-connector-chatbot.php:4
+msgid "https://github.com/guzmandrade-dev/ai-connector-chatbot"
+msgstr ""
+
+#. Description of the plugin
+#: ai-connector-chatbot.php:5
 msgid "AI-powered frontend chatbot with a knowledge base, Akismet spam protection, and Cloudflare Turnstile captcha. Leverages the WordPress 7.0 Connectors API and the PHP AI Client SDK — no custom AI provider code required."
 msgstr ""
 
 #. Author of the plugin
-#: ai-connector-chatbot.php:6
+#: ai-connector-chatbot.php:7
 msgid "Mauricio Andrade"
 msgstr ""
 
 #. Author URI of the plugin
-#: ai-connector-chatbot.php:7
+#: ai-connector-chatbot.php:8
 msgid "https://profiles.wordpress.org/h4l9k/"
 msgstr ""
 
