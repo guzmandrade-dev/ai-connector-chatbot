@@ -2,7 +2,7 @@
 /**
  * Settings module — manages plugin options and the admin settings page.
  *
- * @package AI_Connector_Chatbot
+ * @package Just_Another_Generic_Chatbot
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -10,10 +10,10 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Handles all plugin settings, their registration, and the admin UI.
  */
-class AICC_Settings {
+class JAGC_Settings {
 
 	/** Option key used in the options table. */
-	const OPTION_KEY = 'aicc_settings';
+	const OPTION_KEY = 'jagc_settings';
 
 	/**
 	 * Cached settings.
@@ -38,13 +38,13 @@ class AICC_Settings {
 	public static function get_defaults(): array {
 		return array(
 			'enabled'              => false,
-			'title'                => __( 'Chat with us', 'ai-connector-chatbot' ),
-			'subtitle'             => __( 'We typically reply in a moment', 'ai-connector-chatbot' ),
+			'title'                => __( 'Chat with us', 'just-another-generic-chatbot' ),
+			'subtitle'             => __( 'We typically reply in a moment', 'just-another-generic-chatbot' ),
 			'position'             => 'bottom-right',
-			'welcome_message'      => __( 'Hello! How can I help you today?', 'ai-connector-chatbot' ),
-			'system_prompt'        => __( 'You are a helpful assistant for this website. Answer questions accurately and concisely. If you do not know the answer, say so. Use only the provided knowledge base context to answer questions about this site.', 'ai-connector-chatbot' ),
+			'welcome_message'      => __( 'Hello! How can I help you today?', 'just-another-generic-chatbot' ),
+			'system_prompt'        => __( 'You are a helpful assistant for this website. Answer questions accurately and concisely. If you do not know the answer, say so. Use only the provided knowledge base context to answer questions about this site.', 'just-another-generic-chatbot' ),
 			'max_context_length'   => 4000,
-			'kb_post_types'        => array( 'aicc_article', 'post', 'page' ),
+			'kb_post_types'        => array( 'jagc_article', 'post', 'page' ),
 			'spam_protection'      => true,
 			'rate_limit'           => 10,
 			'max_tokens'           => 1000,
@@ -99,10 +99,10 @@ class AICC_Settings {
 	 */
 	public function add_settings_page(): void {
 		add_options_page(
-			__( 'AI Connector Chatbot', 'ai-connector-chatbot' ),
-			__( 'AI Connector Chatbot', 'ai-connector-chatbot' ),
+			__( 'Just Another Generic Chatbot', 'just-another-generic-chatbot' ),
+			__( 'Just Another Generic Chatbot', 'just-another-generic-chatbot' ),
 			'manage_options',
-			'ai-connector-chatbot',
+			'just-another-generic-chatbot',
 			array( $this, 'render_settings_page' )
 		);
 	}
@@ -112,7 +112,7 @@ class AICC_Settings {
 	 */
 	public function register_settings(): void {
 		register_setting(
-			'aicc_settings_group',
+			'jagc_settings_group',
 			self::OPTION_KEY,
 			array(
 				'sanitize_callback' => array( $this, 'sanitize_settings' ),
@@ -121,128 +121,128 @@ class AICC_Settings {
 
 		// General section.
 		add_settings_section(
-			'aicc_general',
-			__( 'Chatbot', 'ai-connector-chatbot' ),
+			'jagc_general',
+			__( 'Chatbot', 'just-another-generic-chatbot' ),
 			array( $this, 'render_general_intro' ),
-			'ai-connector-chatbot'
+			'just-another-generic-chatbot'
 		);
 
 		add_settings_field(
 			'enabled',
-			__( 'Enable chatbot', 'ai-connector-chatbot' ),
+			__( 'Enable chatbot', 'just-another-generic-chatbot' ),
 			array( $this, 'render_checkbox' ),
-			'ai-connector-chatbot',
-			'aicc_general',
+			'just-another-generic-chatbot',
+			'jagc_general',
 			array(
-				'label_for' => 'aicc_enabled',
+				'label_for' => 'jagc_enabled',
 				'key'       => 'enabled',
 			)
 		);
 
 		add_settings_field(
 			'title',
-			__( 'Title', 'ai-connector-chatbot' ),
+			__( 'Title', 'just-another-generic-chatbot' ),
 			array( $this, 'render_text_input' ),
-			'ai-connector-chatbot',
-			'aicc_general',
+			'just-another-generic-chatbot',
+			'jagc_general',
 			array(
-				'label_for' => 'aicc_title',
+				'label_for' => 'jagc_title',
 				'key'       => 'title',
 			)
 		);
 
 		add_settings_field(
 			'subtitle',
-			__( 'Subtitle', 'ai-connector-chatbot' ),
+			__( 'Subtitle', 'just-another-generic-chatbot' ),
 			array( $this, 'render_text_input' ),
-			'ai-connector-chatbot',
-			'aicc_general',
+			'just-another-generic-chatbot',
+			'jagc_general',
 			array(
-				'label_for' => 'aicc_subtitle',
+				'label_for' => 'jagc_subtitle',
 				'key'       => 'subtitle',
 			)
 		);
 
 		add_settings_field(
 			'welcome_message',
-			__( 'Welcome message', 'ai-connector-chatbot' ),
+			__( 'Welcome message', 'just-another-generic-chatbot' ),
 			array( $this, 'render_textarea' ),
-			'ai-connector-chatbot',
-			'aicc_general',
+			'just-another-generic-chatbot',
+			'jagc_general',
 			array(
-				'label_for' => 'aicc_welcome_message',
+				'label_for' => 'jagc_welcome_message',
 				'key'       => 'welcome_message',
 			)
 		);
 
 		add_settings_field(
 			'position',
-			__( 'Position', 'ai-connector-chatbot' ),
+			__( 'Position', 'just-another-generic-chatbot' ),
 			array( $this, 'render_select' ),
-			'ai-connector-chatbot',
-			'aicc_general',
+			'just-another-generic-chatbot',
+			'jagc_general',
 			array(
-				'label_for' => 'aicc_position',
+				'label_for' => 'jagc_position',
 				'key'       => 'position',
 				'options'   => array(
-					'bottom-right' => __( 'Bottom right', 'ai-connector-chatbot' ),
-					'bottom-left'  => __( 'Bottom left', 'ai-connector-chatbot' ),
+					'bottom-right' => __( 'Bottom right', 'just-another-generic-chatbot' ),
+					'bottom-left'  => __( 'Bottom left', 'just-another-generic-chatbot' ),
 				),
 			)
 		);
 
 		// AI section.
 		add_settings_section(
-			'aicc_ai',
-			__( 'AI Configuration', 'ai-connector-chatbot' ),
+			'jagc_ai',
+			__( 'AI Configuration', 'just-another-generic-chatbot' ),
 			array( $this, 'render_ai_intro' ),
-			'ai-connector-chatbot'
+			'just-another-generic-chatbot'
 		);
 
 		add_settings_field(
 			'system_prompt',
-			__( 'System instructions', 'ai-connector-chatbot' ),
+			__( 'System instructions', 'just-another-generic-chatbot' ),
 			array( $this, 'render_textarea' ),
-			'ai-connector-chatbot',
-			'aicc_ai',
+			'just-another-generic-chatbot',
+			'jagc_ai',
 			array(
-				'label_for' => 'aicc_system_prompt',
+				'label_for' => 'jagc_system_prompt',
 				'key'       => 'system_prompt',
 			)
 		);
 
 		add_settings_field(
 			'ai_provider',
-			__( 'AI provider', 'ai-connector-chatbot' ),
+			__( 'AI provider', 'just-another-generic-chatbot' ),
 			array( $this, 'render_provider_select' ),
-			'ai-connector-chatbot',
-			'aicc_ai',
+			'just-another-generic-chatbot',
+			'jagc_ai',
 			array(
-				'label_for' => 'aicc_ai_provider',
+				'label_for' => 'jagc_ai_provider',
 				'key'       => 'ai_provider',
 			)
 		);
 
 		add_settings_field(
 			'ai_model',
-			__( 'Model (optional)', 'ai-connector-chatbot' ),
+			__( 'Model (optional)', 'just-another-generic-chatbot' ),
 			array( $this, 'render_text_input' ),
-			'ai-connector-chatbot',
-			'aicc_ai',
+			'just-another-generic-chatbot',
+			'jagc_ai',
 			array(
-				'label_for' => 'aicc_ai_model',
+				'label_for' => 'jagc_ai_model',
 				'key'       => 'ai_model',
 			)
 		);
 
 		add_settings_field(
 			'temperature',
-			__( 'Temperature', 'ai-connector-chatbot' ),
+			__( 'Temperature', 'just-another-generic-chatbot' ),
 			array( $this, 'render_number_input' ),
-			'ai-connector-chatbot',
-			'aicc_ai',
+			'just-another-generic-chatbot',
+			'jagc_ai',
 			array(
-				'label_for' => 'aicc_temperature',
+				'label_for' => 'jagc_temperature',
 				'key'       => 'temperature',
 				'min'       => 0,
 				'max'       => 2,
@@ -252,12 +252,12 @@ class AICC_Settings {
 
 		add_settings_field(
 			'max_tokens',
-			__( 'Max tokens', 'ai-connector-chatbot' ),
+			__( 'Max tokens', 'just-another-generic-chatbot' ),
 			array( $this, 'render_number_input' ),
-			'ai-connector-chatbot',
-			'aicc_ai',
+			'just-another-generic-chatbot',
+			'jagc_ai',
 			array(
-				'label_for' => 'aicc_max_tokens',
+				'label_for' => 'jagc_max_tokens',
 				'key'       => 'max_tokens',
 				'min'       => 100,
 				'max'       => 8000,
@@ -267,18 +267,18 @@ class AICC_Settings {
 
 		// Knowledge Base section.
 		add_settings_section(
-			'aicc_kb',
-			__( 'Knowledge Base', 'ai-connector-chatbot' ),
+			'jagc_kb',
+			__( 'Knowledge Base', 'just-another-generic-chatbot' ),
 			array( $this, 'render_kb_intro' ),
-			'ai-connector-chatbot'
+			'just-another-generic-chatbot'
 		);
 
 		add_settings_field(
 			'kb_post_types',
-			__( 'Post types to include', 'ai-connector-chatbot' ),
+			__( 'Post types to include', 'just-another-generic-chatbot' ),
 			array( $this, 'render_post_types_checkboxes' ),
-			'ai-connector-chatbot',
-			'aicc_kb',
+			'just-another-generic-chatbot',
+			'jagc_kb',
 			array(
 				'key' => 'kb_post_types',
 			)
@@ -286,12 +286,12 @@ class AICC_Settings {
 
 		add_settings_field(
 			'max_context_length',
-			__( 'Max context length (chars)', 'ai-connector-chatbot' ),
+			__( 'Max context length (chars)', 'just-another-generic-chatbot' ),
 			array( $this, 'render_number_input' ),
-			'ai-connector-chatbot',
-			'aicc_kb',
+			'just-another-generic-chatbot',
+			'jagc_kb',
 			array(
-				'label_for' => 'aicc_max_context_length',
+				'label_for' => 'jagc_max_context_length',
 				'key'       => 'max_context_length',
 				'min'       => 500,
 				'max'       => 32000,
@@ -301,32 +301,32 @@ class AICC_Settings {
 
 		// Spam section.
 		add_settings_section(
-			'aicc_spam',
-			__( 'Spam Protection', 'ai-connector-chatbot' ),
+			'jagc_spam',
+			__( 'Spam Protection', 'just-another-generic-chatbot' ),
 			array( $this, 'render_spam_intro' ),
-			'ai-connector-chatbot'
+			'just-another-generic-chatbot'
 		);
 
 		add_settings_field(
 			'spam_protection',
-			__( 'Enable spam protection', 'ai-connector-chatbot' ),
+			__( 'Enable spam protection', 'just-another-generic-chatbot' ),
 			array( $this, 'render_checkbox' ),
-			'ai-connector-chatbot',
-			'aicc_spam',
+			'just-another-generic-chatbot',
+			'jagc_spam',
 			array(
-				'label_for' => 'aicc_spam_protection',
+				'label_for' => 'jagc_spam_protection',
 				'key'       => 'spam_protection',
 			)
 		);
 
 		add_settings_field(
 			'rate_limit',
-			__( 'Rate limit (messages per hour per user)', 'ai-connector-chatbot' ),
+			__( 'Rate limit (messages per hour per user)', 'just-another-generic-chatbot' ),
 			array( $this, 'render_number_input' ),
-			'ai-connector-chatbot',
-			'aicc_spam',
+			'just-another-generic-chatbot',
+			'jagc_spam',
 			array(
-				'label_for' => 'aicc_rate_limit',
+				'label_for' => 'jagc_rate_limit',
 				'key'       => 'rate_limit',
 				'min'       => 1,
 				'max'       => 100,
@@ -336,64 +336,64 @@ class AICC_Settings {
 
 		// Captcha section.
 		add_settings_section(
-			'aicc_captcha',
-			__( 'Captcha Protection', 'ai-connector-chatbot' ),
+			'jagc_captcha',
+			__( 'Captcha Protection', 'just-another-generic-chatbot' ),
 			array( $this, 'render_captcha_intro' ),
-			'ai-connector-chatbot'
+			'just-another-generic-chatbot'
 		);
 
 		add_settings_field(
 			'captcha_enabled',
-			__( 'Enable captcha', 'ai-connector-chatbot' ),
+			__( 'Enable captcha', 'just-another-generic-chatbot' ),
 			array( $this, 'render_checkbox' ),
-			'ai-connector-chatbot',
-			'aicc_captcha',
+			'just-another-generic-chatbot',
+			'jagc_captcha',
 			array(
-				'label_for' => 'aicc_captcha_enabled',
+				'label_for' => 'jagc_captcha_enabled',
 				'key'       => 'captcha_enabled',
 			)
 		);
 
 		// Lead Capture section.
 		add_settings_section(
-			'aicc_leads',
-			__( 'Lead Capture', 'ai-connector-chatbot' ),
+			'jagc_leads',
+			__( 'Lead Capture', 'just-another-generic-chatbot' ),
 			array( $this, 'render_leads_intro' ),
-			'ai-connector-chatbot'
+			'just-another-generic-chatbot'
 		);
 
 		add_settings_field(
 			'lead_capture_enabled',
-			__( 'Enable lead capture', 'ai-connector-chatbot' ),
+			__( 'Enable lead capture', 'just-another-generic-chatbot' ),
 			array( $this, 'render_checkbox' ),
-			'ai-connector-chatbot',
-			'aicc_leads',
+			'just-another-generic-chatbot',
+			'jagc_leads',
 			array(
-				'label_for' => 'aicc_lead_capture_enabled',
+				'label_for' => 'jagc_lead_capture_enabled',
 				'key'       => 'lead_capture_enabled',
 			)
 		);
 
 		add_settings_field(
 			'lead_email',
-			__( 'Lead notification email', 'ai-connector-chatbot' ),
+			__( 'Lead notification email', 'just-another-generic-chatbot' ),
 			array( $this, 'render_text_input' ),
-			'ai-connector-chatbot',
-			'aicc_leads',
+			'just-another-generic-chatbot',
+			'jagc_leads',
 			array(
-				'label_for' => 'aicc_lead_email',
+				'label_for' => 'jagc_lead_email',
 				'key'       => 'lead_email',
 			)
 		);
 
 		add_settings_field(
 			'lead_webhook_url',
-			__( 'Webhook URL (optional)', 'ai-connector-chatbot' ),
+			__( 'Webhook URL (optional)', 'just-another-generic-chatbot' ),
 			array( $this, 'render_text_input' ),
-			'ai-connector-chatbot',
-			'aicc_leads',
+			'just-another-generic-chatbot',
+			'jagc_leads',
 			array(
-				'label_for' => 'aicc_lead_webhook_url',
+				'label_for' => 'jagc_lead_webhook_url',
 				'key'       => 'lead_webhook_url',
 			)
 		);
@@ -438,7 +438,7 @@ class AICC_Settings {
 		$submitted_types        = $input['kb_post_types'] ?? array();
 		$clean['kb_post_types'] = array_values( array_intersect( $allowed_type_keys, (array) $submitted_types ) );
 		if ( empty( $clean['kb_post_types'] ) ) {
-			$clean['kb_post_types'] = array( 'aicc_article' );
+			$clean['kb_post_types'] = array( 'jagc_article' );
 		}
 
 		return $clean;
@@ -451,7 +451,7 @@ class AICC_Settings {
 	 */
 	public function get_available_providers(): array {
 		$providers = array(
-			'auto' => __( 'Automatic (use any available)', 'ai-connector-chatbot' ),
+			'auto' => __( 'Automatic (use any available)', 'just-another-generic-chatbot' ),
 		);
 
 		if ( function_exists( 'wp_get_connectors' ) ) {
@@ -480,8 +480,8 @@ class AICC_Settings {
 			$result[ $slug ] = $obj->labels->singular_name;
 		}
 		// Always include our CPT.
-		if ( ! isset( $result['aicc_article'] ) ) {
-			$result['aicc_article'] = __( 'Knowledge Base Article', 'ai-connector-chatbot' );
+		if ( ! isset( $result['jagc_article'] ) ) {
+			$result['jagc_article'] = __( 'Knowledge Base Article', 'just-another-generic-chatbot' );
 		}
 		return $result;
 	}
@@ -493,16 +493,16 @@ class AICC_Settings {
 	 */
 	public function render_settings_page(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have permission to access this page.', 'ai-connector-chatbot' ) );
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'just-another-generic-chatbot' ) );
 		}
 		?>
 		<div class="wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<form action="options.php" method="post">
 				<?php
-				settings_fields( 'aicc_settings_group' );
-				do_settings_sections( 'ai-connector-chatbot' );
-				submit_button( __( 'Save Settings', 'ai-connector-chatbot' ) );
+				settings_fields( 'jagc_settings_group' );
+				do_settings_sections( 'just-another-generic-chatbot' );
+				submit_button( __( 'Save Settings', 'just-another-generic-chatbot' ) );
 				?>
 			</form>
 		</div>
@@ -513,28 +513,28 @@ class AICC_Settings {
 	 * Section intro for the general chatbot section.
 	 */
 	public function render_general_intro(): void {
-		echo '<p class="description">' . esc_html__( 'Configure how the chatbot appears on your site.', 'ai-connector-chatbot' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Configure how the chatbot appears on your site.', 'just-another-generic-chatbot' ) . '</p>';
 	}
 
 	/**
 	 * Section intro for the AI section.
 	 */
 	public function render_ai_intro(): void {
-		echo '<p class="description">' . esc_html__( 'AI providers and API keys are managed under Settings › Connectors (WordPress 7.0+). Select a provider and optionally a specific model here.', 'ai-connector-chatbot' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'AI providers and API keys are managed under Settings › Connectors (WordPress 7.0+). Select a provider and optionally a specific model here.', 'just-another-generic-chatbot' ) . '</p>';
 	}
 
 	/**
 	 * Section intro for the Knowledge Base section.
 	 */
 	public function render_kb_intro(): void {
-		echo '<p class="description">' . esc_html__( 'Select which content types to include as context for the chatbot. Knowledge Base Articles are always available. The article content is where you write the information the chatbot should know.', 'ai-connector-chatbot' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Select which content types to include as context for the chatbot. Knowledge Base Articles are always available. The article content is where you write the information the chatbot should know.', 'just-another-generic-chatbot' ) . '</p>';
 	}
 
 	/**
 	 * Section intro for the Spam section.
 	 */
 	public function render_spam_intro(): void {
-		echo '<p class="description">' . esc_html__( 'Uses Akismet for spam detection when available, with a rate-limiting fallback.', 'ai-connector-chatbot' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Uses Akismet for spam detection when available, with a rate-limiting fallback.', 'just-another-generic-chatbot' ) . '</p>';
 	}
 
 	/**
@@ -544,7 +544,7 @@ class AICC_Settings {
 		echo '<p class="description">' . wp_kses(
 			sprintf(
 				/* translators: %s: Link to the Turnstile plugin. */
-				__( 'Requires the <a href="%s">Simple CAPTCHA with Cloudflare Turnstile</a> plugin. Configure your Cloudflare site key and secret in its settings (Settings › Cloudflare Turnstile) before enabling captcha here.', 'ai-connector-chatbot' ),
+				__( 'Requires the <a href="%s">Simple CAPTCHA with Cloudflare Turnstile</a> plugin. Configure your Cloudflare site key and secret in its settings (Settings › Cloudflare Turnstile) before enabling captcha here.', 'just-another-generic-chatbot' ),
 				'https://wordpress.org/plugins/simple-cloudflare-turnstile/'
 			),
 			array( 'a' => array( 'href' => array() ) )
@@ -555,7 +555,7 @@ class AICC_Settings {
 	 * Section intro for the Lead Capture section.
 	 */
 	public function render_leads_intro(): void {
-		echo '<p class="description">' . esc_html__( 'When enabled, the chatbot uses AI function calling to detect when users share their contact information and automatically saves it. Leads are delivered via email and/or a webhook URL (for connecting to Zapier, Make, n8n, Google Sheets, a CRM, etc.). No forms or database tables needed.', 'ai-connector-chatbot' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'When enabled, the chatbot uses AI function calling to detect when users share their contact information and automatically saves it. Leads are delivered via email and/or a webhook URL (for connecting to Zapier, Make, n8n, Google Sheets, a CRM, etc.). No forms or database tables needed.', 'just-another-generic-chatbot' ) . '</p>';
 	}
 
 	/**
@@ -566,7 +566,7 @@ class AICC_Settings {
 	public function render_checkbox( array $args ): void {
 		$key   = $args['key'];
 		$value = (bool) $this->get( $key );
-		$id    = 'aicc_' . $key;
+		$id    = 'jagc_' . $key;
 		printf(
 			'<input type="checkbox" id="%1$s" name="%2$s[%3$s]" value="1" %4$s />',
 			esc_attr( $id ),
@@ -584,7 +584,7 @@ class AICC_Settings {
 	public function render_text_input( array $args ): void {
 		$key   = $args['key'];
 		$value = (string) $this->get( $key );
-		$id    = $args['label_for'] ?? 'aicc_' . $key;
+		$id    = $args['label_for'] ?? 'jagc_' . $key;
 		printf(
 			'<input type="text" id="%1$s" name="%2$s[%3$s]" value="%4$s" class="regular-text" />',
 			esc_attr( $id ),
@@ -602,7 +602,7 @@ class AICC_Settings {
 	public function render_number_input( array $args ): void {
 		$key   = $args['key'];
 		$value = $this->get( $key );
-		$id    = $args['label_for'] ?? 'aicc_' . $key;
+		$id    = $args['label_for'] ?? 'jagc_' . $key;
 		$min   = $args['min'] ?? 0;
 		$max   = $args['max'] ?? '';
 		$step  = $args['step'] ?? 1;
@@ -626,7 +626,7 @@ class AICC_Settings {
 	public function render_textarea( array $args ): void {
 		$key   = $args['key'];
 		$value = (string) $this->get( $key );
-		$id    = $args['label_for'] ?? 'aicc_' . $key;
+		$id    = $args['label_for'] ?? 'jagc_' . $key;
 		printf(
 			'<textarea id="%1$s" name="%2$s[%3$s]" rows="5" class="large-text">%4$s</textarea>',
 			esc_attr( $id ),
@@ -644,7 +644,7 @@ class AICC_Settings {
 	public function render_select( array $args ): void {
 		$key     = $args['key'];
 		$value   = (string) $this->get( $key );
-		$id      = $args['label_for'] ?? 'aicc_' . $key;
+		$id      = $args['label_for'] ?? 'jagc_' . $key;
 		$options = $args['options'] ?? array();
 		echo '<select id="' . esc_attr( $id ) . '" name="' . esc_attr( self::OPTION_KEY ) . '[' . esc_attr( $key ) . ']">';
 		foreach ( $options as $opt_val => $opt_label ) {
@@ -667,7 +667,7 @@ class AICC_Settings {
 	public function render_provider_select( array $args ): void {
 		$key       = $args['key'];
 		$value     = (string) $this->get( $key, 'auto' );
-		$id        = $args['label_for'] ?? 'aicc_' . $key;
+		$id        = $args['label_for'] ?? 'jagc_' . $key;
 		$providers = $this->get_available_providers();
 
 		echo '<select id="' . esc_attr( $id ) . '" name="' . esc_attr( self::OPTION_KEY ) . '[' . esc_attr( $key ) . ']">';
@@ -682,7 +682,7 @@ class AICC_Settings {
 		echo '</select>';
 
 		if ( count( $providers ) <= 1 ) {
-			echo '<p class="description">' . esc_html__( 'No AI providers found. Install a provider connector plugin and configure it under Settings › Connectors.', 'ai-connector-chatbot' ) . '</p>';
+			echo '<p class="description">' . esc_html__( 'No AI providers found. Install a provider connector plugin and configure it under Settings › Connectors.', 'just-another-generic-chatbot' ) . '</p>';
 		}
 	}
 

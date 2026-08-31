@@ -6,56 +6,56 @@
  * should know. The post title becomes the heading in the AI context. For example,
  * create an article titled "Return Policy" with the policy text in the content body.
  *
- * @package AI_Connector_Chatbot
+ * @package Just_Another_Generic_Chatbot
  */
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Registers the aicc_article custom post type and provides context retrieval.
+ * Registers the jagc_article custom post type and provides context retrieval.
  */
-class AICC_Knowledge_Base {
+class JAGC_Knowledge_Base {
 
 	/** CPT slug. */
-	const CPT_SLUG = 'aicc_article';
+	const CPT_SLUG = 'jagc_article';
 
 	/**
 	 * Settings instance.
 	 *
-	 * @var AICC_Settings
+	 * @var JAGC_Settings
 	 */
-	private AICC_Settings $settings;
+	private JAGC_Settings $settings;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param AICC_Settings $settings Settings instance.
+	 * @param JAGC_Settings $settings Settings instance.
 	 */
-	public function __construct( AICC_Settings $settings ) {
+	public function __construct( JAGC_Settings $settings ) {
 		$this->settings = $settings;
 		add_action( 'init', array( $this, 'register_post_type' ) );
 	}
 
 	/**
-	 * Registers the aicc_article custom post type.
+	 * Registers the jagc_article custom post type.
 	 */
 	public function register_post_type(): void {
 		register_post_type(
 			self::CPT_SLUG,
 			array(
 				'labels'        => array(
-					'name'               => __( 'Knowledge Base', 'ai-connector-chatbot' ),
-					'singular_name'      => __( 'Knowledge Base Article', 'ai-connector-chatbot' ),
-					'add_new'            => __( 'Add New Article', 'ai-connector-chatbot' ),
-					'add_new_item'       => __( 'Add New Knowledge Base Article', 'ai-connector-chatbot' ),
-					'edit_item'          => __( 'Edit Article', 'ai-connector-chatbot' ),
-					'new_item'           => __( 'New Article', 'ai-connector-chatbot' ),
-					'view_item'          => __( 'View Article', 'ai-connector-chatbot' ),
-					'search_items'       => __( 'Search Knowledge Base', 'ai-connector-chatbot' ),
-					'not_found'          => __( 'No articles found.', 'ai-connector-chatbot' ),
-					'not_found_in_trash' => __( 'No articles in trash.', 'ai-connector-chatbot' ),
-					'all_items'          => __( 'All Articles', 'ai-connector-chatbot' ),
-					'menu_name'          => __( 'Knowledge Base', 'ai-connector-chatbot' ),
+					'name'               => __( 'Knowledge Base', 'just-another-generic-chatbot' ),
+					'singular_name'      => __( 'Knowledge Base Article', 'just-another-generic-chatbot' ),
+					'add_new'            => __( 'Add New Article', 'just-another-generic-chatbot' ),
+					'add_new_item'       => __( 'Add New Knowledge Base Article', 'just-another-generic-chatbot' ),
+					'edit_item'          => __( 'Edit Article', 'just-another-generic-chatbot' ),
+					'new_item'           => __( 'New Article', 'just-another-generic-chatbot' ),
+					'view_item'          => __( 'View Article', 'just-another-generic-chatbot' ),
+					'search_items'       => __( 'Search Knowledge Base', 'just-another-generic-chatbot' ),
+					'not_found'          => __( 'No articles found.', 'just-another-generic-chatbot' ),
+					'not_found_in_trash' => __( 'No articles in trash.', 'just-another-generic-chatbot' ),
+					'all_items'          => __( 'All Articles', 'just-another-generic-chatbot' ),
+					'menu_name'          => __( 'Knowledge Base', 'just-another-generic-chatbot' ),
 				),
 				'public'        => true,
 				'has_archive'   => true,
@@ -79,13 +79,13 @@ class AICC_Knowledge_Base {
 	 * @return string Formatted context string for the system prompt.
 	 */
 	public function get_context( string $message ): string {
-		$types       = (array) $this->settings->get( 'kb_post_types', array( 'aicc_article' ) );
+		$types       = (array) $this->settings->get( 'kb_post_types', array( 'jagc_article' ) );
 		$max_length  = (int) $this->settings->get( 'max_context_length', 4000 );
 		$context     = '';
 		$used_length = 0;
 
 		// Always include KB articles first.
-		$articles = $this->query_relevant_posts( $message, array( 'aicc_article' ), 5 );
+		$articles = $this->query_relevant_posts( $message, array( 'jagc_article' ), 5 );
 		if ( ! empty( $articles ) ) {
 			$context .= "## Knowledge Base Articles\n\n";
 			foreach ( $articles as $post ) {
@@ -98,8 +98,8 @@ class AICC_Knowledge_Base {
 			}
 		}
 
-		// Then include other post types (excluding aicc_article which was already done).
-		$other_types = array_diff( $types, array( 'aicc_article' ) );
+		// Then include other post types (excluding jagc_article which was already done).
+		$other_types = array_diff( $types, array( 'jagc_article' ) );
 		if ( ! empty( $other_types ) ) {
 			$posts = $this->query_relevant_posts( $message, $other_types, 5 );
 			if ( ! empty( $posts ) ) {
@@ -220,7 +220,7 @@ class AICC_Knowledge_Base {
 	 * @return string
 	 */
 	private function format_post_as_context( WP_Post $post ): string {
-		$content = wp_strip_all_tags( apply_filters( 'aicc_article_content', $post->post_content ) );
+		$content = wp_strip_all_tags( apply_filters( 'jagc_article_content', $post->post_content ) );
 		// Truncate individual entries to keep total context manageable.
 		$max_entry = 2000;
 		if ( strlen( $content ) > $max_entry ) {

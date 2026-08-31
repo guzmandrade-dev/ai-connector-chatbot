@@ -2,7 +2,7 @@
 /**
  * Spam protection module — integrates with Akismet and provides rate-limiting.
  *
- * @package AI_Connector_Chatbot
+ * @package Just_Another_Generic_Chatbot
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -10,21 +10,21 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Provides spam detection for chatbot messages.
  */
-class AICC_Spam {
+class JAGC_Spam {
 
 	/**
 	 * Settings instance.
 	 *
-	 * @var AICC_Settings
+	 * @var JAGC_Settings
 	 */
-	private AICC_Settings $settings;
+	private JAGC_Settings $settings;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param AICC_Settings $settings Settings instance.
+	 * @param JAGC_Settings $settings Settings instance.
 	 */
-	public function __construct( AICC_Settings $settings ) {
+	public function __construct( JAGC_Settings $settings ) {
 		$this->settings = $settings;
 	}
 
@@ -121,7 +121,7 @@ class AICC_Spam {
 		 * @param array  $comment  The Akismet comment data.
 		 * @param string $message  The original chat message.
 		 */
-		$comment = (array) apply_filters( 'aicc_akismet_payload', $comment, $message );
+		$comment = (array) apply_filters( 'jagc_akismet_payload', $comment, $message );
 
 		try {
 			$response = Akismet::http_post( build_query( $comment ), 'comment-check' );
@@ -138,7 +138,7 @@ class AICC_Spam {
 		if ( $is_spam ) {
 			return array(
 				'spam'   => true,
-				'reason' => __( 'Message flagged as spam by Akismet.', 'ai-connector-chatbot' ),
+				'reason' => __( 'Message flagged as spam by Akismet.', 'just-another-generic-chatbot' ),
 			);
 		}
 
@@ -157,13 +157,13 @@ class AICC_Spam {
 	private function check_rate_limit( array $user_data ): array {
 		$ip            = $user_data['ip'] ?? $this->get_client_ip();
 		$limit         = (int) $this->settings->get( 'rate_limit', 10 );
-		$transient_key = 'aicc_rate_' . md5( (string) $ip );
+		$transient_key = 'jagc_rate_' . md5( (string) $ip );
 
 		$count = (int) get_transient( $transient_key );
 		if ( $count >= $limit ) {
 			return array(
 				'spam'   => true,
-				'reason' => __( 'Rate limit exceeded. Please try again later.', 'ai-connector-chatbot' ),
+				'reason' => __( 'Rate limit exceeded. Please try again later.', 'just-another-generic-chatbot' ),
 			);
 		}
 

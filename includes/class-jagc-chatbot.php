@@ -2,7 +2,7 @@
 /**
  * Chatbot module — shortcode, REST endpoint, and frontend injection.
  *
- * @package AI_Connector_Chatbot
+ * @package Just_Another_Generic_Chatbot
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -10,70 +10,70 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Handles the frontend chatbot: shortcode, REST API, asset enqueuing, and AI calls.
  */
-class AICC_Chatbot {
+class JAGC_Chatbot {
 
 	/** REST API namespace. */
-	const REST_NAMESPACE = 'aicc/v1';
+	const REST_NAMESPACE = 'jagc/v1';
 
 	/**
 	 * Plugin instance.
 	 *
-	 * @var AICC_Plugin
+	 * @var JAGC_Plugin
 	 */
-	private AICC_Plugin $plugin;
+	private JAGC_Plugin $plugin;
 
 	/**
 	 * Settings instance.
 	 *
-	 * @var AICC_Settings
+	 * @var JAGC_Settings
 	 */
-	private AICC_Settings $settings;
+	private JAGC_Settings $settings;
 
 	/**
 	 * Knowledge base instance.
 	 *
-	 * @var AICC_Knowledge_Base
+	 * @var JAGC_Knowledge_Base
 	 */
-	private AICC_Knowledge_Base $knowledge_base;
+	private JAGC_Knowledge_Base $knowledge_base;
 
 	/**
 	 * Spam instance.
 	 *
-	 * @var AICC_Spam
+	 * @var JAGC_Spam
 	 */
-	private AICC_Spam $spam;
+	private JAGC_Spam $spam;
 
 	/**
 	 * Captcha instance.
 	 *
-	 * @var AICC_Captcha
+	 * @var JAGC_Captcha
 	 */
-	private AICC_Captcha $captcha;
+	private JAGC_Captcha $captcha;
 
 	/**
 	 * Lead capture instance.
 	 *
-	 * @var AICC_Lead_Capture
+	 * @var JAGC_Lead_Capture
 	 */
-	private AICC_Lead_Capture $lead_capture;
+	private JAGC_Lead_Capture $lead_capture;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param AICC_Plugin         $plugin         Plugin instance.
-	 * @param AICC_Settings       $settings       Settings.
-	 * @param AICC_Knowledge_Base $knowledge_base Knowledge base.
-	 * @param AICC_Spam           $spam           Spam protection.
-	 * @param AICC_Captcha        $captcha        Captcha protection.
-	 * @param AICC_Lead_Capture   $lead_capture   Lead capture.
+	 * @param JAGC_Plugin         $plugin         Plugin instance.
+	 * @param JAGC_Settings       $settings       Settings.
+	 * @param JAGC_Knowledge_Base $knowledge_base Knowledge base.
+	 * @param JAGC_Spam           $spam           Spam protection.
+	 * @param JAGC_Captcha        $captcha        Captcha protection.
+	 * @param JAGC_Lead_Capture   $lead_capture   Lead capture.
 	 */
 	public function __construct(
-		AICC_Plugin $plugin,
-		AICC_Settings $settings,
-		AICC_Knowledge_Base $knowledge_base,
-		AICC_Spam $spam,
-		AICC_Captcha $captcha,
-		AICC_Lead_Capture $lead_capture
+		JAGC_Plugin $plugin,
+		JAGC_Settings $settings,
+		JAGC_Knowledge_Base $knowledge_base,
+		JAGC_Spam $spam,
+		JAGC_Captcha $captcha,
+		JAGC_Lead_Capture $lead_capture
 	) {
 		$this->plugin         = $plugin;
 		$this->settings       = $settings;
@@ -91,10 +91,10 @@ class AICC_Chatbot {
 	// ── Shortcode ─────────────────────────────────────────────────────
 
 	/**
-	 * Registers the [aicc_chatbot] shortcode.
+	 * Registers the [jagc_chatbot] shortcode.
 	 */
 	public function register_shortcode(): void {
-		add_shortcode( 'aicc_chatbot', array( $this, 'render_shortcode' ) );
+		add_shortcode( 'jagc_chatbot', array( $this, 'render_shortcode' ) );
 	}
 
 	/**
@@ -112,11 +112,11 @@ class AICC_Chatbot {
 				'position' => $this->settings->get( 'position', 'bottom-right' ),
 			),
 			$atts,
-			'aicc_chatbot'
+			'jagc_chatbot'
 		);
 
 		return sprintf(
-			'<div class="aicc-chatbot-container" data-aicc-position="%s"></div>',
+			'<div class="jagc-chatbot-container" data-jagc-position="%s"></div>',
 			esc_attr( $atts['position'] )
 		);
 	}
@@ -140,7 +140,7 @@ class AICC_Chatbot {
 
 		$position = sanitize_html_class( (string) $this->settings->get( 'position', 'bottom-right' ) );
 		printf(
-			'<div class="aicc-chatbot-container" data-aicc-position="%s"></div>',
+			'<div class="jagc-chatbot-container" data-jagc-position="%s"></div>',
 			esc_attr( $position )
 		);
 	}
@@ -152,17 +152,17 @@ class AICC_Chatbot {
 	 */
 	public function register_assets(): void {
 		wp_register_style(
-			'aicc-chatbot',
-			AICC_PLUGIN_URL . 'assets/css/chatbot.css',
+			'jagc-chatbot',
+			JAGC_PLUGIN_URL . 'assets/css/chatbot.css',
 			array(),
-			AICC_VERSION
+			JAGC_VERSION
 		);
 
 		wp_register_script(
-			'aicc-chatbot',
-			AICC_PLUGIN_URL . 'assets/js/chatbot.js',
+			'jagc-chatbot',
+			JAGC_PLUGIN_URL . 'assets/js/chatbot.js',
 			array(),
-			AICC_VERSION,
+			JAGC_VERSION,
 			true
 		);
 	}
@@ -171,8 +171,8 @@ class AICC_Chatbot {
 	 * Enqueues and localizes the frontend assets.
 	 */
 	private function enqueue_frontend_assets(): void {
-		wp_enqueue_style( 'aicc-chatbot' );
-		wp_enqueue_script( 'aicc-chatbot' );
+		wp_enqueue_style( 'jagc-chatbot' );
+		wp_enqueue_script( 'jagc-chatbot' );
 
 		// Enqueue Turnstile scripts if captcha is enabled.
 		$this->captcha->enqueue_scripts();
@@ -181,30 +181,30 @@ class AICC_Chatbot {
 		$data = array(
 			'restUrl'        => esc_url_raw( rest_url( self::REST_NAMESPACE . '/chat' ) ),
 			'nonce'          => wp_create_nonce( 'wp_rest' ),
-			'title'          => $this->settings->get( 'title', __( 'Chat with us', 'ai-connector-chatbot' ) ),
+			'title'          => $this->settings->get( 'title', __( 'Chat with us', 'just-another-generic-chatbot' ) ),
 			'subtitle'       => $this->settings->get( 'subtitle', '' ),
-			'welcomeMessage' => $this->settings->get( 'welcome_message', __( 'Hello! How can I help you today?', 'ai-connector-chatbot' ) ),
+			'welcomeMessage' => $this->settings->get( 'welcome_message', __( 'Hello! How can I help you today?', 'just-another-generic-chatbot' ) ),
 			'position'       => $this->settings->get( 'position', 'bottom-right' ),
 			'userName'       => $user->exists() ? $user->display_name : '',
 			'captchaEnabled' => $this->captcha->is_enabled(),
 			'captchaSiteKey' => $this->captcha->is_enabled() ? $this->captcha->get_site_key() : '',
 			'strings'        => array(
-				'placeholder'     => __( 'Type your message…', 'ai-connector-chatbot' ),
-				'send'            => __( 'Send', 'ai-connector-chatbot' ),
-				'openChat'        => __( 'Open chat', 'ai-connector-chatbot' ),
-				'closeChat'       => __( 'Close chat', 'ai-connector-chatbot' ),
-				'typing'          => __( 'Assistant is typing…', 'ai-connector-chatbot' ),
-				'error'           => __( 'Something went wrong. Please try again.', 'ai-connector-chatbot' ),
-				'spamBlocked'     => __( 'Your message was blocked. Please try again later.', 'ai-connector-chatbot' ),
-				'aiUnavailable'   => __( 'The AI assistant is not configured. Please contact the site administrator.', 'ai-connector-chatbot' ),
-				'captchaRequired' => __( 'Please complete the captcha challenge first.', 'ai-connector-chatbot' ),
-				'captchaFailed'   => __( 'Captcha verification failed. Please try again.', 'ai-connector-chatbot' ),
+				'placeholder'     => __( 'Type your message…', 'just-another-generic-chatbot' ),
+				'send'            => __( 'Send', 'just-another-generic-chatbot' ),
+				'openChat'        => __( 'Open chat', 'just-another-generic-chatbot' ),
+				'closeChat'       => __( 'Close chat', 'just-another-generic-chatbot' ),
+				'typing'          => __( 'Assistant is typing…', 'just-another-generic-chatbot' ),
+				'error'           => __( 'Something went wrong. Please try again.', 'just-another-generic-chatbot' ),
+				'spamBlocked'     => __( 'Your message was blocked. Please try again later.', 'just-another-generic-chatbot' ),
+				'aiUnavailable'   => __( 'The AI assistant is not configured. Please contact the site administrator.', 'just-another-generic-chatbot' ),
+				'captchaRequired' => __( 'Please complete the captcha challenge first.', 'just-another-generic-chatbot' ),
+				'captchaFailed'   => __( 'Captcha verification failed. Please try again.', 'just-another-generic-chatbot' ),
 			),
 		);
 
 		wp_add_inline_script(
-			'aicc-chatbot',
-			'window.AICC_DATA = ' . wp_json_encode( $data ) . ';',
+			'jagc-chatbot',
+			'window.JAGC_DATA = ' . wp_json_encode( $data ) . ';',
 			'before'
 		);
 	}
@@ -326,8 +326,8 @@ class AICC_Chatbot {
 		// 1. Check AI availability.
 		if ( ! $this->plugin->is_ai_available() ) {
 			return new WP_Error(
-				'aicc_ai_unavailable',
-				__( 'The AI assistant is not configured.', 'ai-connector-chatbot' ),
+				'jagc_ai_unavailable',
+				__( 'The AI assistant is not configured.', 'just-another-generic-chatbot' ),
 				array( 'status' => 503 )
 			);
 		}
@@ -337,7 +337,7 @@ class AICC_Chatbot {
 			$captcha_result = $this->captcha->verify( $captcha_token );
 			if ( ! $captcha_result['valid'] ) {
 				return new WP_Error(
-					'aicc_captcha_failed',
+					'jagc_captcha_failed',
 					$captcha_result['reason'],
 					array( 'status' => 403 )
 				);
@@ -357,7 +357,7 @@ class AICC_Chatbot {
 		$spam_result = $this->spam->check( $message, $user_data );
 		if ( $spam_result['spam'] ) {
 			return new WP_Error(
-				'aicc_spam_blocked',
+				'jagc_spam_blocked',
 				$spam_result['reason'],
 				array( 'status' => 403 )
 			);
@@ -424,9 +424,9 @@ class AICC_Chatbot {
 			 *
 			 * @param WP_AI_Client_Prompt_Builder $builder   The AI client prompt builder.
 			 * @param string                      $message   The user's message.
-			 * @param AICC_Settings               $settings  Settings instance.
+			 * @param JAGC_Settings               $settings  Settings instance.
 			 */
-			$builder = apply_filters( 'aicc_prompt_builder', $builder, $message, $this->settings );
+			$builder = apply_filters( 'jagc_prompt_builder', $builder, $message, $this->settings );
 
 			// If lead capture is enabled, we need to use generate_text_result()
 			// to check for function calls. Otherwise we can use the simpler
@@ -447,8 +447,8 @@ class AICC_Chatbot {
 			}
 		} catch ( Throwable $e ) {
 			return new WP_Error(
-				'aicc_ai_error',
-				__( 'Failed to generate a response. Please try again.', 'ai-connector-chatbot' ),
+				'jagc_ai_error',
+				__( 'Failed to generate a response. Please try again.', 'just-another-generic-chatbot' ),
 				array( 'status' => 500 )
 			);
 		}//end try
@@ -456,8 +456,8 @@ class AICC_Chatbot {
 		// generate_text() returns string|WP_Error.
 		if ( is_wp_error( $reply ) ) {
 			return new WP_Error(
-				'aicc_ai_error',
-				$reply->get_error_message() ? $reply->get_error_message() : __( 'Failed to generate a response. Please try again.', 'ai-connector-chatbot' ),
+				'jagc_ai_error',
+				$reply->get_error_message() ? $reply->get_error_message() : __( 'Failed to generate a response. Please try again.', 'just-another-generic-chatbot' ),
 				array( 'status' => 500 )
 			);
 		}
@@ -538,7 +538,7 @@ class AICC_Chatbot {
 		 *
 		 * @param WP_AI_Client_Prompt_Builder $builder The prompt builder.
 		 */
-		$builder = apply_filters( 'aicc_after_function_call', $builder );
+		$builder = apply_filters( 'jagc_after_function_call', $builder );
 
 		$final_text = $builder->generate_text();
 
@@ -546,7 +546,7 @@ class AICC_Chatbot {
 		// from the API if it rejects the function response format. Detect
 		// known API error strings and provide a graceful fallback.
 		if ( is_wp_error( $final_text ) ) {
-			return __( 'I\'ve saved your information. Is there anything else I can help you with?', 'ai-connector-chatbot' );
+			return __( 'I\'ve saved your information. Is there anything else I can help you with?', 'just-another-generic-chatbot' );
 		}
 
 		// Some providers return error messages as plain strings instead
@@ -557,7 +557,7 @@ class AICC_Chatbot {
 			|| false !== stripos( $final_text, 'function response' )
 			|| ( false !== stripos( $final_text, 'invalid' ) && strlen( $final_text ) < 200 && stripos( $final_text, 'error' ) )
 		) {
-			return __( 'I\'ve saved your information. Is there anything else I can help you with?', 'ai-connector-chatbot' );
+			return __( 'I\'ve saved your information. Is there anything else I can help you with?', 'just-another-generic-chatbot' );
 		}
 
 		return $final_text;

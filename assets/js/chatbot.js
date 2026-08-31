@@ -1,5 +1,5 @@
 /**
- * AI Connector Chatbot — Frontend widget.
+ * Just Another Generic Chatbot — Frontend widget.
  *
  * Vanilla JavaScript (no build step required).
  * Creates a floating chat button and panel that communicates with the
@@ -9,19 +9,19 @@
 ( function () {
 	'use strict';
 
-	if ( typeof window.AICC_DATA === 'undefined' ) {
+	if ( typeof window.JAGC_DATA === 'undefined' ) {
 		return;
 	}
 
-	var data      = window.AICC_DATA;
+	var data      = window.JAGC_DATA;
 	var strings   = data.strings || {};
-	var container = document.querySelector( '.aicc-chatbot-container' );
+	var container = document.querySelector( '.jagc-chatbot-container' );
 
 	if ( ! container ) {
 		return;
 	}
 
-	var position        = container.getAttribute( 'data-aicc-position' ) || data.position || 'bottom-right';
+	var position        = container.getAttribute( 'data-jagc-position' ) || data.position || 'bottom-right';
 	var captchaToken    = null;
 	var captchaWidgetId = null;
 	var captchaReady    = false;
@@ -36,7 +36,7 @@
 
 	function createButton() {
 		var btn       = document.createElement( 'button' );
-		btn.className = 'aicc-chat-toggle';
+		btn.className = 'jagc-chat-toggle';
 		btn.setAttribute( 'type', 'button' );
 		btn.setAttribute( 'aria-label', strings.openChat || 'Open chat' );
 		btn.setAttribute( 'aria-expanded', 'false' );
@@ -49,7 +49,7 @@
 
 	function createPanel() {
 		var panel       = document.createElement( 'div' );
-		panel.className = 'aicc-chat-panel';
+		panel.className = 'jagc-chat-panel';
 		panel.setAttribute( 'role', 'dialog' );
 		panel.setAttribute( 'aria-label', data.title || 'Chat' );
 		panel.setAttribute( 'aria-modal', 'false' );
@@ -57,26 +57,26 @@
 
 		// Header.
 		var header       = document.createElement( 'div' );
-		header.className = 'aicc-chat-header';
+		header.className = 'jagc-chat-header';
 
 		var headerText       = document.createElement( 'div' );
-		headerText.className = 'aicc-chat-header-text';
+		headerText.className = 'jagc-chat-header-text';
 
 		var titleEl         = document.createElement( 'span' );
-		titleEl.className   = 'aicc-chat-title';
+		titleEl.className   = 'jagc-chat-title';
 		titleEl.textContent = data.title || 'Chat';
 		headerText.appendChild( titleEl );
 
 		if ( data.subtitle ) {
 			var subtitleEl         = document.createElement( 'span' );
-			subtitleEl.className   = 'aicc-chat-subtitle';
+			subtitleEl.className   = 'jagc-chat-subtitle';
 			subtitleEl.textContent = data.subtitle;
 			headerText.appendChild( subtitleEl );
 		}
 		header.appendChild( headerText );
 
 		var closeBtn       = document.createElement( 'button' );
-		closeBtn.className = 'aicc-chat-close';
+		closeBtn.className = 'jagc-chat-close';
 		closeBtn.setAttribute( 'type', 'button' );
 		closeBtn.setAttribute( 'aria-label', strings.closeChat || 'Close chat' );
 		closeBtn.innerHTML =
@@ -87,7 +87,7 @@
 
 		// Messages area.
 		var messagesEl       = document.createElement( 'div' );
-		messagesEl.className = 'aicc-chat-messages';
+		messagesEl.className = 'jagc-chat-messages';
 		messagesEl.setAttribute( 'role', 'log' );
 		messagesEl.setAttribute( 'aria-live', 'polite' );
 		messagesEl.setAttribute( 'aria-atomic', 'false' );
@@ -96,22 +96,22 @@
 		var captchaEl = null;
 		if ( data.captchaEnabled && data.captchaSiteKey ) {
 			captchaEl           = document.createElement( 'div' );
-			captchaEl.className = 'aicc-chat-captcha';
+			captchaEl.className = 'jagc-chat-captcha';
 		}
 
 		// Input area.
 		var inputWrap       = document.createElement( 'div' );
-		inputWrap.className = 'aicc-chat-input-area';
+		inputWrap.className = 'jagc-chat-input-area';
 
 		var input       = document.createElement( 'textarea' );
-		input.className = 'aicc-chat-input';
+		input.className = 'jagc-chat-input';
 		input.setAttribute( 'type', 'text' );
 		input.setAttribute( 'placeholder', strings.placeholder || 'Type your message…' );
 		input.setAttribute( 'rows', '1' );
 		input.setAttribute( 'aria-label', strings.placeholder || 'Type your message…' );
 
 		var sendBtn       = document.createElement( 'button' );
-		sendBtn.className = 'aicc-chat-send';
+		sendBtn.className = 'jagc-chat-send';
 		sendBtn.setAttribute( 'type', 'button' );
 		sendBtn.setAttribute( 'aria-label', strings.send || 'Send' );
 		sendBtn.innerHTML =
@@ -181,18 +181,18 @@
 
 	function addMessage( role, content, storeInState ) {
 		var msg       = document.createElement( 'div' );
-		msg.className = 'aicc-message aicc-message--' + role;
+		msg.className = 'jagc-message jagc-message--' + role;
 
 		var avatar       = document.createElement( 'span' );
-		avatar.className = 'aicc-message-avatar';
+		avatar.className = 'jagc-message-avatar';
 		avatar.setAttribute( 'aria-hidden', 'true' );
 		avatar.textContent = role === 'user' ? 'U' : 'AI';
 
 		var bubble       = document.createElement( 'div' );
-		bubble.className = 'aicc-message-bubble';
+		bubble.className = 'jagc-message-bubble';
 
 		var text       = document.createElement( 'div' );
-		text.className = 'aicc-message-text';
+		text.className = 'jagc-message-text';
 		text.innerHTML = formatMessage( content );
 
 		bubble.appendChild( text );
@@ -223,17 +223,17 @@
 
 	function showTyping() {
 		var msg       = document.createElement( 'div' );
-		msg.className = 'aicc-message aicc-message--assistant aicc-typing-indicator';
+		msg.className = 'jagc-message jagc-message--assistant jagc-typing-indicator';
 		msg.setAttribute( 'aria-label', strings.typing || 'Assistant is typing…' );
 
 		var avatar       = document.createElement( 'span' );
-		avatar.className = 'aicc-message-avatar';
+		avatar.className = 'jagc-message-avatar';
 		avatar.setAttribute( 'aria-hidden', 'true' );
 		avatar.textContent = 'AI';
 
 		var dots       = document.createElement( 'div' );
-		dots.className = 'aicc-message-bubble';
-		dots.innerHTML = '<span class="aicc-typing-dot"></span><span class="aicc-typing-dot"></span><span class="aicc-typing-dot"></span>';
+		dots.className = 'jagc-message-bubble';
+		dots.innerHTML = '<span class="jagc-typing-dot"></span><span class="jagc-typing-dot"></span><span class="jagc-typing-dot"></span>';
 
 		msg.appendChild( avatar );
 		msg.appendChild( dots );
@@ -330,13 +330,13 @@
 						}
 					} else {
 						var errorMsg = ( result.json && result.json.message ) ? result.json.message : ( strings.error || 'Something went wrong.' );
-						if ( result.json && result.json.code === 'aicc_spam_blocked' ) {
+						if ( result.json && result.json.code === 'jagc_spam_blocked' ) {
 							errorMsg = strings.spamBlocked || errorMsg;
 						}
-						if ( result.json && result.json.code === 'aicc_ai_unavailable' ) {
+						if ( result.json && result.json.code === 'jagc_ai_unavailable' ) {
 							errorMsg = strings.aiUnavailable || errorMsg;
 						}
-						if ( result.json && result.json.code === 'aicc_captcha_failed' ) {
+						if ( result.json && result.json.code === 'jagc_captcha_failed' ) {
 							errorMsg = strings.captchaFailed || errorMsg;
 						}
 						addMessage( 'assistant', errorMsg );
@@ -372,7 +372,7 @@
 		state.isOpen = true;
 		elements.panel.removeAttribute( 'hidden' );
 		toggleBtn.setAttribute( 'aria-expanded', 'true' );
-		toggleBtn.classList.add( 'aicc-chat-toggle--active' );
+		toggleBtn.classList.add( 'jagc-chat-toggle--active' );
 
 		// Add welcome message on first open. Don't store it in conversation
 		// state — it's a greeting, not part of the chat history, and the AI
@@ -418,7 +418,7 @@
 		state.isOpen = false;
 		elements.panel.setAttribute( 'hidden', '' );
 		toggleBtn.setAttribute( 'aria-expanded', 'false' );
-		toggleBtn.classList.remove( 'aicc-chat-toggle--active' );
+		toggleBtn.classList.remove( 'jagc-chat-toggle--active' );
 	}
 
 	function autoResize() {
@@ -438,7 +438,7 @@
 
 	// ── Initialization ──────────────────────────────────────────────
 
-	container.classList.add( 'aicc-position-' + position );
+	container.classList.add( 'jagc-position-' + position );
 
 	var toggleBtn = createButton();
 	var elements  = createPanel();

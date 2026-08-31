@@ -2,13 +2,13 @@
 /**
  * Uninstall handler — removes all plugin data.
  *
- * @package AI_Connector_Chatbot
+ * @package Just_Another_Generic_Chatbot
  */
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
 // Delete the settings option.
-delete_option( 'aicc_settings' );
+delete_option( 'jagc_settings' );
 
 // Delete rate-limit transients.
 //
@@ -20,21 +20,21 @@ $wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, Word
 		"DELETE FROM {$wpdb->options}
 		 WHERE option_name LIKE %s
 		    OR option_name LIKE %s",
-		$wpdb->esc_like( '_transient_aicc_rate_' ) . '%',
-		$wpdb->esc_like( '_transient_timeout_aicc_rate_' ) . '%'
+		$wpdb->esc_like( '_transient_jagc_rate_' ) . '%',
+		$wpdb->esc_like( '_transient_timeout_jagc_rate_' ) . '%'
 	)
 );
 
 // Delete all knowledge base articles.
-$aicc_kb_posts = get_posts(
+$jagc_kb_posts = get_posts(
 	array(
-		'post_type'      => 'aicc_article',
+		'post_type'      => 'jagc_article',
 		'post_status'    => 'any',
 		'posts_per_page' => -1,
 		'fields'         => 'ids',
 	)
 );
 
-foreach ( $aicc_kb_posts as $aicc_post_id ) {
-	wp_delete_post( $aicc_post_id, true );
+foreach ( $jagc_kb_posts as $jagc_post_id ) {
+	wp_delete_post( $jagc_post_id, true );
 }

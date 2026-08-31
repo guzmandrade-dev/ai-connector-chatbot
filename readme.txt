@@ -1,4 +1,4 @@
-=== AI Connector Chatbot ===
+=== Just Another Generic Chatbot ===
 Contributors: h4l9k
 Tags: chatbot, ai, chat, spam, captcha
 Requires at least: 7.0
@@ -12,12 +12,12 @@ AI-powered frontend chatbot with a knowledge base, Akismet spam protection, and 
 
 == Description ==
 
-AI Connector Chatbot adds an AI-powered chatbot to the frontend of your WordPress site. It leverages the WordPress 7.0 Connectors API and the PHP AI Client SDK — meaning no custom AI provider integration code is needed. Configure your AI provider under **Settings › Connectors** and you're ready.
+Just Another Generic Chatbot adds an AI-powered chatbot to the frontend of your WordPress site. It leverages the WordPress 7.0 Connectors API and the PHP AI Client SDK — meaning no custom AI provider integration code is needed. Configure your AI provider under **Settings › Connectors** and you're ready.
 
 = Features =
 
 * **Frontend Chat Widget** — A floating chat button that opens a conversational panel. Place it site-wide or via shortcode.
-* **Knowledge Base** — A custom post type (`aicc_article`) for curated content the chatbot can reference. The article content is where you write the information the chatbot should know. Optionally include standard posts and pages as context.
+* **Knowledge Base** — A custom post type (`jagc_article`) for curated content the chatbot can reference. The article content is where you write the information the chatbot should know. Optionally include standard posts and pages as context.
 * **Spam Protection** — Integrates with Akismet to detect and block spam messages. Falls back to rate-limiting when Akismet is not available.
 * **Captcha Protection** — Integrates with the Simple CAPTCHA with Cloudflare Turnstile plugin to verify human visitors before they can send messages.
 * **Lead Capture** — Uses AI function calling to detect when users share contact information in conversation and automatically saves leads. Delivers via email and/or webhook (connects to Zapier, Make, n8n, Google Sheets, CRMs). No forms or database tables needed.
@@ -33,9 +33,9 @@ AI Connector Chatbot adds an AI-powered chatbot to the frontend of your WordPres
 
 == Installation ==
 
-1. Upload the `ai-connector-chatbot` folder to `/wp-content/plugins/`.
+1. Upload the `just-another-generic-chatbot` folder to `/wp-content/plugins/`.
 2. Activate the plugin through the **Plugins** menu in WordPress.
-3. Navigate to **Settings › AI Connector Chatbot** to configure the chatbot.
+3. Navigate to **Settings › Just Another Generic Chatbot** to configure the chatbot.
 4. Enable the chatbot toggle and configure the system instructions.
 5. Ensure an AI provider connector is installed and configured under **Settings › Connectors**.
 6. Optionally install and activate Akismet for spam protection.
@@ -45,15 +45,15 @@ AI Connector Chatbot adds an AI-powered chatbot to the frontend of your WordPres
 
 = Where do I configure my AI API key? =
 
-AI Connector Chatbot does not manage API keys. Use the WordPress 7.0 **Settings › Connectors** screen to register and configure AI providers (OpenAI, Anthropic, Google, etc.).
+Just Another Generic Chatbot does not manage API keys. Use the WordPress 7.0 **Settings › Connectors** screen to register and configure AI providers (OpenAI, Anthropic, Google, etc.).
 
 = Can I use the chatbot on specific pages only? =
 
-Yes. Use the `[aicc_chatbot]` shortcode on any page or post. For a site-wide floating widget, enable it in the plugin settings.
+Yes. Use the `[jagc_chatbot]` shortcode on any page or post. For a site-wide floating widget, enable it in the plugin settings.
 
 = How does the knowledge base work? =
 
-Knowledge Base Articles (the `aicc_article` custom post type) are the primary knowledge source. You create articles with a title and content — the content is where you write the information/instructions the chatbot should know. You can also include standard posts and pages. The plugin retrieves relevant content based on keywords in the user's message and includes it as context for the AI.
+Knowledge Base Articles (the `jagc_article` custom post type) are the primary knowledge source. You create articles with a title and content — the content is where you write the information/instructions the chatbot should know. You can also include standard posts and pages. The plugin retrieves relevant content based on keywords in the user's message and includes it as context for the AI.
 
 = What happens if Akismet is not installed? =
 
@@ -68,9 +68,9 @@ Captcha uses Cloudflare Turnstile via the "Simple CAPTCHA with Cloudflare Turnst
 = 1.0.0 =
 * Initial release.
 * Frontend chatbot widget (floating button + chat panel).
-* Knowledge base via `aicc_article` custom post type with keyword-based context retrieval.
+* Knowledge base via `jagc_article` custom post type with keyword-based context retrieval.
 * Akismet spam integration with rate-limiting fallback.
 * Cloudflare Turnstile captcha integration via Simple CAPTCHA plugin.
 * Lead capture via AI function calling — delivers leads via email and/or webhook (Zapier, Make, n8n, Google Sheets, CRMs).
-* Admin settings page under Settings › AI Connector Chatbot.
+* Admin settings page under Settings › Just Another Generic Chatbot.
 * Leverages WordPress 7.0 Connectors API and PHP AI Client SDK.

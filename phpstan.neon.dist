@@ -4,7 +4,7 @@ parameters:
   level: 9
   phpVersion: 80000
   paths:
-    - ai-connector-chatbot.php
+    - just-another-generic-chatbot.php
     - uninstall.php
   scanDirectories:
     - includes

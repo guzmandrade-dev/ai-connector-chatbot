@@ -2,3 +2,4 @@ composer.lock
 /vendor/
 /dist/*
 !/dist/.gitkeep
+*.zip
