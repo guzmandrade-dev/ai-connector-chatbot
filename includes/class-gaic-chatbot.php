@@ -179,10 +179,12 @@ class GAIC_Chatbot {
 
 		$user = wp_get_current_user();
 
-		// Optional Gravatar for the assistant. get_avatar_url() resolves the
-		// same Gravatar + default-avatar fallback used by comment avatars.
+		// Optional Gravatar for the assistant. get_avatar_url() mirrors the
+		// comment-avatar behavior in Settings › Discussion: an email without
+		// a Gravatar, or no email at all, falls back to the site's default
+		// avatar.
 		$avatar_email = sanitize_email( (string) $this->settings->get( 'avatar_email', '' ) );
-		$avatar_url   = $avatar_email ? get_avatar_url( $avatar_email, array( 'size' => 64 ) ) : false;
+		$avatar_url   = get_avatar_url( $avatar_email, array( 'size' => 64 ) );
 
 		$data = array(
 			'restUrl'        => esc_url_raw( rest_url( self::REST_NAMESPACE . '/chat' ) ),

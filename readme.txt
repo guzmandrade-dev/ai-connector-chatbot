@@ -53,7 +53,7 @@ Yes. Use the `[gaic_chatbot]` shortcode on any page or post. For a site-wide flo
 
 = Can I show a Gravatar instead of the "AI" badge? =
 
-Yes. Enter an email address in the "Assistant avatar email" field in the plugin settings and the assistant's messages will display its Gravatar. If the email has no Gravatar, your default avatar from Settings › Discussion is used — the same fallback as comment avatars. Leave the field empty to keep the default badge.
+Yes. Enter an email address in the "Assistant avatar email" field in the plugin settings and the assistant's messages will display its Gravatar. If the email has no Gravatar, or the field is empty, your default avatar from Settings › Discussion is used — the same fallback as comment avatars.
 
 = How does the knowledge base work? =
 
