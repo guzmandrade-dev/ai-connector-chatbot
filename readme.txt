@@ -4,7 +4,7 @@ Tags: chatbot, ai, chat, spam, captcha
 Requires at least: 7.0
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,11 @@ Rate-limiting is used as a fallback. Each IP address can send a limited number o
 Captcha uses Cloudflare Turnstile via the "Simple CAPTCHA with Cloudflare Turnstile" plugin. After installing and configuring that plugin (Settings › Cloudflare Turnstile), enable captcha in the chatbot settings. A Turnstile challenge widget will appear in the chat panel before users can send their first message.
 
 == Changelog ==
+
+= 1.1.0 =
+* Renamed the plugin from AI Connector Chatbot to Just Another Generic Chatbot.
+* Added an optional Gravatar for the assistant, configured by email in the plugin settings.
+* The assistant avatar falls back to your default avatar from Settings › Discussion, the same fallback as comment avatars.
 
 = 1.0.0 =
 * Initial release.

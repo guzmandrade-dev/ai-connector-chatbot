@@ -7,6 +7,12 @@
  * a plugin's slug from its folder name, so a mismatch makes Plugin Check
  * report text domain errors after the archive is installed.
  *
+ * This wp-cli version also appends to an existing archive instead of
+ * replacing it, so trees from earlier builds can accumulate. When more
+ * than one root folder is found, only the most recently added tree is
+ * kept, because dist-archive appends fresh content after existing
+ * entries.
+ *
  * Usage: php bin/normalize-zip-dirname.php <archive.zip> <slug>
  *
  * @package Just_Another_Generic_Chatbot
@@ -35,49 +41,86 @@ if ( true !== $zip->open( $archive ) ) {
 }
 
 $num_entries = $zip->count();
-$prefix      = null;
 
-// Determine the current root folder from the first directory entry.
+if ( 0 === $num_entries ) {
+	fwrite( STDERR, "Archive is empty: {$archive}\n" );
+	$zip->close();
+	exit( 2 );
+}
+
+// Track the highest entry index per root folder.
+$roots = array();
+
 for ( $i = 0; $i < $num_entries; $i++ ) {
-	$name = $zip->getNameIndex( $i );
+	$name  = $zip->getNameIndex( $i );
+	$slash = strpos( $name, '/' );
+	$root  = ( false === $slash ) ? '' : substr( $name, 0, $slash );
 
-	if ( null === $prefix && str_contains( $name, '/' ) ) {
-		$prefix = strstr( $name, '/', true ) . '/';
-		break;
+	if ( ! isset( $roots[ $root ] ) || $roots[ $root ] < $i ) {
+		$roots[ $root ] = $i;
 	}
 }
 
-if ( null === $prefix ) {
+// The most recently added tree has the highest entry index.
+$latest = array_search( max( $roots ), $roots, true );
+
+if ( '' === $latest ) {
 	fwrite( STDERR, "Could not determine the archive's root folder.\n" );
 	$zip->close();
 	exit( 2 );
 }
 
-if ( $prefix === $slug . '/' ) {
+if ( 1 === count( $roots ) && $slug === $latest ) {
 	fwrite( STDOUT, "Archive root folder already matches the slug.\n" );
 	$zip->close();
 	exit( 0 );
 }
 
-$failures = 0;
+// Rebuild the archive keeping only the latest tree, renamed to the slug.
+$tmp_name = $archive . '.tmp';
+$tmp      = new ZipArchive();
 
-for ( $i = 0; $i < $num_entries; $i++ ) {
-	$name = $zip->getNameIndex( $i );
-
-	if ( 0 !== strpos( $name, $prefix ) ) {
-		continue;
-	}
-
-	if ( ! $zip->renameIndex( $i, $slug . '/' . substr( $name, strlen( $prefix ) ) ) ) {
-		fwrite( STDERR, "Could not rename entry: {$name}\n" );
-		$failures++;
-	}
-}
-
-$zip->close();
-
-if ( 0 !== $failures ) {
+if ( true !== $tmp->open( $tmp_name, ZipArchive::CREATE | ZipArchive::OVERWRITE ) ) {
+	fwrite( STDERR, "Could not create temporary archive: {$tmp_name}\n" );
+	$zip->close();
 	exit( 3 );
 }
 
-fwrite( STDOUT, "Renamed archive root folder from {$prefix} to {$slug}/.\n" );
+$kept      = 0;
+$discarded = 0;
+$renamed   = 0;
+
+for ( $i = 0; $i < $num_entries; $i++ ) {
+	$name  = $zip->getNameIndex( $i );
+	$slash = strpos( $name, '/' );
+	$root  = ( false === $slash ) ? '' : substr( $name, 0, $slash );
+
+	if ( $latest !== $root ) {
+		$discarded++;
+		continue;
+	}
+
+	$new_name = ( $slug === $root ) ? $name : $slug . '/' . substr( $name, $slash + 1 );
+
+	if ( '/' === substr( $new_name, -1 ) ) {
+		$tmp->addEmptyDir( rtrim( $new_name, '/' ) );
+	} else {
+		$tmp->addFromString( $new_name, $zip->getFromIndex( $i ) );
+	}
+
+	if ( $new_name !== $name ) {
+		$renamed++;
+	}
+
+	$kept++;
+}
+
+$zip->close();
+$tmp->close();
+
+if ( ! unlink( $archive ) || ! rename( $tmp_name, $archive ) ) {
+	fwrite( STDERR, "Could not replace archive: {$archive}\n" );
+	exit( 3 );
+}
+
+fwrite( STDOUT, "Archive root folder is now {$slug}/ — kept {$kept} entries, renamed {$renamed}, discarded {$discarded} stale entries.\n" );
