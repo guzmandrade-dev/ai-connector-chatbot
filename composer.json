@@ -22,7 +22,7 @@
         "lint": "phpcs",
         "lint:fix": "phpcbf",
         "analyze": "phpstan --memory-limit=1G",
-        "build": "wp dist-archive . just-another-generic-chatbot.zip"
+        "build": "wp i18n make-pot . languages/just-another-generic-chatbot.pot --slug=just-another-generic-chatbot && wp dist-archive . just-another-generic-chatbot.zip"
     },
     "config": {
         "allow-plugins": {
