@@ -178,6 +178,12 @@ class GAIC_Chatbot {
 		$this->captcha->enqueue_scripts();
 
 		$user = wp_get_current_user();
+
+		// Optional Gravatar for the assistant. get_avatar_url() resolves the
+		// same Gravatar + default-avatar fallback used by comment avatars.
+		$avatar_email = sanitize_email( (string) $this->settings->get( 'avatar_email', '' ) );
+		$avatar_url   = $avatar_email ? get_avatar_url( $avatar_email, array( 'size' => 64 ) ) : false;
+
 		$data = array(
 			'restUrl'        => esc_url_raw( rest_url( self::REST_NAMESPACE . '/chat' ) ),
 			'nonce'          => wp_create_nonce( 'wp_rest' ),
@@ -186,6 +192,7 @@ class GAIC_Chatbot {
 			'welcomeMessage' => $this->settings->get( 'welcome_message', __( 'Hello! How can I help you today?', 'guzmandrade-ai-chatbot' ) ),
 			'position'       => $this->settings->get( 'position', 'bottom-right' ),
 			'userName'       => $user->exists() ? $user->display_name : '',
+			'avatarUrl'      => $avatar_url ? esc_url_raw( $avatar_url ) : '',
 			'captchaEnabled' => $this->captcha->is_enabled(),
 			'captchaSiteKey' => $this->captcha->is_enabled() ? $this->captcha->get_site_key() : '',
 			'strings'        => array(

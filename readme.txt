@@ -51,6 +51,10 @@ Guzmandrade AI Chatbot does not manage API keys. Use the WordPress 7.0 **Setting
 
 Yes. Use the `[gaic_chatbot]` shortcode on any page or post. For a site-wide floating widget, enable it in the plugin settings.
 
+= Can I show a Gravatar instead of the "AI" badge? =
+
+Yes. Enter an email address in the "Assistant avatar email" field in the plugin settings and the assistant's messages will display its Gravatar. If the email has no Gravatar, your default avatar from Settings › Discussion is used — the same fallback as comment avatars. Leave the field empty to keep the default badge.
+
 = How does the knowledge base work? =
 
 Knowledge Base Articles (the `gaic_article` custom post type) are the primary knowledge source. You create articles with a title and content — the content is where you write the information/instructions the chatbot should know. You can also include standard posts and pages. The plugin retrieves relevant content based on keywords in the user's message and includes it as context for the AI.
