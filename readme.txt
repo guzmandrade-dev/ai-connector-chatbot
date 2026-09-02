@@ -4,7 +4,7 @@ Tags: chatbot, ai, chat, spam, captcha
 Requires at least: 7.0
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,8 +69,11 @@ Captcha uses Cloudflare Turnstile via the "Simple CAPTCHA with Cloudflare Turnst
 
 == Changelog ==
 
+= 1.1.1 =
+* Renamed the plugin from Just Another Generic Chatbot to Guzmandrade AI Chatbot.
+
 = 1.1.0 =
-* Renamed the plugin from AI Connector Chatbot to Guzmandrade AI Chatbot.
+* Renamed the plugin from AI Connector Chatbot to Just Another Generic Chatbot.
 * Added an optional Gravatar for the assistant, configured by email in the plugin settings.
 * The assistant avatar falls back to your default avatar from Settings › Discussion, the same fallback as comment avatars.
 
