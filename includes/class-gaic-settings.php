@@ -2,7 +2,7 @@
 /**
  * Settings module — manages plugin options and the admin settings page.
  *
- * @package Just_Another_Generic_Chatbot
+ * @package Guzmandrade_AI_Chatbot
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -10,10 +10,10 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Handles all plugin settings, their registration, and the admin UI.
  */
-class JAGC_Settings {
+class GAIC_Settings {
 
 	/** Option key used in the options table. */
-	const OPTION_KEY = 'jagc_settings';
+	const OPTION_KEY = 'gaic_settings';
 
 	/**
 	 * Cached settings.
@@ -38,13 +38,13 @@ class JAGC_Settings {
 	public static function get_defaults(): array {
 		return array(
 			'enabled'              => false,
-			'title'                => __( 'Chat with us', 'just-another-generic-chatbot' ),
-			'subtitle'             => __( 'We typically reply in a moment', 'just-another-generic-chatbot' ),
+			'title'                => __( 'Chat with us', 'guzmandrade-ai-chatbot' ),
+			'subtitle'             => __( 'We typically reply in a moment', 'guzmandrade-ai-chatbot' ),
 			'position'             => 'bottom-right',
-			'welcome_message'      => __( 'Hello! How can I help you today?', 'just-another-generic-chatbot' ),
-			'system_prompt'        => __( 'You are a helpful assistant for this website. Answer questions accurately and concisely. If you do not know the answer, say so. Use only the provided knowledge base context to answer questions about this site.', 'just-another-generic-chatbot' ),
+			'welcome_message'      => __( 'Hello! How can I help you today?', 'guzmandrade-ai-chatbot' ),
+			'system_prompt'        => __( 'You are a helpful assistant for this website. Answer questions accurately and concisely. If you do not know the answer, say so. Use only the provided knowledge base context to answer questions about this site.', 'guzmandrade-ai-chatbot' ),
 			'max_context_length'   => 4000,
-			'kb_post_types'        => array( 'jagc_article', 'post', 'page' ),
+			'kb_post_types'        => array( 'gaic_article', 'post', 'page' ),
 			'spam_protection'      => true,
 			'rate_limit'           => 10,
 			'max_tokens'           => 1000,
@@ -99,10 +99,10 @@ class JAGC_Settings {
 	 */
 	public function add_settings_page(): void {
 		add_options_page(
-			__( 'Just Another Generic Chatbot', 'just-another-generic-chatbot' ),
-			__( 'Just Another Generic Chatbot', 'just-another-generic-chatbot' ),
+			__( 'Guzmandrade AI Chatbot', 'guzmandrade-ai-chatbot' ),
+			__( 'Guzmandrade AI Chatbot', 'guzmandrade-ai-chatbot' ),
 			'manage_options',
-			'just-another-generic-chatbot',
+			'guzmandrade-ai-chatbot',
 			array( $this, 'render_settings_page' )
 		);
 	}
@@ -112,7 +112,7 @@ class JAGC_Settings {
 	 */
 	public function register_settings(): void {
 		register_setting(
-			'jagc_settings_group',
+			'gaic_settings_group',
 			self::OPTION_KEY,
 			array(
 				'sanitize_callback' => array( $this, 'sanitize_settings' ),
@@ -121,128 +121,128 @@ class JAGC_Settings {
 
 		// General section.
 		add_settings_section(
-			'jagc_general',
-			__( 'Chatbot', 'just-another-generic-chatbot' ),
+			'gaic_general',
+			__( 'Chatbot', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_general_intro' ),
-			'just-another-generic-chatbot'
+			'guzmandrade-ai-chatbot'
 		);
 
 		add_settings_field(
 			'enabled',
-			__( 'Enable chatbot', 'just-another-generic-chatbot' ),
+			__( 'Enable chatbot', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_checkbox' ),
-			'just-another-generic-chatbot',
-			'jagc_general',
+			'guzmandrade-ai-chatbot',
+			'gaic_general',
 			array(
-				'label_for' => 'jagc_enabled',
+				'label_for' => 'gaic_enabled',
 				'key'       => 'enabled',
 			)
 		);
 
 		add_settings_field(
 			'title',
-			__( 'Title', 'just-another-generic-chatbot' ),
+			__( 'Title', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_text_input' ),
-			'just-another-generic-chatbot',
-			'jagc_general',
+			'guzmandrade-ai-chatbot',
+			'gaic_general',
 			array(
-				'label_for' => 'jagc_title',
+				'label_for' => 'gaic_title',
 				'key'       => 'title',
 			)
 		);
 
 		add_settings_field(
 			'subtitle',
-			__( 'Subtitle', 'just-another-generic-chatbot' ),
+			__( 'Subtitle', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_text_input' ),
-			'just-another-generic-chatbot',
-			'jagc_general',
+			'guzmandrade-ai-chatbot',
+			'gaic_general',
 			array(
-				'label_for' => 'jagc_subtitle',
+				'label_for' => 'gaic_subtitle',
 				'key'       => 'subtitle',
 			)
 		);
 
 		add_settings_field(
 			'welcome_message',
-			__( 'Welcome message', 'just-another-generic-chatbot' ),
+			__( 'Welcome message', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_textarea' ),
-			'just-another-generic-chatbot',
-			'jagc_general',
+			'guzmandrade-ai-chatbot',
+			'gaic_general',
 			array(
-				'label_for' => 'jagc_welcome_message',
+				'label_for' => 'gaic_welcome_message',
 				'key'       => 'welcome_message',
 			)
 		);
 
 		add_settings_field(
 			'position',
-			__( 'Position', 'just-another-generic-chatbot' ),
+			__( 'Position', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_select' ),
-			'just-another-generic-chatbot',
-			'jagc_general',
+			'guzmandrade-ai-chatbot',
+			'gaic_general',
 			array(
-				'label_for' => 'jagc_position',
+				'label_for' => 'gaic_position',
 				'key'       => 'position',
 				'options'   => array(
-					'bottom-right' => __( 'Bottom right', 'just-another-generic-chatbot' ),
-					'bottom-left'  => __( 'Bottom left', 'just-another-generic-chatbot' ),
+					'bottom-right' => __( 'Bottom right', 'guzmandrade-ai-chatbot' ),
+					'bottom-left'  => __( 'Bottom left', 'guzmandrade-ai-chatbot' ),
 				),
 			)
 		);
 
 		// AI section.
 		add_settings_section(
-			'jagc_ai',
-			__( 'AI Configuration', 'just-another-generic-chatbot' ),
+			'gaic_ai',
+			__( 'AI Configuration', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_ai_intro' ),
-			'just-another-generic-chatbot'
+			'guzmandrade-ai-chatbot'
 		);
 
 		add_settings_field(
 			'system_prompt',
-			__( 'System instructions', 'just-another-generic-chatbot' ),
+			__( 'System instructions', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_textarea' ),
-			'just-another-generic-chatbot',
-			'jagc_ai',
+			'guzmandrade-ai-chatbot',
+			'gaic_ai',
 			array(
-				'label_for' => 'jagc_system_prompt',
+				'label_for' => 'gaic_system_prompt',
 				'key'       => 'system_prompt',
 			)
 		);
 
 		add_settings_field(
 			'ai_provider',
-			__( 'AI provider', 'just-another-generic-chatbot' ),
+			__( 'AI provider', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_provider_select' ),
-			'just-another-generic-chatbot',
-			'jagc_ai',
+			'guzmandrade-ai-chatbot',
+			'gaic_ai',
 			array(
-				'label_for' => 'jagc_ai_provider',
+				'label_for' => 'gaic_ai_provider',
 				'key'       => 'ai_provider',
 			)
 		);
 
 		add_settings_field(
 			'ai_model',
-			__( 'Model (optional)', 'just-another-generic-chatbot' ),
+			__( 'Model (optional)', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_text_input' ),
-			'just-another-generic-chatbot',
-			'jagc_ai',
+			'guzmandrade-ai-chatbot',
+			'gaic_ai',
 			array(
-				'label_for' => 'jagc_ai_model',
+				'label_for' => 'gaic_ai_model',
 				'key'       => 'ai_model',
 			)
 		);
 
 		add_settings_field(
 			'temperature',
-			__( 'Temperature', 'just-another-generic-chatbot' ),
+			__( 'Temperature', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_number_input' ),
-			'just-another-generic-chatbot',
-			'jagc_ai',
+			'guzmandrade-ai-chatbot',
+			'gaic_ai',
 			array(
-				'label_for' => 'jagc_temperature',
+				'label_for' => 'gaic_temperature',
 				'key'       => 'temperature',
 				'min'       => 0,
 				'max'       => 2,
@@ -252,12 +252,12 @@ class JAGC_Settings {
 
 		add_settings_field(
 			'max_tokens',
-			__( 'Max tokens', 'just-another-generic-chatbot' ),
+			__( 'Max tokens', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_number_input' ),
-			'just-another-generic-chatbot',
-			'jagc_ai',
+			'guzmandrade-ai-chatbot',
+			'gaic_ai',
 			array(
-				'label_for' => 'jagc_max_tokens',
+				'label_for' => 'gaic_max_tokens',
 				'key'       => 'max_tokens',
 				'min'       => 100,
 				'max'       => 8000,
@@ -267,18 +267,18 @@ class JAGC_Settings {
 
 		// Knowledge Base section.
 		add_settings_section(
-			'jagc_kb',
-			__( 'Knowledge Base', 'just-another-generic-chatbot' ),
+			'gaic_kb',
+			__( 'Knowledge Base', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_kb_intro' ),
-			'just-another-generic-chatbot'
+			'guzmandrade-ai-chatbot'
 		);
 
 		add_settings_field(
 			'kb_post_types',
-			__( 'Post types to include', 'just-another-generic-chatbot' ),
+			__( 'Post types to include', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_post_types_checkboxes' ),
-			'just-another-generic-chatbot',
-			'jagc_kb',
+			'guzmandrade-ai-chatbot',
+			'gaic_kb',
 			array(
 				'key' => 'kb_post_types',
 			)
@@ -286,12 +286,12 @@ class JAGC_Settings {
 
 		add_settings_field(
 			'max_context_length',
-			__( 'Max context length (chars)', 'just-another-generic-chatbot' ),
+			__( 'Max context length (chars)', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_number_input' ),
-			'just-another-generic-chatbot',
-			'jagc_kb',
+			'guzmandrade-ai-chatbot',
+			'gaic_kb',
 			array(
-				'label_for' => 'jagc_max_context_length',
+				'label_for' => 'gaic_max_context_length',
 				'key'       => 'max_context_length',
 				'min'       => 500,
 				'max'       => 32000,
@@ -301,32 +301,32 @@ class JAGC_Settings {
 
 		// Spam section.
 		add_settings_section(
-			'jagc_spam',
-			__( 'Spam Protection', 'just-another-generic-chatbot' ),
+			'gaic_spam',
+			__( 'Spam Protection', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_spam_intro' ),
-			'just-another-generic-chatbot'
+			'guzmandrade-ai-chatbot'
 		);
 
 		add_settings_field(
 			'spam_protection',
-			__( 'Enable spam protection', 'just-another-generic-chatbot' ),
+			__( 'Enable spam protection', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_checkbox' ),
-			'just-another-generic-chatbot',
-			'jagc_spam',
+			'guzmandrade-ai-chatbot',
+			'gaic_spam',
 			array(
-				'label_for' => 'jagc_spam_protection',
+				'label_for' => 'gaic_spam_protection',
 				'key'       => 'spam_protection',
 			)
 		);
 
 		add_settings_field(
 			'rate_limit',
-			__( 'Rate limit (messages per hour per user)', 'just-another-generic-chatbot' ),
+			__( 'Rate limit (messages per hour per user)', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_number_input' ),
-			'just-another-generic-chatbot',
-			'jagc_spam',
+			'guzmandrade-ai-chatbot',
+			'gaic_spam',
 			array(
-				'label_for' => 'jagc_rate_limit',
+				'label_for' => 'gaic_rate_limit',
 				'key'       => 'rate_limit',
 				'min'       => 1,
 				'max'       => 100,
@@ -336,64 +336,64 @@ class JAGC_Settings {
 
 		// Captcha section.
 		add_settings_section(
-			'jagc_captcha',
-			__( 'Captcha Protection', 'just-another-generic-chatbot' ),
+			'gaic_captcha',
+			__( 'Captcha Protection', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_captcha_intro' ),
-			'just-another-generic-chatbot'
+			'guzmandrade-ai-chatbot'
 		);
 
 		add_settings_field(
 			'captcha_enabled',
-			__( 'Enable captcha', 'just-another-generic-chatbot' ),
+			__( 'Enable captcha', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_checkbox' ),
-			'just-another-generic-chatbot',
-			'jagc_captcha',
+			'guzmandrade-ai-chatbot',
+			'gaic_captcha',
 			array(
-				'label_for' => 'jagc_captcha_enabled',
+				'label_for' => 'gaic_captcha_enabled',
 				'key'       => 'captcha_enabled',
 			)
 		);
 
 		// Lead Capture section.
 		add_settings_section(
-			'jagc_leads',
-			__( 'Lead Capture', 'just-another-generic-chatbot' ),
+			'gaic_leads',
+			__( 'Lead Capture', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_leads_intro' ),
-			'just-another-generic-chatbot'
+			'guzmandrade-ai-chatbot'
 		);
 
 		add_settings_field(
 			'lead_capture_enabled',
-			__( 'Enable lead capture', 'just-another-generic-chatbot' ),
+			__( 'Enable lead capture', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_checkbox' ),
-			'just-another-generic-chatbot',
-			'jagc_leads',
+			'guzmandrade-ai-chatbot',
+			'gaic_leads',
 			array(
-				'label_for' => 'jagc_lead_capture_enabled',
+				'label_for' => 'gaic_lead_capture_enabled',
 				'key'       => 'lead_capture_enabled',
 			)
 		);
 
 		add_settings_field(
 			'lead_email',
-			__( 'Lead notification email', 'just-another-generic-chatbot' ),
+			__( 'Lead notification email', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_text_input' ),
-			'just-another-generic-chatbot',
-			'jagc_leads',
+			'guzmandrade-ai-chatbot',
+			'gaic_leads',
 			array(
-				'label_for' => 'jagc_lead_email',
+				'label_for' => 'gaic_lead_email',
 				'key'       => 'lead_email',
 			)
 		);
 
 		add_settings_field(
 			'lead_webhook_url',
-			__( 'Webhook URL (optional)', 'just-another-generic-chatbot' ),
+			__( 'Webhook URL (optional)', 'guzmandrade-ai-chatbot' ),
 			array( $this, 'render_text_input' ),
-			'just-another-generic-chatbot',
-			'jagc_leads',
+			'guzmandrade-ai-chatbot',
+			'gaic_leads',
 			array(
-				'label_for' => 'jagc_lead_webhook_url',
+				'label_for' => 'gaic_lead_webhook_url',
 				'key'       => 'lead_webhook_url',
 			)
 		);
@@ -438,7 +438,7 @@ class JAGC_Settings {
 		$submitted_types        = $input['kb_post_types'] ?? array();
 		$clean['kb_post_types'] = array_values( array_intersect( $allowed_type_keys, (array) $submitted_types ) );
 		if ( empty( $clean['kb_post_types'] ) ) {
-			$clean['kb_post_types'] = array( 'jagc_article' );
+			$clean['kb_post_types'] = array( 'gaic_article' );
 		}
 
 		return $clean;
@@ -451,7 +451,7 @@ class JAGC_Settings {
 	 */
 	public function get_available_providers(): array {
 		$providers = array(
-			'auto' => __( 'Automatic (use any available)', 'just-another-generic-chatbot' ),
+			'auto' => __( 'Automatic (use any available)', 'guzmandrade-ai-chatbot' ),
 		);
 
 		if ( function_exists( 'wp_get_connectors' ) ) {
@@ -480,8 +480,8 @@ class JAGC_Settings {
 			$result[ $slug ] = $obj->labels->singular_name;
 		}
 		// Always include our CPT.
-		if ( ! isset( $result['jagc_article'] ) ) {
-			$result['jagc_article'] = __( 'Knowledge Base Article', 'just-another-generic-chatbot' );
+		if ( ! isset( $result['gaic_article'] ) ) {
+			$result['gaic_article'] = __( 'Knowledge Base Article', 'guzmandrade-ai-chatbot' );
 		}
 		return $result;
 	}
@@ -493,16 +493,16 @@ class JAGC_Settings {
 	 */
 	public function render_settings_page(): void {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have permission to access this page.', 'just-another-generic-chatbot' ) );
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'guzmandrade-ai-chatbot' ) );
 		}
 		?>
 		<div class="wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<form action="options.php" method="post">
 				<?php
-				settings_fields( 'jagc_settings_group' );
-				do_settings_sections( 'just-another-generic-chatbot' );
-				submit_button( __( 'Save Settings', 'just-another-generic-chatbot' ) );
+				settings_fields( 'gaic_settings_group' );
+				do_settings_sections( 'guzmandrade-ai-chatbot' );
+				submit_button( __( 'Save Settings', 'guzmandrade-ai-chatbot' ) );
 				?>
 			</form>
 		</div>
@@ -513,28 +513,28 @@ class JAGC_Settings {
 	 * Section intro for the general chatbot section.
 	 */
 	public function render_general_intro(): void {
-		echo '<p class="description">' . esc_html__( 'Configure how the chatbot appears on your site.', 'just-another-generic-chatbot' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Configure how the chatbot appears on your site.', 'guzmandrade-ai-chatbot' ) . '</p>';
 	}
 
 	/**
 	 * Section intro for the AI section.
 	 */
 	public function render_ai_intro(): void {
-		echo '<p class="description">' . esc_html__( 'AI providers and API keys are managed under Settings › Connectors (WordPress 7.0+). Select a provider and optionally a specific model here.', 'just-another-generic-chatbot' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'AI providers and API keys are managed under Settings › Connectors (WordPress 7.0+). Select a provider and optionally a specific model here.', 'guzmandrade-ai-chatbot' ) . '</p>';
 	}
 
 	/**
 	 * Section intro for the Knowledge Base section.
 	 */
 	public function render_kb_intro(): void {
-		echo '<p class="description">' . esc_html__( 'Select which content types to include as context for the chatbot. Knowledge Base Articles are always available. The article content is where you write the information the chatbot should know.', 'just-another-generic-chatbot' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Select which content types to include as context for the chatbot. Knowledge Base Articles are always available. The article content is where you write the information the chatbot should know.', 'guzmandrade-ai-chatbot' ) . '</p>';
 	}
 
 	/**
 	 * Section intro for the Spam section.
 	 */
 	public function render_spam_intro(): void {
-		echo '<p class="description">' . esc_html__( 'Uses Akismet for spam detection when available, with a rate-limiting fallback.', 'just-another-generic-chatbot' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Uses Akismet for spam detection when available, with a rate-limiting fallback.', 'guzmandrade-ai-chatbot' ) . '</p>';
 	}
 
 	/**
@@ -544,7 +544,7 @@ class JAGC_Settings {
 		echo '<p class="description">' . wp_kses(
 			sprintf(
 				/* translators: %s: Link to the Turnstile plugin. */
-				__( 'Requires the <a href="%s">Simple CAPTCHA with Cloudflare Turnstile</a> plugin. Configure your Cloudflare site key and secret in its settings (Settings › Cloudflare Turnstile) before enabling captcha here.', 'just-another-generic-chatbot' ),
+				__( 'Requires the <a href="%s">Simple CAPTCHA with Cloudflare Turnstile</a> plugin. Configure your Cloudflare site key and secret in its settings (Settings › Cloudflare Turnstile) before enabling captcha here.', 'guzmandrade-ai-chatbot' ),
 				'https://wordpress.org/plugins/simple-cloudflare-turnstile/'
 			),
 			array( 'a' => array( 'href' => array() ) )
@@ -555,7 +555,7 @@ class JAGC_Settings {
 	 * Section intro for the Lead Capture section.
 	 */
 	public function render_leads_intro(): void {
-		echo '<p class="description">' . esc_html__( 'When enabled, the chatbot uses AI function calling to detect when users share their contact information and automatically saves it. Leads are delivered via email and/or a webhook URL (for connecting to Zapier, Make, n8n, Google Sheets, a CRM, etc.). No forms or database tables needed.', 'just-another-generic-chatbot' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'When enabled, the chatbot uses AI function calling to detect when users share their contact information and automatically saves it. Leads are delivered via email and/or a webhook URL (for connecting to Zapier, Make, n8n, Google Sheets, a CRM, etc.). No forms or database tables needed.', 'guzmandrade-ai-chatbot' ) . '</p>';
 	}
 
 	/**
@@ -566,7 +566,7 @@ class JAGC_Settings {
 	public function render_checkbox( array $args ): void {
 		$key   = $args['key'];
 		$value = (bool) $this->get( $key );
-		$id    = 'jagc_' . $key;
+		$id    = 'gaic_' . $key;
 		printf(
 			'<input type="checkbox" id="%1$s" name="%2$s[%3$s]" value="1" %4$s />',
 			esc_attr( $id ),
@@ -584,7 +584,7 @@ class JAGC_Settings {
 	public function render_text_input( array $args ): void {
 		$key   = $args['key'];
 		$value = (string) $this->get( $key );
-		$id    = $args['label_for'] ?? 'jagc_' . $key;
+		$id    = $args['label_for'] ?? 'gaic_' . $key;
 		printf(
 			'<input type="text" id="%1$s" name="%2$s[%3$s]" value="%4$s" class="regular-text" />',
 			esc_attr( $id ),
@@ -602,7 +602,7 @@ class JAGC_Settings {
 	public function render_number_input( array $args ): void {
 		$key   = $args['key'];
 		$value = $this->get( $key );
-		$id    = $args['label_for'] ?? 'jagc_' . $key;
+		$id    = $args['label_for'] ?? 'gaic_' . $key;
 		$min   = $args['min'] ?? 0;
 		$max   = $args['max'] ?? '';
 		$step  = $args['step'] ?? 1;
@@ -626,7 +626,7 @@ class JAGC_Settings {
 	public function render_textarea( array $args ): void {
 		$key   = $args['key'];
 		$value = (string) $this->get( $key );
-		$id    = $args['label_for'] ?? 'jagc_' . $key;
+		$id    = $args['label_for'] ?? 'gaic_' . $key;
 		printf(
 			'<textarea id="%1$s" name="%2$s[%3$s]" rows="5" class="large-text">%4$s</textarea>',
 			esc_attr( $id ),
@@ -644,7 +644,7 @@ class JAGC_Settings {
 	public function render_select( array $args ): void {
 		$key     = $args['key'];
 		$value   = (string) $this->get( $key );
-		$id      = $args['label_for'] ?? 'jagc_' . $key;
+		$id      = $args['label_for'] ?? 'gaic_' . $key;
 		$options = $args['options'] ?? array();
 		echo '<select id="' . esc_attr( $id ) . '" name="' . esc_attr( self::OPTION_KEY ) . '[' . esc_attr( $key ) . ']">';
 		foreach ( $options as $opt_val => $opt_label ) {
@@ -667,7 +667,7 @@ class JAGC_Settings {
 	public function render_provider_select( array $args ): void {
 		$key       = $args['key'];
 		$value     = (string) $this->get( $key, 'auto' );
-		$id        = $args['label_for'] ?? 'jagc_' . $key;
+		$id        = $args['label_for'] ?? 'gaic_' . $key;
 		$providers = $this->get_available_providers();
 
 		echo '<select id="' . esc_attr( $id ) . '" name="' . esc_attr( self::OPTION_KEY ) . '[' . esc_attr( $key ) . ']">';
@@ -682,7 +682,7 @@ class JAGC_Settings {
 		echo '</select>';
 
 		if ( count( $providers ) <= 1 ) {
-			echo '<p class="description">' . esc_html__( 'No AI providers found. Install a provider connector plugin and configure it under Settings › Connectors.', 'just-another-generic-chatbot' ) . '</p>';
+			echo '<p class="description">' . esc_html__( 'No AI providers found. Install a provider connector plugin and configure it under Settings › Connectors.', 'guzmandrade-ai-chatbot' ) . '</p>';
 		}
 	}
 

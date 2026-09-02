@@ -2,71 +2,71 @@
 /**
  * Main plugin class — bootstraps all modules.
  *
- * @package Just_Another_Generic_Chatbot
+ * @package Guzmandrade_AI_Chatbot
  */
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Core orchestrator for the Just Another Generic Chatbot plugin.
+ * Core orchestrator for the Guzmandrade AI Chatbot plugin.
  */
-final class JAGC_Plugin {
+final class GAIC_Plugin {
 
 	/**
 	 * Singleton instance.
 	 *
-	 * @var ?JAGC_Plugin
+	 * @var ?GAIC_Plugin
 	 */
-	private static ?JAGC_Plugin $instance = null;
+	private static ?GAIC_Plugin $instance = null;
 
 	/**
 	 * Settings module.
 	 *
-	 * @var ?JAGC_Settings
+	 * @var ?GAIC_Settings
 	 */
-	private ?JAGC_Settings $settings = null;
+	private ?GAIC_Settings $settings = null;
 
 	/**
 	 * Knowledge Base module.
 	 *
-	 * @var ?JAGC_Knowledge_Base
+	 * @var ?GAIC_Knowledge_Base
 	 */
-	private ?JAGC_Knowledge_Base $knowledge_base = null;
+	private ?GAIC_Knowledge_Base $knowledge_base = null;
 
 	/**
 	 * Spam module.
 	 *
-	 * @var ?JAGC_Spam
+	 * @var ?GAIC_Spam
 	 */
-	private ?JAGC_Spam $spam = null;
+	private ?GAIC_Spam $spam = null;
 
 	/**
 	 * Captcha module.
 	 *
-	 * @var ?JAGC_Captcha
+	 * @var ?GAIC_Captcha
 	 */
-	private ?JAGC_Captcha $captcha = null;
+	private ?GAIC_Captcha $captcha = null;
 
 	/**
 	 * Lead capture module.
 	 *
-	 * @var ?JAGC_Lead_Capture
+	 * @var ?GAIC_Lead_Capture
 	 */
-	private ?JAGC_Lead_Capture $lead_capture = null;
+	private ?GAIC_Lead_Capture $lead_capture = null;
 
 	/**
 	 * Chatbot module.
 	 *
-	 * @var ?JAGC_Chatbot
+	 * @var ?GAIC_Chatbot
 	 */
-	private ?JAGC_Chatbot $chatbot = null;
+	private ?GAIC_Chatbot $chatbot = null;
 
 	/**
 	 * Returns the singleton instance.
 	 *
-	 * @return JAGC_Plugin
+	 * @return GAIC_Plugin
 	 */
-	public static function get_instance(): JAGC_Plugin {
+	public static function get_instance(): GAIC_Plugin {
 		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}
@@ -89,24 +89,24 @@ final class JAGC_Plugin {
 	 * Includes module class files.
 	 */
 	private function require_files(): void {
-		require_once JAGC_PLUGIN_DIR . 'includes/class-jagc-settings.php';
-		require_once JAGC_PLUGIN_DIR . 'includes/class-jagc-knowledge-base.php';
-		require_once JAGC_PLUGIN_DIR . 'includes/class-jagc-spam.php';
-		require_once JAGC_PLUGIN_DIR . 'includes/class-jagc-captcha.php';
-		require_once JAGC_PLUGIN_DIR . 'includes/class-jagc-lead-capture.php';
-		require_once JAGC_PLUGIN_DIR . 'includes/class-jagc-chatbot.php';
+		require_once GAIC_PLUGIN_DIR . 'includes/class-gaic-settings.php';
+		require_once GAIC_PLUGIN_DIR . 'includes/class-gaic-knowledge-base.php';
+		require_once GAIC_PLUGIN_DIR . 'includes/class-gaic-spam.php';
+		require_once GAIC_PLUGIN_DIR . 'includes/class-gaic-captcha.php';
+		require_once GAIC_PLUGIN_DIR . 'includes/class-gaic-lead-capture.php';
+		require_once GAIC_PLUGIN_DIR . 'includes/class-gaic-chatbot.php';
 	}
 
 	/**
 	 * Instantiates all modules.
 	 */
 	private function init_modules(): void {
-		$this->settings       = new JAGC_Settings();
-		$this->knowledge_base = new JAGC_Knowledge_Base( $this->settings );
-		$this->spam           = new JAGC_Spam( $this->settings );
-		$this->captcha        = new JAGC_Captcha( $this->settings );
-		$this->lead_capture   = new JAGC_Lead_Capture( $this->settings );
-		$this->chatbot        = new JAGC_Chatbot( $this, $this->settings, $this->knowledge_base, $this->spam, $this->captcha, $this->lead_capture );
+		$this->settings       = new GAIC_Settings();
+		$this->knowledge_base = new GAIC_Knowledge_Base( $this->settings );
+		$this->spam           = new GAIC_Spam( $this->settings );
+		$this->captcha        = new GAIC_Captcha( $this->settings );
+		$this->lead_capture   = new GAIC_Lead_Capture( $this->settings );
+		$this->chatbot        = new GAIC_Chatbot( $this, $this->settings, $this->knowledge_base, $this->spam, $this->captcha, $this->lead_capture );
 	}
 
 	/**
@@ -127,7 +127,7 @@ final class JAGC_Plugin {
 				wp_kses(
 					sprintf(
 						/* translators: %s: Link to the AI plugin. */
-						__( 'Just Another Generic Chatbot needs the WordPress AI building blocks to function. Please install and activate the <a href="%s">AI plugin</a> or upgrade to WordPress 7.0+. Then configure an AI provider under <strong>Settings &rsaquo; Connectors</strong>.', 'just-another-generic-chatbot' ),
+						__( 'Guzmandrade AI Chatbot needs the WordPress AI building blocks to function. Please install and activate the <a href="%s">AI plugin</a> or upgrade to WordPress 7.0+. Then configure an AI provider under <strong>Settings &rsaquo; Connectors</strong>.', 'guzmandrade-ai-chatbot' ),
 						'https://wordpress.org/plugins/ai/'
 					),
 					array(
@@ -144,7 +144,7 @@ final class JAGC_Plugin {
 				wp_kses(
 					sprintf(
 						/* translators: %s: Link to Akismet. */
-						__( 'Just Another Generic Chatbot recommends <a href="%s">Akismet</a> for spam protection. Install and activate it to enable spam filtering on chat messages. Rate-limiting fallback is active in the meantime.', 'just-another-generic-chatbot' ),
+						__( 'Guzmandrade AI Chatbot recommends <a href="%s">Akismet</a> for spam protection. Install and activate it to enable spam filtering on chat messages. Rate-limiting fallback is active in the meantime.', 'guzmandrade-ai-chatbot' ),
 						'https://wordpress.org/plugins/akismet/'
 					),
 					array( 'a' => array( 'href' => array() ) )
@@ -158,7 +158,7 @@ final class JAGC_Plugin {
 				wp_kses(
 					sprintf(
 						/* translators: %s: Link to the Turnstile plugin. */
-						__( 'Just Another Generic Chatbot is configured to use captcha but the <a href="%s">Simple CAPTCHA with Cloudflare Turnstile</a> plugin is not active. Install and configure it, or disable captcha in the chatbot settings.', 'just-another-generic-chatbot' ),
+						__( 'Guzmandrade AI Chatbot is configured to use captcha but the <a href="%s">Simple CAPTCHA with Cloudflare Turnstile</a> plugin is not active. Install and configure it, or disable captcha in the chatbot settings.', 'guzmandrade-ai-chatbot' ),
 						'https://wordpress.org/plugins/simple-cloudflare-turnstile/'
 					),
 					array( 'a' => array( 'href' => array() ) )
@@ -181,45 +181,45 @@ final class JAGC_Plugin {
 	/**
 	 * Gets the settings module.
 	 *
-	 * @return JAGC_Settings
+	 * @return GAIC_Settings
 	 */
-	public function settings(): JAGC_Settings {
+	public function settings(): GAIC_Settings {
 		return $this->settings;
 	}
 
 	/**
 	 * Gets the knowledge base module.
 	 *
-	 * @return JAGC_Knowledge_Base
+	 * @return GAIC_Knowledge_Base
 	 */
-	public function knowledge_base(): JAGC_Knowledge_Base {
+	public function knowledge_base(): GAIC_Knowledge_Base {
 		return $this->knowledge_base;
 	}
 
 	/**
 	 * Gets the spam module.
 	 *
-	 * @return JAGC_Spam
+	 * @return GAIC_Spam
 	 */
-	public function spam(): JAGC_Spam {
+	public function spam(): GAIC_Spam {
 		return $this->spam;
 	}
 
 	/**
 	 * Gets the captcha module.
 	 *
-	 * @return JAGC_Captcha
+	 * @return GAIC_Captcha
 	 */
-	public function captcha(): JAGC_Captcha {
+	public function captcha(): GAIC_Captcha {
 		return $this->captcha;
 	}
 
 	/**
 	 * Gets the lead capture module.
 	 *
-	 * @return JAGC_Lead_Capture
+	 * @return GAIC_Lead_Capture
 	 */
-	public function lead_capture(): JAGC_Lead_Capture {
+	public function lead_capture(): GAIC_Lead_Capture {
 		return $this->lead_capture;
 	}
 
@@ -229,16 +229,16 @@ final class JAGC_Plugin {
 	 * Runs on plugin activation.
 	 */
 	public static function activate(): void {
-		require_once JAGC_PLUGIN_DIR . 'includes/class-jagc-settings.php';
-		require_once JAGC_PLUGIN_DIR . 'includes/class-jagc-knowledge-base.php';
+		require_once GAIC_PLUGIN_DIR . 'includes/class-gaic-settings.php';
+		require_once GAIC_PLUGIN_DIR . 'includes/class-gaic-knowledge-base.php';
 
 		// Seed default settings.
-		if ( false === get_option( 'jagc_settings' ) ) {
-			add_option( 'jagc_settings', JAGC_Settings::get_defaults() );
+		if ( false === get_option( 'gaic_settings' ) ) {
+			add_option( 'gaic_settings', GAIC_Settings::get_defaults() );
 		}
 
 		// Register the CPT so rewrite rules are set up on activation.
-		$kb = new JAGC_Knowledge_Base( new JAGC_Settings() );
+		$kb = new GAIC_Knowledge_Base( new GAIC_Settings() );
 		$kb->register_post_type();
 		flush_rewrite_rules();
 	}

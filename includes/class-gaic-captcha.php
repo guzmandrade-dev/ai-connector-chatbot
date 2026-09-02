@@ -2,7 +2,7 @@
 /**
  * Captcha module — integrates with the Simple Cloudflare Turnstile plugin.
  *
- * @package Just_Another_Generic_Chatbot
+ * @package Guzmandrade_AI_Chatbot
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -11,21 +11,21 @@ defined( 'ABSPATH' ) || exit;
  * Provides captcha verification for chatbot messages using Cloudflare Turnstile
  * via the "Simple CAPTCHA with Cloudflare Turnstile" WordPress plugin.
  */
-class JAGC_Captcha {
+class GAIC_Captcha {
 
 	/**
 	 * Settings instance.
 	 *
-	 * @var JAGC_Settings
+	 * @var GAIC_Settings
 	 */
-	private JAGC_Settings $settings;
+	private GAIC_Settings $settings;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param JAGC_Settings $settings Settings instance.
+	 * @param GAIC_Settings $settings Settings instance.
 	 */
-	public function __construct( JAGC_Settings $settings ) {
+	public function __construct( GAIC_Settings $settings ) {
 		$this->settings = $settings;
 	}
 
@@ -68,7 +68,7 @@ class JAGC_Captcha {
 		if ( empty( $token ) ) {
 			return array(
 				'valid'  => false,
-				'reason' => __( 'Captcha verification required. Please complete the challenge.', 'just-another-generic-chatbot' ),
+				'reason' => __( 'Captcha verification required. Please complete the challenge.', 'guzmandrade-ai-chatbot' ),
 			);
 		}
 
@@ -83,7 +83,7 @@ class JAGC_Captcha {
 
 		return array(
 			'valid'  => false,
-			'reason' => __( 'Captcha verification failed. Please try again.', 'just-another-generic-chatbot' ),
+			'reason' => __( 'Captcha verification failed. Please try again.', 'guzmandrade-ai-chatbot' ),
 		);
 	}
 

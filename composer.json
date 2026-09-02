@@ -1,5 +1,5 @@
 {
-    "name": "h4l9k/just-another-generic-chatbot",
+    "name": "h4l9k/guzmandrade-ai-chatbot",
     "description": "AI-powered frontend chatbot with a knowledge base, Akismet spam protection, and Cloudflare Turnstile captcha.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
@@ -22,7 +22,7 @@
         "lint": "phpcs",
         "lint:fix": "phpcbf",
         "analyze": "phpstan --memory-limit=1G",
-        "build": "wp i18n make-pot . languages/just-another-generic-chatbot.pot --slug=just-another-generic-chatbot && wp dist-archive . just-another-generic-chatbot.zip"
+        "build": "wp i18n make-pot . languages/guzmandrade-ai-chatbot.pot --slug=guzmandrade-ai-chatbot && wp dist-archive . guzmandrade-ai-chatbot.zip"
     },
     "config": {
         "allow-plugins": {

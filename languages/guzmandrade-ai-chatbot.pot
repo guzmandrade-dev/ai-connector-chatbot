@@ -2,393 +2,393 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Just Another Generic Chatbot 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/just-another-generic-chatbot\n"
+"Project-Id-Version: Guzmandrade AI Chatbot 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/guzmandrade-ai-chatbot\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-01T00:44:34+00:00\n"
+"POT-Creation-Date: 2026-09-02T16:33:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 3.0.0-alpha-6a3afd3\n"
-"X-Domain: just-another-generic-chatbot\n"
+"X-Domain: guzmandrade-ai-chatbot\n"
 
 #. Plugin Name of the plugin
-#: just-another-generic-chatbot.php:3
-#: includes/class-jagc-settings.php:102
-#: includes/class-jagc-settings.php:103
-msgid "Just Another Generic Chatbot"
+#: guzmandrade-ai-chatbot.php:3
+#: includes/class-gaic-settings.php:102
+#: includes/class-gaic-settings.php:103
+msgid "Guzmandrade AI Chatbot"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: just-another-generic-chatbot.php:4
-msgid "https://github.com/guzmandrade-dev/just-another-generic-chatbot"
+#: guzmandrade-ai-chatbot.php:4
+msgid "https://github.com/guzmandrade-dev/guzmandrade-ai-chatbot"
 msgstr ""
 
 #. Description of the plugin
-#: just-another-generic-chatbot.php:5
+#: guzmandrade-ai-chatbot.php:5
 msgid "AI-powered frontend chatbot with a knowledge base, Akismet spam protection, and Cloudflare Turnstile captcha. Leverages the WordPress 7.0 Connectors API and the PHP AI Client SDK — no custom AI provider code required."
 msgstr ""
 
 #. Author of the plugin
-#: just-another-generic-chatbot.php:7
+#: guzmandrade-ai-chatbot.php:7
 msgid "Mauricio Andrade"
 msgstr ""
 
 #. Author URI of the plugin
-#: just-another-generic-chatbot.php:8
+#: guzmandrade-ai-chatbot.php:8
 msgid "https://profiles.wordpress.org/h4l9k/"
 msgstr ""
 
-#: includes/class-jagc-captcha.php:71
+#: includes/class-gaic-captcha.php:71
 msgid "Captcha verification required. Please complete the challenge."
 msgstr ""
 
-#: includes/class-jagc-captcha.php:86
-#: includes/class-jagc-chatbot.php:201
+#: includes/class-gaic-captcha.php:86
+#: includes/class-gaic-chatbot.php:201
 msgid "Captcha verification failed. Please try again."
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:184
-#: includes/class-jagc-settings.php:41
+#: includes/class-gaic-chatbot.php:184
+#: includes/class-gaic-settings.php:41
 msgid "Chat with us"
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:186
-#: includes/class-jagc-settings.php:44
+#: includes/class-gaic-chatbot.php:186
+#: includes/class-gaic-settings.php:44
 msgid "Hello! How can I help you today?"
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:192
+#: includes/class-gaic-chatbot.php:192
 msgid "Type your message…"
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:193
+#: includes/class-gaic-chatbot.php:193
 msgid "Send"
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:194
+#: includes/class-gaic-chatbot.php:194
 msgid "Open chat"
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:195
+#: includes/class-gaic-chatbot.php:195
 msgid "Close chat"
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:196
+#: includes/class-gaic-chatbot.php:196
 msgid "Assistant is typing…"
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:197
+#: includes/class-gaic-chatbot.php:197
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:198
+#: includes/class-gaic-chatbot.php:198
 msgid "Your message was blocked. Please try again later."
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:199
+#: includes/class-gaic-chatbot.php:199
 msgid "The AI assistant is not configured. Please contact the site administrator."
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:200
+#: includes/class-gaic-chatbot.php:200
 msgid "Please complete the captcha challenge first."
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:330
+#: includes/class-gaic-chatbot.php:330
 msgid "The AI assistant is not configured."
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:451
-#: includes/class-jagc-chatbot.php:460
+#: includes/class-gaic-chatbot.php:451
+#: includes/class-gaic-chatbot.php:460
 msgid "Failed to generate a response. Please try again."
 msgstr ""
 
-#: includes/class-jagc-chatbot.php:549
-#: includes/class-jagc-chatbot.php:560
+#: includes/class-gaic-chatbot.php:549
+#: includes/class-gaic-chatbot.php:560
 msgid "I've saved your information. Is there anything else I can help you with?"
 msgstr ""
 
-#: includes/class-jagc-knowledge-base.php:47
-#: includes/class-jagc-knowledge-base.php:58
-#: includes/class-jagc-settings.php:271
+#: includes/class-gaic-knowledge-base.php:47
+#: includes/class-gaic-knowledge-base.php:58
+#: includes/class-gaic-settings.php:271
 msgid "Knowledge Base"
 msgstr ""
 
-#: includes/class-jagc-knowledge-base.php:48
-#: includes/class-jagc-settings.php:484
+#: includes/class-gaic-knowledge-base.php:48
+#: includes/class-gaic-settings.php:484
 msgid "Knowledge Base Article"
 msgstr ""
 
-#: includes/class-jagc-knowledge-base.php:49
+#: includes/class-gaic-knowledge-base.php:49
 msgid "Add New Article"
 msgstr ""
 
-#: includes/class-jagc-knowledge-base.php:50
+#: includes/class-gaic-knowledge-base.php:50
 msgid "Add New Knowledge Base Article"
 msgstr ""
 
-#: includes/class-jagc-knowledge-base.php:51
+#: includes/class-gaic-knowledge-base.php:51
 msgid "Edit Article"
 msgstr ""
 
-#: includes/class-jagc-knowledge-base.php:52
+#: includes/class-gaic-knowledge-base.php:52
 msgid "New Article"
 msgstr ""
 
-#: includes/class-jagc-knowledge-base.php:53
+#: includes/class-gaic-knowledge-base.php:53
 msgid "View Article"
 msgstr ""
 
-#: includes/class-jagc-knowledge-base.php:54
+#: includes/class-gaic-knowledge-base.php:54
 msgid "Search Knowledge Base"
 msgstr ""
 
-#: includes/class-jagc-knowledge-base.php:55
+#: includes/class-gaic-knowledge-base.php:55
 msgid "No articles found."
 msgstr ""
 
-#: includes/class-jagc-knowledge-base.php:56
+#: includes/class-gaic-knowledge-base.php:56
 msgid "No articles in trash."
 msgstr ""
 
-#: includes/class-jagc-knowledge-base.php:57
+#: includes/class-gaic-knowledge-base.php:57
 msgid "All Articles"
 msgstr ""
 
-#: includes/class-jagc-lead-capture.php:72
+#: includes/class-gaic-lead-capture.php:72
 msgid "Save a lead captured during the chat conversation. Call this function when a user provides their contact information (name, email, phone) and expresses interest in being contacted or learning more. Only call this when the user has explicitly shared their details."
 msgstr ""
 
-#: includes/class-jagc-lead-capture.php:111
+#: includes/class-gaic-lead-capture.php:111
 msgid "You have the ability to save leads using the save_lead function. When a user shows interest in your services, products, or being contacted, naturally guide the conversation toward collecting their contact information. Ask for their name and email address conversationally — do not use form-like language. For example, instead of \"Please provide your name and email,\" say something like \"I'd be happy to have someone follow up with you about this. Could you share your name and the best email to reach you at?\" Only call the save_lead function after the user has provided at least their name and email. Never call save_lead more than once per conversation — once a lead is saved, do not save it again even if the user continues chatting. Never ask for or collect sensitive data like passwords, credit card numbers, or social security numbers. After saving a lead, let the user know their information has been received and someone will be in touch."
 msgstr ""
 
-#: includes/class-jagc-lead-capture.php:113
+#: includes/class-gaic-lead-capture.php:113
 msgid ""
 "## Conversation End Detection\n"
 "When it is clear the user has no further questions (e.g. they say \"that is all\", \"no more questions\", \"thanks\", \"goodbye\", or similar), wrap up the conversation politely and append the marker [[CHAT_END]] at the very end of your response. This signals the system to close the chat panel. Only use this marker when you are confident the conversation has concluded — never use it if the user might still have follow-up questions."
 msgstr ""
 
-#: includes/class-jagc-lead-capture.php:166
+#: includes/class-gaic-lead-capture.php:166
 msgid "Lead saved successfully."
 msgstr ""
 
-#: includes/class-jagc-lead-capture.php:167
+#: includes/class-gaic-lead-capture.php:167
 msgid "Lead saved with some delivery errors."
 msgstr ""
 
 #. translators: %s: Lead name.
-#: includes/class-jagc-lead-capture.php:181
+#: includes/class-gaic-lead-capture.php:181
 #, php-format
 msgid "[%s] New lead from chatbot"
 msgstr ""
 
-#: includes/class-jagc-lead-capture.php:182
+#: includes/class-gaic-lead-capture.php:182
 msgid "Unknown"
 msgstr ""
 
-#: includes/class-jagc-lead-capture.php:185
-msgid "A new lead was captured by the Just Another Generic Chatbot:"
+#: includes/class-gaic-lead-capture.php:185
+msgid "A new lead was captured by the Guzmandrade AI Chatbot:"
 msgstr ""
 
-#: includes/class-jagc-lead-capture.php:186
+#: includes/class-gaic-lead-capture.php:186
 msgid "Name: "
 msgstr ""
 
-#: includes/class-jagc-lead-capture.php:187
+#: includes/class-gaic-lead-capture.php:187
 msgid "Email: "
 msgstr ""
 
-#: includes/class-jagc-lead-capture.php:190
+#: includes/class-gaic-lead-capture.php:190
 msgid "Phone: "
 msgstr ""
 
-#: includes/class-jagc-lead-capture.php:194
+#: includes/class-gaic-lead-capture.php:194
 msgid "Notes:"
 msgstr ""
 
-#: includes/class-jagc-lead-capture.php:197
+#: includes/class-gaic-lead-capture.php:197
 msgid "Captured: "
 msgstr ""
 
-#: includes/class-jagc-lead-capture.php:198
+#: includes/class-gaic-lead-capture.php:198
 msgid "Source: "
 msgstr ""
 
 #. translators: %s: Link to the AI plugin.
-#: includes/class-jagc-plugin.php:130
+#: includes/class-gaic-plugin.php:130
 #, php-format
-msgid "Just Another Generic Chatbot needs the WordPress AI building blocks to function. Please install and activate the <a href=\"%s\">AI plugin</a> or upgrade to WordPress 7.0+. Then configure an AI provider under <strong>Settings &rsaquo; Connectors</strong>."
+msgid "Guzmandrade AI Chatbot needs the WordPress AI building blocks to function. Please install and activate the <a href=\"%s\">AI plugin</a> or upgrade to WordPress 7.0+. Then configure an AI provider under <strong>Settings &rsaquo; Connectors</strong>."
 msgstr ""
 
 #. translators: %s: Link to Akismet.
-#: includes/class-jagc-plugin.php:147
+#: includes/class-gaic-plugin.php:147
 #, php-format
-msgid "Just Another Generic Chatbot recommends <a href=\"%s\">Akismet</a> for spam protection. Install and activate it to enable spam filtering on chat messages. Rate-limiting fallback is active in the meantime."
+msgid "Guzmandrade AI Chatbot recommends <a href=\"%s\">Akismet</a> for spam protection. Install and activate it to enable spam filtering on chat messages. Rate-limiting fallback is active in the meantime."
 msgstr ""
 
 #. translators: %s: Link to the Turnstile plugin.
-#: includes/class-jagc-plugin.php:161
+#: includes/class-gaic-plugin.php:161
 #, php-format
-msgid "Just Another Generic Chatbot is configured to use captcha but the <a href=\"%s\">Simple CAPTCHA with Cloudflare Turnstile</a> plugin is not active. Install and configure it, or disable captcha in the chatbot settings."
+msgid "Guzmandrade AI Chatbot is configured to use captcha but the <a href=\"%s\">Simple CAPTCHA with Cloudflare Turnstile</a> plugin is not active. Install and configure it, or disable captcha in the chatbot settings."
 msgstr ""
 
-#: includes/class-jagc-settings.php:42
+#: includes/class-gaic-settings.php:42
 msgid "We typically reply in a moment"
 msgstr ""
 
-#: includes/class-jagc-settings.php:45
+#: includes/class-gaic-settings.php:45
 msgid "You are a helpful assistant for this website. Answer questions accurately and concisely. If you do not know the answer, say so. Use only the provided knowledge base context to answer questions about this site."
 msgstr ""
 
-#: includes/class-jagc-settings.php:125
+#: includes/class-gaic-settings.php:125
 msgid "Chatbot"
 msgstr ""
 
-#: includes/class-jagc-settings.php:132
+#: includes/class-gaic-settings.php:132
 msgid "Enable chatbot"
 msgstr ""
 
-#: includes/class-jagc-settings.php:144
+#: includes/class-gaic-settings.php:144
 msgid "Title"
 msgstr ""
 
-#: includes/class-jagc-settings.php:156
+#: includes/class-gaic-settings.php:156
 msgid "Subtitle"
 msgstr ""
 
-#: includes/class-jagc-settings.php:168
+#: includes/class-gaic-settings.php:168
 msgid "Welcome message"
 msgstr ""
 
-#: includes/class-jagc-settings.php:180
+#: includes/class-gaic-settings.php:180
 msgid "Position"
 msgstr ""
 
-#: includes/class-jagc-settings.php:188
+#: includes/class-gaic-settings.php:188
 msgid "Bottom right"
 msgstr ""
 
-#: includes/class-jagc-settings.php:189
+#: includes/class-gaic-settings.php:189
 msgid "Bottom left"
 msgstr ""
 
-#: includes/class-jagc-settings.php:197
+#: includes/class-gaic-settings.php:197
 msgid "AI Configuration"
 msgstr ""
 
-#: includes/class-jagc-settings.php:204
+#: includes/class-gaic-settings.php:204
 msgid "System instructions"
 msgstr ""
 
-#: includes/class-jagc-settings.php:216
+#: includes/class-gaic-settings.php:216
 msgid "AI provider"
 msgstr ""
 
-#: includes/class-jagc-settings.php:228
+#: includes/class-gaic-settings.php:228
 msgid "Model (optional)"
 msgstr ""
 
-#: includes/class-jagc-settings.php:240
+#: includes/class-gaic-settings.php:240
 msgid "Temperature"
 msgstr ""
 
-#: includes/class-jagc-settings.php:255
+#: includes/class-gaic-settings.php:255
 msgid "Max tokens"
 msgstr ""
 
-#: includes/class-jagc-settings.php:278
+#: includes/class-gaic-settings.php:278
 msgid "Post types to include"
 msgstr ""
 
-#: includes/class-jagc-settings.php:289
+#: includes/class-gaic-settings.php:289
 msgid "Max context length (chars)"
 msgstr ""
 
-#: includes/class-jagc-settings.php:305
+#: includes/class-gaic-settings.php:305
 msgid "Spam Protection"
 msgstr ""
 
-#: includes/class-jagc-settings.php:312
+#: includes/class-gaic-settings.php:312
 msgid "Enable spam protection"
 msgstr ""
 
-#: includes/class-jagc-settings.php:324
+#: includes/class-gaic-settings.php:324
 msgid "Rate limit (messages per hour per user)"
 msgstr ""
 
-#: includes/class-jagc-settings.php:340
+#: includes/class-gaic-settings.php:340
 msgid "Captcha Protection"
 msgstr ""
 
-#: includes/class-jagc-settings.php:347
+#: includes/class-gaic-settings.php:347
 msgid "Enable captcha"
 msgstr ""
 
-#: includes/class-jagc-settings.php:360
+#: includes/class-gaic-settings.php:360
 msgid "Lead Capture"
 msgstr ""
 
-#: includes/class-jagc-settings.php:367
+#: includes/class-gaic-settings.php:367
 msgid "Enable lead capture"
 msgstr ""
 
-#: includes/class-jagc-settings.php:379
+#: includes/class-gaic-settings.php:379
 msgid "Lead notification email"
 msgstr ""
 
-#: includes/class-jagc-settings.php:391
+#: includes/class-gaic-settings.php:391
 msgid "Webhook URL (optional)"
 msgstr ""
 
-#: includes/class-jagc-settings.php:454
+#: includes/class-gaic-settings.php:454
 msgid "Automatic (use any available)"
 msgstr ""
 
-#: includes/class-jagc-settings.php:496
+#: includes/class-gaic-settings.php:496
 msgid "You do not have permission to access this page."
 msgstr ""
 
-#: includes/class-jagc-settings.php:505
+#: includes/class-gaic-settings.php:505
 msgid "Save Settings"
 msgstr ""
 
-#: includes/class-jagc-settings.php:516
+#: includes/class-gaic-settings.php:516
 msgid "Configure how the chatbot appears on your site."
 msgstr ""
 
-#: includes/class-jagc-settings.php:523
+#: includes/class-gaic-settings.php:523
 msgid "AI providers and API keys are managed under Settings › Connectors (WordPress 7.0+). Select a provider and optionally a specific model here."
 msgstr ""
 
-#: includes/class-jagc-settings.php:530
+#: includes/class-gaic-settings.php:530
 msgid "Select which content types to include as context for the chatbot. Knowledge Base Articles are always available. The article content is where you write the information the chatbot should know."
 msgstr ""
 
-#: includes/class-jagc-settings.php:537
+#: includes/class-gaic-settings.php:537
 msgid "Uses Akismet for spam detection when available, with a rate-limiting fallback."
 msgstr ""
 
 #. translators: %s: Link to the Turnstile plugin.
-#: includes/class-jagc-settings.php:547
+#: includes/class-gaic-settings.php:547
 #, php-format
 msgid "Requires the <a href=\"%s\">Simple CAPTCHA with Cloudflare Turnstile</a> plugin. Configure your Cloudflare site key and secret in its settings (Settings › Cloudflare Turnstile) before enabling captcha here."
 msgstr ""
 
-#: includes/class-jagc-settings.php:558
+#: includes/class-gaic-settings.php:558
 msgid "When enabled, the chatbot uses AI function calling to detect when users share their contact information and automatically saves it. Leads are delivered via email and/or a webhook URL (for connecting to Zapier, Make, n8n, Google Sheets, a CRM, etc.). No forms or database tables needed."
 msgstr ""
 
-#: includes/class-jagc-settings.php:685
+#: includes/class-gaic-settings.php:685
 msgid "No AI providers found. Install a provider connector plugin and configure it under Settings › Connectors."
 msgstr ""
 
-#: includes/class-jagc-spam.php:141
+#: includes/class-gaic-spam.php:141
 msgid "Message flagged as spam by Akismet."
 msgstr ""
 
-#: includes/class-jagc-spam.php:166
+#: includes/class-gaic-spam.php:166
 msgid "Rate limit exceeded. Please try again later."
 msgstr ""

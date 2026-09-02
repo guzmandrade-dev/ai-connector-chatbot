@@ -8,7 +8,7 @@
  *
  * No CPT, no database table, no form — the chatbot conversation IS the form.
  *
- * @package Just_Another_Generic_Chatbot
+ * @package Guzmandrade_AI_Chatbot
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -16,21 +16,21 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Provides AI-powered lead capture via function calling.
  */
-class JAGC_Lead_Capture {
+class GAIC_Lead_Capture {
 
 	/**
 	 * Settings instance.
 	 *
-	 * @var JAGC_Settings
+	 * @var GAIC_Settings
 	 */
-	private JAGC_Settings $settings;
+	private GAIC_Settings $settings;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param JAGC_Settings $settings Settings instance.
+	 * @param GAIC_Settings $settings Settings instance.
 	 */
-	public function __construct( JAGC_Settings $settings ) {
+	public function __construct( GAIC_Settings $settings ) {
 		$this->settings = $settings;
 	}
 
@@ -69,7 +69,7 @@ class JAGC_Lead_Capture {
 
 		return new $fn_class(
 			'save_lead',
-			__( 'Save a lead captured during the chat conversation. Call this function when a user provides their contact information (name, email, phone) and expresses interest in being contacted or learning more. Only call this when the user has explicitly shared their details.', 'just-another-generic-chatbot' ),
+			__( 'Save a lead captured during the chat conversation. Call this function when a user provides their contact information (name, email, phone) and expresses interest in being contacted or learning more. Only call this when the user has explicitly shared their details.', 'guzmandrade-ai-chatbot' ),
 			array(
 				'type'       => 'object',
 				'properties' => array(
@@ -108,9 +108,9 @@ class JAGC_Lead_Capture {
 		}
 
 		return "\n\n## Lead Capture\n\n" .
-			__( 'You have the ability to save leads using the save_lead function. When a user shows interest in your services, products, or being contacted, naturally guide the conversation toward collecting their contact information. Ask for their name and email address conversationally — do not use form-like language. For example, instead of "Please provide your name and email," say something like "I\'d be happy to have someone follow up with you about this. Could you share your name and the best email to reach you at?" Only call the save_lead function after the user has provided at least their name and email. Never call save_lead more than once per conversation — once a lead is saved, do not save it again even if the user continues chatting. Never ask for or collect sensitive data like passwords, credit card numbers, or social security numbers. After saving a lead, let the user know their information has been received and someone will be in touch.', 'just-another-generic-chatbot' ) .
+			__( 'You have the ability to save leads using the save_lead function. When a user shows interest in your services, products, or being contacted, naturally guide the conversation toward collecting their contact information. Ask for their name and email address conversationally — do not use form-like language. For example, instead of "Please provide your name and email," say something like "I\'d be happy to have someone follow up with you about this. Could you share your name and the best email to reach you at?" Only call the save_lead function after the user has provided at least their name and email. Never call save_lead more than once per conversation — once a lead is saved, do not save it again even if the user continues chatting. Never ask for or collect sensitive data like passwords, credit card numbers, or social security numbers. After saving a lead, let the user know their information has been received and someone will be in touch.', 'guzmandrade-ai-chatbot' ) .
 			"\n\n" .
-			__( "## Conversation End Detection\nWhen it is clear the user has no further questions (e.g. they say \"that is all\", \"no more questions\", \"thanks\", \"goodbye\", or similar), wrap up the conversation politely and append the marker [[CHAT_END]] at the very end of your response. This signals the system to close the chat panel. Only use this marker when you are confident the conversation has concluded — never use it if the user might still have follow-up questions.", 'just-another-generic-chatbot' );
+			__( "## Conversation End Detection\nWhen it is clear the user has no further questions (e.g. they say \"that is all\", \"no more questions\", \"thanks\", \"goodbye\", or similar), wrap up the conversation politely and append the marker [[CHAT_END]] at the very end of your response. This signals the system to close the chat panel. Only use this marker when you are confident the conversation has concluded — never use it if the user might still have follow-up questions.", 'guzmandrade-ai-chatbot' );
 	}
 
 	/**
@@ -158,13 +158,13 @@ class JAGC_Lead_Capture {
 		 * @param array<string,mixed> $lead_data The lead data.
 		 * @param bool                 $success  Whether all delivery methods succeeded.
 		 */
-		do_action( 'jagc_lead_captured', $lead_data, $all_success );
+		do_action( 'gaic_lead_captured', $lead_data, $all_success );
 
 		return array(
 			'success' => $all_success,
 			'message' => $all_success
-				? __( 'Lead saved successfully.', 'just-another-generic-chatbot' )
-				: __( 'Lead saved with some delivery errors.', 'just-another-generic-chatbot' ),
+				? __( 'Lead saved successfully.', 'guzmandrade-ai-chatbot' )
+				: __( 'Lead saved with some delivery errors.', 'guzmandrade-ai-chatbot' ),
 		);
 	}
 
@@ -178,24 +178,24 @@ class JAGC_Lead_Capture {
 	private function send_email( string $to, array $lead_data ): bool {
 		$subject = sprintf(
 			/* translators: %s: Lead name. */
-			__( '[%s] New lead from chatbot', 'just-another-generic-chatbot' ),
-			$lead_data['name'] ?? __( 'Unknown', 'just-another-generic-chatbot' )
+			__( '[%s] New lead from chatbot', 'guzmandrade-ai-chatbot' ),
+			$lead_data['name'] ?? __( 'Unknown', 'guzmandrade-ai-chatbot' )
 		);
 
-		$body  = __( 'A new lead was captured by the Just Another Generic Chatbot:', 'just-another-generic-chatbot' ) . "\n\n";
-		$body .= __( 'Name: ', 'just-another-generic-chatbot' ) . $lead_data['name'] . "\n";
-		$body .= __( 'Email: ', 'just-another-generic-chatbot' ) . $lead_data['email'] . "\n";
+		$body  = __( 'A new lead was captured by the Guzmandrade AI Chatbot:', 'guzmandrade-ai-chatbot' ) . "\n\n";
+		$body .= __( 'Name: ', 'guzmandrade-ai-chatbot' ) . $lead_data['name'] . "\n";
+		$body .= __( 'Email: ', 'guzmandrade-ai-chatbot' ) . $lead_data['email'] . "\n";
 
 		if ( ! empty( $lead_data['phone'] ) ) {
-			$body .= __( 'Phone: ', 'just-another-generic-chatbot' ) . $lead_data['phone'] . "\n";
+			$body .= __( 'Phone: ', 'guzmandrade-ai-chatbot' ) . $lead_data['phone'] . "\n";
 		}
 
 		if ( ! empty( $lead_data['notes'] ) ) {
-			$body .= "\n" . __( 'Notes:', 'just-another-generic-chatbot' ) . "\n" . $lead_data['notes'] . "\n";
+			$body .= "\n" . __( 'Notes:', 'guzmandrade-ai-chatbot' ) . "\n" . $lead_data['notes'] . "\n";
 		}
 
-		$body .= "\n" . __( 'Captured: ', 'just-another-generic-chatbot' ) . $lead_data['timestamp'] . "\n";
-		$body .= __( 'Source: ', 'just-another-generic-chatbot' ) . $lead_data['source'] . "\n";
+		$body .= "\n" . __( 'Captured: ', 'guzmandrade-ai-chatbot' ) . $lead_data['timestamp'] . "\n";
+		$body .= __( 'Source: ', 'guzmandrade-ai-chatbot' ) . $lead_data['source'] . "\n";
 
 		$headers = array( 'Content-Type: text/plain; charset=UTF-8' );
 

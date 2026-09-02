@@ -4,7 +4,7 @@ parameters:
   level: 9
   phpVersion: 80000
   paths:
-    - just-another-generic-chatbot.php
+    - guzmandrade-ai-chatbot.php
     - uninstall.php
   scanDirectories:
     - includes
