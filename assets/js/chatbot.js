@@ -179,14 +179,33 @@
 
 	// ── Message rendering ──────────────────────────────────────────
 
+	function createAvatar( role ) {
+		var avatar       = document.createElement( 'span' );
+		avatar.className = 'gaic-message-avatar';
+		avatar.setAttribute( 'aria-hidden', 'true' );
+
+		if ( role !== 'user' && data.avatarUrl ) {
+			var img       = document.createElement( 'img' );
+			img.className = 'gaic-message-avatar-img';
+			img.setAttribute( 'src', data.avatarUrl );
+			img.setAttribute( 'alt', '' );
+			img.onerror = function () {
+				// If the image fails to load, fall back to the text badge.
+				avatar.textContent = 'AI';
+			};
+			avatar.appendChild( img );
+		} else {
+			avatar.textContent = role === 'user' ? 'U' : 'AI';
+		}
+
+		return avatar;
+	}
+
 	function addMessage( role, content, storeInState ) {
 		var msg       = document.createElement( 'div' );
 		msg.className = 'gaic-message gaic-message--' + role;
 
-		var avatar       = document.createElement( 'span' );
-		avatar.className = 'gaic-message-avatar';
-		avatar.setAttribute( 'aria-hidden', 'true' );
-		avatar.textContent = role === 'user' ? 'U' : 'AI';
+		var avatar = createAvatar( role );
 
 		var bubble       = document.createElement( 'div' );
 		bubble.className = 'gaic-message-bubble';
@@ -226,10 +245,7 @@
 		msg.className = 'gaic-message gaic-message--assistant gaic-typing-indicator';
 		msg.setAttribute( 'aria-label', strings.typing || 'Assistant is typing…' );
 
-		var avatar       = document.createElement( 'span' );
-		avatar.className = 'gaic-message-avatar';
-		avatar.setAttribute( 'aria-hidden', 'true' );
-		avatar.textContent = 'AI';
+		var avatar = createAvatar( 'assistant' );
 
 		var dots       = document.createElement( 'div' );
 		dots.className = 'gaic-message-bubble';

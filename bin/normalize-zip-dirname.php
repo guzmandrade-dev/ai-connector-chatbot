@@ -15,7 +15,7 @@
  *
  * Usage: php bin/normalize-zip-dirname.php <archive.zip> <slug>
  *
- * @package Just_Another_Generic_Chatbot
+ * @package Guzmandrade_AI_Chatbot
  */
 
 // phpcs:ignoreFile -- Standalone CLI build tool; unescaped CLI output is intentional.

@@ -41,6 +41,7 @@ class GAIC_Settings {
 			'title'                => __( 'Chat with us', 'guzmandrade-ai-chatbot' ),
 			'subtitle'             => __( 'We typically reply in a moment', 'guzmandrade-ai-chatbot' ),
 			'position'             => 'bottom-right',
+			'avatar_email'         => '',
 			'welcome_message'      => __( 'Hello! How can I help you today?', 'guzmandrade-ai-chatbot' ),
 			'system_prompt'        => __( 'You are a helpful assistant for this website. Answer questions accurately and concisely. If you do not know the answer, say so. Use only the provided knowledge base context to answer questions about this site.', 'guzmandrade-ai-chatbot' ),
 			'max_context_length'   => 4000,
@@ -188,6 +189,19 @@ class GAIC_Settings {
 					'bottom-right' => __( 'Bottom right', 'guzmandrade-ai-chatbot' ),
 					'bottom-left'  => __( 'Bottom left', 'guzmandrade-ai-chatbot' ),
 				),
+			)
+		);
+
+		add_settings_field(
+			'avatar_email',
+			__( 'Assistant avatar email', 'guzmandrade-ai-chatbot' ),
+			array( $this, 'render_text_input' ),
+			'guzmandrade-ai-chatbot',
+			'gaic_general',
+			array(
+				'label_for'   => 'gaic_avatar_email',
+				'key'         => 'avatar_email',
+				'description' => __( 'Shows the Gravatar for this email address next to assistant messages. If the email has no Gravatar, or the field is empty, your default avatar from Settings › Discussion is used — the same fallback as comment avatars.', 'guzmandrade-ai-chatbot' ),
 			)
 		);
 
@@ -413,6 +427,7 @@ class GAIC_Settings {
 		$clean['title']              = sanitize_text_field( $input['title'] ?? $defaults['title'] );
 		$clean['subtitle']           = sanitize_text_field( $input['subtitle'] ?? $defaults['subtitle'] );
 		$clean['position']           = in_array( $input['position'] ?? '', array( 'bottom-right', 'bottom-left' ), true ) ? $input['position'] : 'bottom-right';
+		$clean['avatar_email']       = sanitize_email( $input['avatar_email'] ?? '' );
 		$clean['welcome_message']    = sanitize_textarea_field( $input['welcome_message'] ?? $defaults['welcome_message'] );
 		$clean['system_prompt']      = sanitize_textarea_field( $input['system_prompt'] ?? $defaults['system_prompt'] );
 		$clean['max_context_length'] = absint( $input['max_context_length'] ?? $defaults['max_context_length'] );
@@ -582,9 +597,11 @@ class GAIC_Settings {
 	 * @param array<string,mixed> $args Field arguments.
 	 */
 	public function render_text_input( array $args ): void {
-		$key   = $args['key'];
-		$value = (string) $this->get( $key );
-		$id    = $args['label_for'] ?? 'gaic_' . $key;
+		$key         = $args['key'];
+		$value       = (string) $this->get( $key );
+		$id          = $args['label_for'] ?? 'gaic_' . $key;
+		$description = $args['description'] ?? '';
+
 		printf(
 			'<input type="text" id="%1$s" name="%2$s[%3$s]" value="%4$s" class="regular-text" />',
 			esc_attr( $id ),
@@ -592,6 +609,13 @@ class GAIC_Settings {
 			esc_attr( $key ),
 			esc_attr( $value )
 		);
+
+		if ( $description ) {
+			printf(
+				'<p class="description">%s</p>',
+				esc_html( $description )
+			);
+		}
 	}
 
 	/**

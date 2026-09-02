@@ -70,7 +70,7 @@ Captcha uses Cloudflare Turnstile via the "Simple CAPTCHA with Cloudflare Turnst
 == Changelog ==
 
 = 1.1.0 =
-* Renamed the plugin from AI Connector Chatbot to Just Another Generic Chatbot.
+* Renamed the plugin from AI Connector Chatbot to Guzmandrade AI Chatbot.
 * Added an optional Gravatar for the assistant, configured by email in the plugin settings.
 * The assistant avatar falls back to your default avatar from Settings › Discussion, the same fallback as comment avatars.
 
